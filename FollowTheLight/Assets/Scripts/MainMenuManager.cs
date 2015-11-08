@@ -10,6 +10,7 @@ public class MainMenuManager : MonoBehaviour {
 	private AudioSource hoverSound;
 	
 	void Start () {
+        Cursor.visible = true;
 		audios = gameObject.GetComponents<AudioSource>();
 		hoverSound = audios [0];
 		CheckMusic();

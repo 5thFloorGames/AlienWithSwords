@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour {
 	private UserInterfaceManager uim;
 
 	void Start () {
-		cm = gameObject.GetComponent<CharacterManager> ();
+        Cursor.visible = false;
+        cm = gameObject.GetComponent<CharacterManager> ();
 		em = gameObject.GetComponent<EnemyManager> ();
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
+
 		StartPlayerTurn ();
 	}
 
