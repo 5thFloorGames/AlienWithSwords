@@ -16,7 +16,7 @@ public class zSpellCaster : MonoBehaviour {
 
 	void Start () {
 		rbPlayer = gameObject.GetComponent<Rigidbody> ();
-		orb = (GameObject)Resources.Load ("zLightOrb");
+		orb = (GameObject)Resources.Load ("LightOrb");
 		orbList = new List<GameObject> ();
 	}
 
@@ -26,7 +26,7 @@ public class zSpellCaster : MonoBehaviour {
             casting = true;
 		}
 		if (Input.GetKeyUp(KeyCode.Alpha1) && casting) {
-			spawnedOrb.GetComponent<zOrbLife>().releaseOrb();
+			spawnedOrb.GetComponent<OrbLife>().releaseOrb();
             casting = false;
 		}
 
@@ -41,7 +41,7 @@ public class zSpellCaster : MonoBehaviour {
 	}
 
 	void releaseOrb() {
-		spawnedOrb.GetComponent<zOrbLife> ().released = true;
+		spawnedOrb.GetComponent<OrbLife> ().released = true;
 		rbOrb.constraints = RigidbodyConstraints.None;
 		rbOrb.velocity = rbPlayer.rotation * new Vector3 (0, 2.0f, 2.0f);
 		spawnedOrb.transform.parent = null;
@@ -59,7 +59,7 @@ public class zSpellCaster : MonoBehaviour {
 		if (orbList.Count > orbLimit) {
 			GameObject oldestOrb = orbList[0];
 			orbList.RemoveAt(0);
-			oldestOrb.GetComponent<zOrbLife>().startSuicide();
+			oldestOrb.GetComponent<OrbLife>().startSuicide();
 			
 		}
 	}
