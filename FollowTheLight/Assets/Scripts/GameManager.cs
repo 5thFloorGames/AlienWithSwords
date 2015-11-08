@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour {
 	private UserInterfaceManager uim;
 
 	void Start () {
-        Cursor.visible = false;
+        //this gets annoying when testing in editor, should remember to uncomment when built
+        //Cursor.visible = false;
         cm = gameObject.GetComponent<CharacterManager> ();
 		em = gameObject.GetComponent<EnemyManager> ();
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
