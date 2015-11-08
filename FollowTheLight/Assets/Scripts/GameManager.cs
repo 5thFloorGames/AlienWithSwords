@@ -14,11 +14,18 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Update () {
+		if (Input.GetButton ("Cancel")) {
+			QuitGame();
+		}
 		if (playersTurn) {
 			if (Input.GetButton ("Submit")) {
 				EnemyTurnStart();
 			}
 		}
+	}
+
+	public void QuitGame() {
+		Application.LoadLevel (0);
 	}
 
 	void EnemyTurnStart() {

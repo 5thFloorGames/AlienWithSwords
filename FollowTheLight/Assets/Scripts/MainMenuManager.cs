@@ -36,7 +36,6 @@ public class MainMenuManager : MonoBehaviour {
 	public void Play() {
 		PlayChoosingSound ();
 		StartCoroutine(PlayPlaySoundAndPlay());
-		Debug.Log ("play");
 	}
 	
 	public void ExitGame() {
