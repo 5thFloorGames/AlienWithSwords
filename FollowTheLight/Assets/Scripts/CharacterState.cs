@@ -3,13 +3,21 @@ using System.Collections;
 
 public class CharacterState : MonoBehaviour {
 
-	// Use this for initialization
+    public int health;
+
 	void Start () {
 	
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 	
 	}
+
+    void Damaged() {
+        Debug.Log("character dmged");
+    }
+
+    public void ReduceHealthBy(int amount) {
+        Debug.Log("character " + gameObject.name + " took " + amount + " damage");
+    }
 }

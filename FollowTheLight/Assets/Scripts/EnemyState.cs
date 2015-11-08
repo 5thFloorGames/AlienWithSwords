@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterAbilities : MonoBehaviour {
+public class EnemyState : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
