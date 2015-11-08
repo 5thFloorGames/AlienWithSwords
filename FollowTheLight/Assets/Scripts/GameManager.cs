@@ -7,8 +7,7 @@ public class GameManager : MonoBehaviour {
 	private EnemyManager em;
 	private UserInterfaceManager uim;
 
-	private bool playersTurn;
-
+	private bool playerTurn;
 	
 	void Start () {
 		cm = gameObject.GetComponent<CharacterManager> ();
@@ -20,7 +19,7 @@ public class GameManager : MonoBehaviour {
 		if (Input.GetButton ("Cancel")) {
 			QuitGame();
 		}
-		if (playersTurn) {
+		if (playerTurn) {
 			if (Input.GetButton ("Submit")) {
 				StartEnemyTurn();
 			}
@@ -28,11 +27,12 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void QuitGame() {
+		GameState.Reset ();
 		Application.LoadLevel(0);
 	}
 
 	void StartEnemyTurn() {
-		playersTurn = false;
+		playerTurn = false;
 		uim.ShowEnemyUI ();
 		cm.deactivatePlayer ();
 		StartCoroutine(enemyTurn());
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 	void StartPlayerTurn() {
 		cm.activatePlayer ();
 		uim.HideEnemyUI ();
-		playersTurn = true;
+		playerTurn = true;
 	}
 
 	IEnumerator enemyTurn() {

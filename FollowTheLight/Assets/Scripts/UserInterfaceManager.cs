@@ -6,7 +6,7 @@ public class UserInterfaceManager : MonoBehaviour {
 	private GameObject enemyTurn;
 	private GameObject crosshairs;
 	
-	void Start () {
+	void Awake () {
 		enemyTurn = (GameObject)transform.Find ("EnemyTurn").gameObject;
 		crosshairs = (GameObject)transform.Find ("Crosshairs").gameObject;
 	}

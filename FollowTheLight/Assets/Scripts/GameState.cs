@@ -3,17 +3,25 @@ using System.Collections;
 
 public class GameState : MonoBehaviour {
 	
-	public static int level = 1;
-	public static int maxLevel = 1;
-	
-	public static void Reset(){
-		level = 1;
+	static int level = 1;
+	static int lastLevel = 1;
+
+	public static int GetLevel() {
+		return level;
 	}
 
-	public static void LevelUp(){
+	public static int GetLastLevel() {
+		return lastLevel;
+	}
+
+	public static void LevelComplete(){
 		level++;
-		if (level > maxLevel) {
-			level = maxLevel;
+		if (level > lastLevel) {
+			level = lastLevel;
 		}
+	}
+
+	public static void Reset(){
+		level = 1;
 	}
 }

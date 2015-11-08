@@ -12,7 +12,6 @@ public class OrbLife : MonoBehaviour {
 
 	GameObject playerObject;
 	Rigidbody rb;
-	SpellCaster scscript;
 	Light lighting;
 
 	void Start () {
@@ -20,7 +19,6 @@ public class OrbLife : MonoBehaviour {
 		rb = gameObject.GetComponent<Rigidbody> ();
 		lighting = gameObject.GetComponent<Light>();
 		playerObject = GameObject.Find ("Player");
-		scscript = playerObject.GetComponent<SpellCaster>();
 		released = false;
 	}
 
