@@ -1,24 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CharacterManager : MonoBehaviour {
-	private PlayerController pc;
+	FPSController fpsc;
+	List<GameObject> characters;
+	int theActiveCharacter;
+	bool playersTurn;
 
-	public void deactivatePlayer() {
-		pc.deactivate ();
-	}
-
-	public void activatePlayer() {
-		pc.activate ();
-	}
-	
 	void Start () {
-		pc = GameObject.Find("Player").GetComponent<PlayerController>();
-		pc.enterCharacter ();
+
+		characters = new List<GameObject>();
+		//create character from prefab
+		//GameObject firstCharPrefab = (GameObject) Resources.Load("Character1");
+		//GameObject firstChar = (GameObject) Instantiate (firstCharPrefab, new Vector3(0, 1, 0), Quaternion.identity);
+		//firstChar.name = "Character1";
+		GameObject firstChar = GameObject.Find ("Character1");
+		characters.Add (firstChar);
+		firstChar.GetComponent<FPSController> ().enterCharacter ();
+
 	}
 
 	void Update () {
 	
 	}
-	
+
 }

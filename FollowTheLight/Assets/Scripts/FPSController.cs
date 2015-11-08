@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
-	[RequireComponent(typeof (CharacterController))]
+	[RequireComponent(typeof (FPSController))]
 	[RequireComponent(typeof (AudioSource))]
 
-public class PlayerController : MonoBehaviour {
+public class FPSController : MonoBehaviour {
 
 	[SerializeField] private bool isWalking;
 	[SerializeField] private float walkSpeed;
@@ -26,8 +26,7 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private AudioClip[] footstepSounds;    // an array of footstep sounds that will be randomly selected from.
 	[SerializeField] private AudioClip jumpSound;           // the sound played when character leaves the ground.
 	[SerializeField] private AudioClip landSound;           // the sound played when character touches back on ground.
-
-	private bool active;
+	
 	private bool inCharacter;
 
 	private Camera camra;
@@ -44,14 +43,6 @@ public class PlayerController : MonoBehaviour {
 	private bool jumping;
 	private AudioSource audiosource;
 
-	public void activate() {
-		active = true;
-	}
-
-	public void deactivate() {
-		active = false;
-	}
-
 	public void enterCharacter() {
 		inCharacter = true;
 	}
@@ -61,9 +52,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Start() {
-
-		activate ();
-		enterCharacter ();
 
 		characterController = GetComponent<CharacterController>();
 		camra = Camera.main;
@@ -80,7 +68,7 @@ public class PlayerController : MonoBehaviour {
 	private void Update() {
 		if (inCharacter) {
 			RotateView();
-			if (active) {
+			if (GameState.playersTurn) {
 				// the jump state needs to read here to make sure it is not missed
 				if (!jump)
 				{
@@ -113,7 +101,7 @@ public class PlayerController : MonoBehaviour {
 	
 	
 	private void FixedUpdate() {
-		if (inCharacter && active) {
+		if (inCharacter && GameState.playersTurn) {
 			float speed;
 			GetInput(out speed);
 			// always move along the camera forward as it is the direction that it being aimed at

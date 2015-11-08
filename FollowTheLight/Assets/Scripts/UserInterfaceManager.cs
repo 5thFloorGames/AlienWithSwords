@@ -3,11 +3,11 @@ using System.Collections;
 
 public class UserInterfaceManager : MonoBehaviour {
 
-	private GameObject enemyTurn;
+	private GameObject enemyTurnUI;
 	private GameObject crosshairs;
 	
 	void Awake () {
-		enemyTurn = (GameObject)transform.Find ("EnemyTurn").gameObject;
+		enemyTurnUI = (GameObject)transform.Find ("EnemyTurn").gameObject;
 		crosshairs = (GameObject)transform.Find ("Crosshairs").gameObject;
 	}
 
@@ -16,10 +16,10 @@ public class UserInterfaceManager : MonoBehaviour {
 	}
 
 	public void ShowEnemyUI() {
-		enemyTurn.SetActive (true);
+		enemyTurnUI.SetActive (true);
 	}
 
 	public void HideEnemyUI() {
-		enemyTurn.SetActive (false);
+		enemyTurnUI.SetActive (false);
 	}
 }

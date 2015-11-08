@@ -7,10 +7,9 @@ public class GameManager : MonoBehaviour {
 	private EnemyManager em;
 	private UserInterfaceManager uim;
 
-	private bool playerTurn;
-	
 	void Start () {
 		cm = gameObject.GetComponent<CharacterManager> ();
+		em = gameObject.GetComponent<EnemyManager> ();
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
 		StartPlayerTurn ();
 	}
@@ -19,7 +18,7 @@ public class GameManager : MonoBehaviour {
 		if (Input.GetButton ("Cancel")) {
 			QuitGame();
 		}
-		if (playerTurn) {
+		if (GameState.playersTurn) {
 			if (Input.GetButton ("Submit")) {
 				StartEnemyTurn();
 			}
@@ -32,22 +31,22 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void StartEnemyTurn() {
-		playerTurn = false;
+		Debug.Log ("enemies' turn start");
+		GameState.playersTurn = false;
 		uim.ShowEnemyUI ();
-		cm.deactivatePlayer ();
-		StartCoroutine(enemyTurn());
+		em.TriggerEnemyActions ();
+
+		StartCoroutine(EnemyTurn());
 	}
 
 	void StartPlayerTurn() {
-		cm.activatePlayer ();
 		uim.HideEnemyUI ();
-		playerTurn = true;
+		GameState.playersTurn = true;
+		Debug.Log ("   player's turn again");
 	}
 
-	IEnumerator enemyTurn() {
-		Debug.Log ("enemies' turn start");
+	IEnumerator EnemyTurn() {
 		yield return new WaitForSeconds(5.0f);
-		Debug.Log ("   player's turn again");
 		StartPlayerTurn ();
 	}
 	

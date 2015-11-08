@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OrbLife : MonoBehaviour {
+public class zOrbLife : MonoBehaviour {
 
 	public bool released;
 

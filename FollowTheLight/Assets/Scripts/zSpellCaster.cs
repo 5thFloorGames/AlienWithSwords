@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SpellCaster : MonoBehaviour {
+public class zSpellCaster : MonoBehaviour {
 
 	public int orbLimit;
 	List<GameObject> orbList;
@@ -16,7 +16,7 @@ public class SpellCaster : MonoBehaviour {
 
 	void Start () {
 		rbPlayer = gameObject.GetComponent<Rigidbody> ();
-		orb = (GameObject)Resources.Load ("LightOrb");
+		orb = (GameObject)Resources.Load ("zLightOrb");
 		orbList = new List<GameObject> ();
 	}
 
@@ -26,7 +26,7 @@ public class SpellCaster : MonoBehaviour {
             casting = true;
 		}
 		if (Input.GetKeyUp(KeyCode.Alpha1) && casting) {
-			spawnedOrb.GetComponent<OrbLife>().releaseOrb();
+			spawnedOrb.GetComponent<zOrbLife>().releaseOrb();
             casting = false;
 		}
 
@@ -41,7 +41,7 @@ public class SpellCaster : MonoBehaviour {
 	}
 
 	void releaseOrb() {
-		spawnedOrb.GetComponent<OrbLife> ().released = true;
+		spawnedOrb.GetComponent<zOrbLife> ().released = true;
 		rbOrb.constraints = RigidbodyConstraints.None;
 		rbOrb.velocity = rbPlayer.rotation * new Vector3 (0, 2.0f, 2.0f);
 		spawnedOrb.transform.parent = null;
@@ -59,7 +59,7 @@ public class SpellCaster : MonoBehaviour {
 		if (orbList.Count > orbLimit) {
 			GameObject oldestOrb = orbList[0];
 			orbList.RemoveAt(0);
-			oldestOrb.GetComponent<OrbLife>().startSuicide();
+			oldestOrb.GetComponent<zOrbLife>().startSuicide();
 			
 		}
 	}
