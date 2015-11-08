@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
 	private bool active;
 	private bool inCharacter;
 
-	private Camera camera;
+	private Camera camra;
 	private bool jump;
 	private float yRotation;
 	private Vector2 inpt;
@@ -62,18 +62,19 @@ public class PlayerController : MonoBehaviour {
 
 	private void Start() {
 
-		active = false;
+		activate ();
+		enterCharacter ();
 
 		characterController = GetComponent<CharacterController>();
-		camera = Camera.main;
-		originalCameraPosition = camera.transform.localPosition;
-		fovKick.Setup(camera);
-		headBob.Setup(camera, stepInterval);
+		camra = Camera.main;
+		originalCameraPosition = camra.transform.localPosition;
+		fovKick.Setup(camra);
+		headBob.Setup(camra, stepInterval);
 		stepCycle = 0f;
 		nextStep = stepCycle/2f;
 		jumping = false;
 		audiosource = GetComponent<AudioSource>();
-		mouseLook.Init(transform , camera.transform);
+		mouseLook.Init(transform , camra.transform);
 	}
 
 	private void Update() {
@@ -195,17 +196,17 @@ public class PlayerController : MonoBehaviour {
 			return;
 		}
 		if (characterController.velocity.magnitude > 0 && characterController.isGrounded) {
-			camera.transform.localPosition =
+			camra.transform.localPosition =
 				headBob.DoHeadBob(characterController.velocity.magnitude +
 				                    (speed*(isWalking ? 1f : runStepLengthen)));
-			newCameraPosition = camera.transform.localPosition;
-			newCameraPosition.y = camera.transform.localPosition.y - jumpBob.Offset();
+			newCameraPosition = camra.transform.localPosition;
+			newCameraPosition.y = camra.transform.localPosition.y - jumpBob.Offset();
 		}
 		else {
-			newCameraPosition = camera.transform.localPosition;
+			newCameraPosition = camra.transform.localPosition;
 			newCameraPosition.y = originalCameraPosition.y - jumpBob.Offset();
 		}
-		camera.transform.localPosition = newCameraPosition;
+		camra.transform.localPosition = newCameraPosition;
 	}
 	
 	
@@ -240,7 +241,7 @@ public class PlayerController : MonoBehaviour {
 	
 	
 	private void RotateView() {
-		mouseLook.LookRotation (transform, camera.transform);
+		mouseLook.LookRotation (transform, camra.transform);
 	}
 	
 	
