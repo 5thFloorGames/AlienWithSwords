@@ -8,6 +8,7 @@ public class OrbLife : MonoBehaviour {
 	public float suicideTimer;
 	public bool maxLifeTime;
 	public float maxSize;
+    public float size;
 
 	GameObject playerObject;
 	Rigidbody rb;
@@ -15,6 +16,7 @@ public class OrbLife : MonoBehaviour {
 	Light lighting;
 
 	void Start () {
+        size = gameObject.transform.localScale.x;
 		rb = gameObject.GetComponent<Rigidbody> ();
 		lighting = gameObject.GetComponent<Light>();
 		playerObject = GameObject.Find ("Player");
@@ -55,12 +57,16 @@ public class OrbLife : MonoBehaviour {
 
 	void growIfNotReleased() {
 		if (!released) {
-			if (gameObject.transform.localScale.x >= maxSize) {
+			if (size >= maxSize) {
 				gameObject.transform.localScale = new Vector3 (maxSize, maxSize, maxSize);
-				lighting.range = maxSize/2;
+				lighting.range = maxSize*10;
 			} else {
-				gameObject.transform.localScale += new Vector3 (1.0f, 1.0f, 1.0f) * Time.deltaTime;
-				lighting.range += ((0.5f * Time.deltaTime));
+                size += 1.0f * Time.deltaTime;
+				gameObject.transform.localScale = new Vector3 (size, size, size);
+				lighting.range = size * 10;
+                if (lighting.range < 0.5f) {
+                    lighting.range = 0.5f;
+                }
 			}
 		}
 	}

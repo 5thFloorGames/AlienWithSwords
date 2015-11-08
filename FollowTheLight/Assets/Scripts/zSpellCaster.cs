@@ -6,6 +6,7 @@ public class SpellCaster : MonoBehaviour {
 
 	public int orbLimit;
 	List<GameObject> orbList;
+    bool casting = false;
 
 	GameObject orb;
 	Rigidbody rbPlayer;
@@ -20,11 +21,13 @@ public class SpellCaster : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Alpha1)) {
+		if (Input.GetKeyDown(KeyCode.Alpha1) && !casting) {
 			startCastingOrb();
+            casting = true;
 		}
-		if (Input.GetKeyUp(KeyCode.Alpha1)) {
+		if (Input.GetKeyUp(KeyCode.Alpha1) && casting) {
 			spawnedOrb.GetComponent<OrbLife>().releaseOrb();
+            casting = false;
 		}
 
 		checkOrbLimits ();
@@ -40,7 +43,7 @@ public class SpellCaster : MonoBehaviour {
 	void releaseOrb() {
 		spawnedOrb.GetComponent<OrbLife> ().released = true;
 		rbOrb.constraints = RigidbodyConstraints.None;
-		rbOrb.velocity = rbPlayer.rotation * new Vector3 (0, 2.0f, 8.0f);
+		rbOrb.velocity = rbPlayer.rotation * new Vector3 (0, 2.0f, 2.0f);
 		spawnedOrb.transform.parent = null;
 	}
 
