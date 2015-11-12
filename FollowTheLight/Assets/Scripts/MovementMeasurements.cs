@@ -70,7 +70,7 @@ public class MovementMeasurements : MonoBehaviour {
 
 	void updateDistanceToUI() {
 		updatedDistance = (float)System.Math.Round (distanceTravelled, 2);
-		uim.updateDistanceMeter (gameObject.name, updatedDistance);
+		uim.UpdateDistanceMeter (gameObject.name, updatedDistance, maximumMovement);
 	}
 
 }
