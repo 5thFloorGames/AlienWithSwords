@@ -2,18 +2,23 @@
 using System.Collections;
 
 public class EnemyActions : MonoBehaviour {
-    GameObject explosion;
+    GameObject areaDamage;
 
 	void Start () {
-        explosion = (GameObject)Resources.Load("AreaDamage");
+        areaDamage = (GameObject)Resources.Load("AreaDamage");
 	}
 
 	public void TriggerActions () {
 		Debug.Log (gameObject.name + " enemy used an ability");
-        CastExplosion();
+        CastAreaDamage();
 	}
 
-    void CastExplosion() {
-        Instantiate(explosion, transform.position, Quaternion.identity);
+    void CastAreaDamage() {
+        GameObject spawnedAreaDamage = (GameObject)Instantiate(areaDamage, transform.position, Quaternion.identity);
+		spawnedAreaDamage.name = gameObject.name + "AOE";
+		AreaDamageBehavior aob = spawnedAreaDamage.GetComponent<AreaDamageBehavior> ();
+		aob.time = 2.0f;
+		aob.size = 20f;
+		aob.damage = 5;
     }
 }

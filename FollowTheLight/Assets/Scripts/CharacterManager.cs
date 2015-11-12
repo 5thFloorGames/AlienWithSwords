@@ -18,7 +18,8 @@ public class CharacterManager : MonoBehaviour {
 		GameObject firstChar = GameObject.Find ("Character1");
 		characters.Add (firstChar);
 		firstChar.GetComponent<FPSController> ().enterCharacter ();
-
+		CharacterState firstCs = firstChar.GetComponent<CharacterState> ();
+		firstCs.health = 100;
 	}
 
 	void Update () {
