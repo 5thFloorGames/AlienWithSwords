@@ -9,10 +9,12 @@ public class UserInterfaceManager : MonoBehaviour {
 	GameObject crosshairs;
 	GameObject characterPanel;
 
+	Dictionary <string, Image> healthMeters;
 	Dictionary <string, Image> distanceMeters;
 	
 	void Awake () {
 		distanceMeters = new Dictionary<string, Image>();
+		healthMeters = new Dictionary<string, Image> ();
 
 		enemyTurnUI = (GameObject)transform.Find ("EnemyTurn").gameObject;
 		crosshairs = (GameObject)transform.Find ("Crosshairs").gameObject;
@@ -21,9 +23,12 @@ public class UserInterfaceManager : MonoBehaviour {
 
 		foreach (Transform charinf in characterPanel.transform) {
 			GameObject obj = charinf.FindChild("DistanceMeter").gameObject;
-			Image meterimg = obj.GetComponent<Image>();
-			distanceMeters.Add(charinf.name, meterimg);
-			Debug.Log (meterimg);
+			Image img = obj.GetComponent<Image>();
+			distanceMeters.Add(charinf.name, img);
+
+			obj = charinf.FindChild("HealthMeter").gameObject;
+			img = obj.GetComponent<Image>();
+			healthMeters.Add(charinf.name, img);
 		}
 
 		//distanceMeter = (GameObject)transform.Find ("DistanceMeter").gameObject;
@@ -42,7 +47,11 @@ public class UserInterfaceManager : MonoBehaviour {
 	}
 
 	public void UpdateDistanceMeter(string characterName, float distance, float maximum) {
-		Debug.Log (characterName + " has moved: " + distance);
+		// Debug.Log (characterName + " has moved: " + distance);
 		distanceMeters [characterName].fillAmount = ( 1- (distance/maximum));
+	}
+
+	public void UpdateHealthMeter(string characterName, float currentHealth, float maximum) {
+		healthMeters [characterName].fillAmount = (currentHealth/maximum);
 	}
 }

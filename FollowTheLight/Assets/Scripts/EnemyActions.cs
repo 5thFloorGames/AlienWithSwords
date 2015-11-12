@@ -9,7 +9,7 @@ public class EnemyActions : MonoBehaviour {
 	}
 
 	public void TriggerActions () {
-		Debug.Log (gameObject.name + " enemy used an ability");
+		// Debug.Log (gameObject.name + " enemy used an ability");
         CastAreaDamage();
 	}
 

@@ -23,7 +23,7 @@ public class CharacterManager : MonoBehaviour {
 		firstMm.enterCharacter ();
 		firstMm.maximumMovement = 10;
 		CharacterState firstCs = firstChar.GetComponent<CharacterState> ();
-		firstCs.health = 100;
+		firstCs.Init(100);
 	}
 
 	void Update () {
