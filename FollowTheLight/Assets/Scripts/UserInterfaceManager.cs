@@ -22,4 +22,8 @@ public class UserInterfaceManager : MonoBehaviour {
 	public void HideEnemyUI() {
 		enemyTurnUI.SetActive (false);
 	}
+
+	public void updateDistanceMeter(string characterName, float distance) {
+		Debug.Log (characterName + " has moved: " + distance);
+	}
 }

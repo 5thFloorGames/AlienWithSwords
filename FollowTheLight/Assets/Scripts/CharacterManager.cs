@@ -7,6 +7,7 @@ public class CharacterManager : MonoBehaviour {
 	List<GameObject> characters;
 	int theActiveCharacter;
 	bool playersTurn;
+	MovementMeasurements firstMm;
 
 	void Start () {
 
@@ -18,12 +19,19 @@ public class CharacterManager : MonoBehaviour {
 		GameObject firstChar = GameObject.Find ("Character1");
 		characters.Add (firstChar);
 		firstChar.GetComponent<FPSController> ().enterCharacter ();
+		firstMm = firstChar.GetComponent<MovementMeasurements> ();
+		firstMm.enterCharacter ();
+		firstMm.maximumMovement = 10;
 		CharacterState firstCs = firstChar.GetComponent<CharacterState> ();
 		firstCs.health = 100;
 	}
 
 	void Update () {
 	
+	}
+
+	public void PlayersTurnActivated() {
+		firstMm.ResetMovement ();
 	}
 
 }

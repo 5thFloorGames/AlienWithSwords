@@ -44,12 +44,13 @@ public class GameManager : MonoBehaviour {
 
 	void StartPlayerTurn() {
 		uim.HideEnemyUI ();
+		cm.PlayersTurnActivated ();
 		GameState.playersTurn = true;
 		Debug.Log ("   player's turn again");
 	}
 
 	IEnumerator EnemyTurn() {
-		yield return new WaitForSeconds(5.0f);
+		yield return new WaitForSeconds(4.0f);
 		StartPlayerTurn ();
 	}
 	

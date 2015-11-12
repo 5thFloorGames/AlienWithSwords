@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 
 public class FPSController : MonoBehaviour {
 
+	public bool movementAvailable;
+
 	[SerializeField] private bool isWalking;
 	[SerializeField] private float walkSpeed;
 	[SerializeField] private float runSpeed;
@@ -52,7 +54,6 @@ public class FPSController : MonoBehaviour {
 	}
 
 	private void Start() {
-
 		characterController = GetComponent<CharacterController>();
 		camra = Camera.main;
 		originalCameraPosition = camra.transform.localPosition;
@@ -68,7 +69,7 @@ public class FPSController : MonoBehaviour {
 	private void Update() {
 		if (inCharacter) {
 			RotateView();
-			if (GameState.playersTurn) {
+			if (GameState.playersTurn && movementAvailable) {
 				// the jump state needs to read here to make sure it is not missed
 				if (!jump)
 				{
@@ -101,7 +102,7 @@ public class FPSController : MonoBehaviour {
 	
 	
 	private void FixedUpdate() {
-		if (inCharacter && GameState.playersTurn) {
+		if (inCharacter && GameState.playersTurn && movementAvailable) {
 			float speed;
 			GetInput(out speed);
 			// always move along the camera forward as it is the direction that it being aimed at
