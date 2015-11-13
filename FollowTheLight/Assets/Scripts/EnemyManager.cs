@@ -34,15 +34,20 @@ public class EnemyManager : MonoBehaviour {
 
 	void InstantiateEnemiesForFirstLevel() {
 		GameObject first = (GameObject) Instantiate (enemy, new Vector3(33, 2, 2), Quaternion.identity);
-		enemyBasicAssignments (first, "first");
+		enemyBasicAssignments (first, "first", 50);
 
 		GameObject second = (GameObject)Instantiate (enemy, new Vector3 (33, 2, -2), Quaternion.identity);
-		enemyBasicAssignments (second, "second");
+		enemyBasicAssignments (second, "second", 80);
 	}
 
-	void enemyBasicAssignments(GameObject obj, string name) {
+	void enemyBasicAssignments(GameObject obj, string name, int health) {
 		obj.name = name;
+		obj.tag = "Enemy";
 		obj.transform.parent = enemyHolder;
+
+		EnemyState es = obj.GetComponent<EnemyState> ();
+		es.Init(100);
+
 		enemies.Add (obj);
 	}
 }

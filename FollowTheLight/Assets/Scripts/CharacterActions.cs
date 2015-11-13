@@ -3,6 +3,8 @@ using System.Collections;
 
 public class CharacterActions : MonoBehaviour {
 
+	public int bulletDamage;
+
 	GameObject bullet;
 	GameObject cameraObj;
 	float bulletCooldown;
@@ -30,6 +32,7 @@ public class CharacterActions : MonoBehaviour {
 	void Shoot() {
 		GameObject firedBullet = (GameObject)Instantiate (bullet, transform.position + transform.rotation *
 		                                                  new Vector3(0, 0, 1), transform.rotation);
+		firedBullet.GetComponent<BulletDamages> ().setDamage (bulletDamage);
 		Rigidbody bulletrb = firedBullet.GetComponent<Rigidbody> ();
 		bulletrb.AddForce(transform.rotation * bullet.transform.forward * 2000f);
 	}
