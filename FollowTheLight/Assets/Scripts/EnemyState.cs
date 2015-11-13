@@ -7,14 +7,16 @@ public class EnemyState : MonoBehaviour {
 	public bool dead;
 	public int currentHealth;
 	Image healthMeter;
+	GameObject em;
 
 	int maximumHealth;
 
-	public void Init(int amount) {
+	public void Init(int amount, GameObject manager) {
 		dead = false;
 		maximumHealth = amount;
 		currentHealth = amount;
 		healthMeter = transform.FindChild("EnemyInfo").FindChild("HealthMeter").GetComponent<Image>();
+		em = manager;
 		updateHealthToHealthMeter ();
 	}
 	
@@ -34,7 +36,7 @@ public class EnemyState : MonoBehaviour {
 				currentHealth = 0;
 				//Debug.Log (gameObject.name + " is dead :(");
 				dead = true;
-				Destroy (gameObject);
+				death();
 			}
 			updateHealthToHealthMeter ();
 		}
@@ -42,5 +44,10 @@ public class EnemyState : MonoBehaviour {
 
 	void updateHealthToHealthMeter() {
 		healthMeter.fillAmount = ((float)currentHealth/maximumHealth);
+	}
+
+	void death() {
+		em.SendMessage ("deleteEnemyFromList", gameObject);
+		Destroy (gameObject);
 	}
 }

@@ -50,8 +50,13 @@ public class EnemyManager : MonoBehaviour {
 		obj.transform.parent = enemyHolder;
 
 		EnemyState es = obj.GetComponent<EnemyState> ();
-		es.Init(100);
+		es.Init(100, gameObject);
 
 		enemies.Add (obj);
 	}
+
+	void deleteEnemyFromList(GameObject enemyobj) {
+		enemies.Remove (enemyobj);
+	}
+
 }
