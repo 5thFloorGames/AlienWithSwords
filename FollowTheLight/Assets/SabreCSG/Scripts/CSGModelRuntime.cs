@@ -1,0 +1,19 @@
+﻿using UnityEngine;
+using System.Collections;
+
+namespace Sabresaurus.SabreCSG
+{
+	public class CSGModelRuntime : MonoBehaviour
+	{
+	    // Use this for initialization
+	    void Start()
+	    {	
+			Transform meshGroup = transform.FindChild("MeshGroup");
+			// Reanchor the meshes to the root
+			meshGroup.parent = null;
+
+			// Remove this game object
+			Destroy (this.gameObject);	
+	    }
+	}
+}
