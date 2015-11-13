@@ -33,10 +33,10 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	void InstantiateEnemiesForFirstLevel() {
-		GameObject first = (GameObject) Instantiate (enemy, new Vector3(33, 2, 2), Quaternion.identity);
+		GameObject first = (GameObject) Instantiate (enemy, new Vector3(33, 3, 2), Quaternion.identity);
 		enemyBasicAssignments (first, "first", 50);
 
-		GameObject second = (GameObject)Instantiate (enemy, new Vector3 (33, 2, -2), Quaternion.identity);
+		GameObject second = (GameObject)Instantiate (enemy, new Vector3 (33, 3, -2), Quaternion.identity);
 		enemyBasicAssignments (second, "second", 80);
 	}
 

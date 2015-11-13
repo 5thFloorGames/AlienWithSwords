@@ -3,9 +3,15 @@ using System.Collections;
 
 public class EnemyActions : MonoBehaviour {
     GameObject areaDamage;
+	Transform char1;
 
 	void Start () {
         areaDamage = (GameObject)Resources.Load("AreaDamage");
+		char1 = GameObject.Find ("Character1").transform;
+	}
+
+	void Update () {
+		transform.LookAt (char1);
 	}
 
 	public void TriggerActions () {

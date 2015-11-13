@@ -9,14 +9,12 @@ public class CharacterActions : MonoBehaviour {
 	GameObject cameraObj;
 	float bulletCooldown;
 	float previousFire;
-
-	// Use this for initialization
+	
 	void Start () {
 		bullet = (GameObject)Resources.Load ("Bullet");
 		bulletCooldown = 0.5f;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if (GameState.playersTurn) {
 			if (Time.time - previousFire >= bulletCooldown) {
