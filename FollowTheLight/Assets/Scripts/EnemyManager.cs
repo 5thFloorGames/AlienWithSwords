@@ -20,6 +20,10 @@ public class EnemyManager : MonoBehaviour {
 		
 	}
 
+	public void PlayersTurnActivated() {
+
+	}
+
 	public void TriggerEnemyActions() {
 		foreach (GameObject e in enemies) {
 			e.GetComponent<EnemyActions>().TriggerActions();

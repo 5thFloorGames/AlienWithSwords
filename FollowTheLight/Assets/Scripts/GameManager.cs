@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour {
 	void StartPlayerTurn() {
 		uim.HideEnemyUI ();
 		cm.PlayersTurnActivated ();
+		em.PlayersTurnActivated ();
 		GameState.playersTurn = true;
 		Debug.Log ("   player's turn again");
 	}

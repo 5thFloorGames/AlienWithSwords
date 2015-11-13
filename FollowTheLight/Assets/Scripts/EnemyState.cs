@@ -31,6 +31,7 @@ public class EnemyState : MonoBehaviour {
 				health = 0;
 				Debug.Log (gameObject.name + " is dead :(");
 				dead = true;
+				Destroy (gameObject);
 			}
 			//updateHealthToUI ();
 		}
