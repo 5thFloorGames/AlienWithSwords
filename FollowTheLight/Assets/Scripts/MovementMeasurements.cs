@@ -14,14 +14,6 @@ public class MovementMeasurements : MonoBehaviour {
 	UserInterfaceManager uim;
 	FPSController fpsc;
 
-	public void EnterCharacter() {
-		inCharacter = true;
-	}
-	
-	public void LeaveCharacter() {
-		inCharacter = false;
-	}
-
 	public void ResetMovement() {
 		distanceTravelled = 0;
         lastPosition = transform.position;
@@ -65,5 +57,16 @@ public class MovementMeasurements : MonoBehaviour {
 		updatedDistance = (float)System.Math.Round (distanceTravelled, 2);
 		uim.UpdateDistanceMeter (gameObject.name, updatedDistance, maximumMovement);
 	}
+
+
+    // Character managers calls these with a broadcast message
+
+    void EnterCharacter() {
+        inCharacter = true;
+    }
+
+    void LeaveCharacter() {
+        inCharacter = false;
+    }
 
 }
