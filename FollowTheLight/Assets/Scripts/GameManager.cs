@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour {
 
 	void Awake() {
 		DontDestroyOnLoad (gameObject);
-	}
+        GameState.SetLevel(Application.loadedLevel);
+    }
 
 	void Start () {
         #if !UNITY_EDITOR
@@ -20,10 +21,7 @@ public class GameManager : MonoBehaviour {
 		em = gameObject.GetComponent<EnemyManager> ();
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
 		levelCompleted = false;
-
-		GameState.SetLevel (Application.loadedLevel);
 		Invoke("LateStart", 0.1f);
-
 	}
 
 	void LateStart () {

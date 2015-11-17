@@ -71,7 +71,6 @@ public class UserInterfaceManager : MonoBehaviour {
 	}
 
 	public void UpdateDistanceMeter(string characterName, float distance, float maximum) {
-		// Debug.Log (characterName + " has moved: " + distance);
 		distanceMeters [characterName].fillAmount =  (1 - distance / maximum);
 	}
 
