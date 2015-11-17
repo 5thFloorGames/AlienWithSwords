@@ -51,11 +51,11 @@ public class GameManager : MonoBehaviour {
 		if (level == 0) {
 			Destroy(gameObject);
 		}
-
-		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
-		uim.HideLevelCompletedUI ();
-		GameState.playersTurn = true;
 		levelCompleted = false;
+        if (uim != null) {
+            uim.HideLevelCompletedUI();
+        }
+        Invoke("StartPlayerTurn", 0.1f);
 	}
 	
 	public void LevelComplete() {
@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour {
 
 	void StartPlayerTurn() {
 		uim.HideEnemyUI ();
-		cm.PlayersTurnActivated ();
+        cm.PlayersTurnActivated ();
 		em.PlayersTurnActivated ();
 		GameState.playersTurn = true;
 		Debug.Log ("   player's turn again");

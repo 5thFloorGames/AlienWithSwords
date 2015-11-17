@@ -28,7 +28,7 @@ public class EnemyManager : MonoBehaviour {
 
 	public void TriggerEnemyActions() {
 		foreach (GameObject e in enemies) {
-			e.GetComponent<EnemyActions>().TriggerActions();
+			e.BroadcastMessage("TriggerActions");
 		}
 	}
 

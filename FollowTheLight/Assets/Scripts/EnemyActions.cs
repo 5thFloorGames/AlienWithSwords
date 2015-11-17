@@ -4,14 +4,21 @@ using System.Collections;
 public class EnemyActions : MonoBehaviour {
     GameObject areaDamage;
 	Transform char1;
+    Transform char2;
 
 	void Start () {
         areaDamage = (GameObject)Resources.Load("AreaDamage");
 		char1 = GameObject.Find ("Character1").transform;
-	}
+        char2 = GameObject.Find("Character2").transform;
+    }
 
 	void Update () {
-		transform.LookAt (char1);
+        if (GameState.activeCharacter == "Character1") {
+            transform.LookAt(char1);
+        } else {
+            transform.LookAt(char2);
+        }
+		
 	}
 
 	public void TriggerActions () {

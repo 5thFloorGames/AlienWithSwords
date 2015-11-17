@@ -24,6 +24,8 @@ public class MovementMeasurements : MonoBehaviour {
 
 	public void ResetMovement() {
 		distanceTravelled = 0;
+        lastPosition = transform.position;
+        lastPosition.y = 1;
 		updateDistanceToUI ();
 		movementAvailable = true;
 		fpsc.movementAvailable = true;
@@ -32,14 +34,6 @@ public class MovementMeasurements : MonoBehaviour {
 	void Awake() {
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
 		fpsc = gameObject.GetComponent<FPSController> ();
-		
-		movementAvailable = true;
-		fpsc.movementAvailable = true;
-		
-		distanceTravelled = 0;
-		updatedDistance = 0;
-		lastPosition = transform.position;
-		lastPosition.y = 1;
 	}
 	
 	

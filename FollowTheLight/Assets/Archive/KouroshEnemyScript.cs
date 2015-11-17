@@ -422,8 +422,8 @@ public class EnemyScript : MonoBehaviour
         int index_j = 0;
         int ret_i = -1;
         int ret_j = -1;
-        int rand_counter = UnityEngine.Random.Range((int)0, (int)max_counter - 1);
-        float m_dis = -max_counter;
+        //int rand_counter = UnityEngine.Random.Range((int)0, (int)max_counter - 1);
+        ///float m_dis = -max_counter;
         for (int i = 0; i < max_counter && flag_continue; i++)
         {
             if (iRandcol == 0)

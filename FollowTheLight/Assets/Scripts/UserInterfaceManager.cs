@@ -6,12 +6,13 @@ using System.Collections.Generic;
 public class UserInterfaceManager : MonoBehaviour {
 
 	GameObject enemyTurnUI;
-	GameObject levelCompletedUI;
-	GameObject crosshairs;
+    GameObject levelCompletedUI;
 	GameObject characterPanel;
+    //GameObject crosshairs;
 
-	Dictionary <string, Image> healthMeters;
+    Dictionary <string, Image> healthMeters;
 	Dictionary <string, Image> distanceMeters;
+    Dictionary <string, Image> actionMeters;
 	
 	void Awake () {
 
@@ -19,10 +20,11 @@ public class UserInterfaceManager : MonoBehaviour {
 
 		distanceMeters = new Dictionary<string, Image>();
 		healthMeters = new Dictionary<string, Image> ();
+        actionMeters = new Dictionary<string, Image> ();
 
 		enemyTurnUI = (GameObject)transform.Find ("EnemyTurn").gameObject;
 		levelCompletedUI = (GameObject)transform.Find ("LevelCompleted").gameObject;
-		crosshairs = (GameObject)transform.Find ("Crosshairs").gameObject;
+		//crosshairs = (GameObject)transform.Find ("Crosshairs").gameObject;
 
 		characterPanel = (GameObject)transform.Find ("CharacterPanel").gameObject;
 
@@ -34,9 +36,12 @@ public class UserInterfaceManager : MonoBehaviour {
 			obj = charinf.FindChild("HealthMeter").gameObject;
 			img = obj.GetComponent<Image>();
 			healthMeters.Add(charinf.name, img);
-		}
 
-		//distanceMeter = (GameObject)transform.Find ("DistanceMeter").gameObject;
+            obj = charinf.FindChild("ActionMeter").gameObject;
+            img = obj.GetComponent<Image>();
+            actionMeters.Add(charinf.name, img);
+        }
+
 	}
 
 	void Update () {
@@ -67,10 +72,14 @@ public class UserInterfaceManager : MonoBehaviour {
 
 	public void UpdateDistanceMeter(string characterName, float distance, float maximum) {
 		// Debug.Log (characterName + " has moved: " + distance);
-		distanceMeters [characterName].fillAmount = ( 1- (distance/maximum));
+		distanceMeters [characterName].fillAmount =  (1 - distance / maximum);
 	}
 
 	public void UpdateHealthMeter(string characterName, float currentHealth, float maximum) {
-		healthMeters [characterName].fillAmount = (currentHealth/maximum);
+		healthMeters [characterName].fillAmount = (currentHealth / maximum);
 	}
+
+    public void UpdateActionMeter(string characterName, float actions, float maximum) {
+        actionMeters[characterName].fillAmount = (actions / maximum);
+    }
 }

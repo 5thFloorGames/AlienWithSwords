@@ -309,7 +309,7 @@ public class CreateMap : MonoBehaviour
     ArrayList myMap;
     myDividedArea myAreaDivider;
     ArrayList myGameObjects;
-    int numberOfDestroyableCubes = 0;
+    //int numberOfDestroyableCubes = 0;
 
     void initializing_Map(int iN, int iM)
     {
