@@ -4,30 +4,36 @@ using System.Collections.Generic;
 
 public class CharacterManager : MonoBehaviour {
 	List<GameObject> characters;
+    UserInterfaceManager uim;
+    bool firstLoaded;
+    bool secondLoaded;
+    bool thirdLoaded;
 
 	void Start () {
+        uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 
-		characters = new List<GameObject>();
-		CreateFirstCharacter ();
-		CreateSecondCharacter ();
-        CreateThirdCharacter();
+        characters = new List<GameObject>();
+
+        CheckCharacters();
+
         AssignCharacterSpawningPoints();
 	}
 
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Alpha1)) {
+		if (Input.GetKeyDown (KeyCode.Alpha1) && firstLoaded) {
 			EnterCharacter(GetCharacterObject("Character1"));
 		}
-		if (Input.GetKeyDown (KeyCode.Alpha2)) {
+		if (Input.GetKeyDown (KeyCode.Alpha2) && secondLoaded) {
 			EnterCharacter(GetCharacterObject("Character2"));
 		}
-        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        if (Input.GetKeyDown(KeyCode.Alpha3) && thirdLoaded) {
             EnterCharacter(GetCharacterObject("Character3"));
         }
     }
 
 	void OnLevelWasLoaded(int level) {
         if (characters != null) {
+            CheckCharacters();
             AssignCharacterSpawningPoints();
 		}
 	}
@@ -36,6 +42,24 @@ public class CharacterManager : MonoBehaviour {
 		ResetCharacterMovement ();
         ResetCharacterActions();
 	}
+
+    void CheckCharacters() {
+        if (!firstLoaded) {
+            CreateFirstCharacter();
+            firstLoaded = true;
+            uim.ShowCharacterInfos(1);
+        }
+        if (!secondLoaded && Application.loadedLevel > 1) {
+            CreateSecondCharacter();
+            secondLoaded = true;
+            uim.ShowCharacterInfos(2);
+        }
+        if (!thirdLoaded && Application.loadedLevel > 2) {
+            CreateThirdCharacter();
+            thirdLoaded = true;
+            uim.ShowCharacterInfos(3);
+        }
+    }
 
 	void CreateFirstCharacter() {
 		string name = "Character1";
@@ -106,12 +130,17 @@ public class CharacterManager : MonoBehaviour {
 	}
 
     void AssignCharacterSpawningPoints() {
-
-        if (GameState.GetLevel() >= 1) {
+        if (firstLoaded) {
             GetCharacterObject("Character1").transform.position = new Vector3(0, 1, 0);
-            GetCharacterObject("Character2").transform.position = new Vector3(1, 1, 1);
-            GetCharacterObject("Character3").transform.position = new Vector3(2, 1, 2);
         }
+
+       if (secondLoaded) {
+            GetCharacterObject("Character2").transform.position = new Vector3(1, 1, 0);
+       }
+
+       if (thirdLoaded) {
+           GetCharacterObject("Character3").transform.position = new Vector3(2, 1, 0);
+       }
     }
 
 }

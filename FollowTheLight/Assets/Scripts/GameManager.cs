@@ -13,8 +13,9 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start () {
-        //this gets annoying when testing in editor, should remember to uncomment when built
-        //Cursor.visible = false;
+        #if !UNITY_EDITOR
+            Cursor.visible = false;
+        #endif
         cm = gameObject.GetComponent<CharacterManager> ();
 		em = gameObject.GetComponent<EnemyManager> ();
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour {
 
 		GameState.SetLevel (Application.loadedLevel);
 		Invoke("LateStart", 0.1f);
+
 	}
 
 	void LateStart () {

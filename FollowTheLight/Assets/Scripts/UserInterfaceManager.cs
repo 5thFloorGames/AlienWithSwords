@@ -82,4 +82,16 @@ public class UserInterfaceManager : MonoBehaviour {
     public void UpdateActionMeter(string characterName, float actions, float maximum) {
         actionMeters[characterName].fillAmount = (actions / maximum);
     }
+
+    public void ShowCharacterInfos(int howMany) {
+        int i = 0;
+        foreach (Transform charinf in characterPanel.transform) {
+            i += 1;
+            if (i <= howMany ) {
+                charinf.gameObject.SetActive(true);
+            } else {
+                charinf.gameObject.SetActive(false);
+            }
+        }
+    }
 }

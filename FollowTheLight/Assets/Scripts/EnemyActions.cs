@@ -5,18 +5,28 @@ public class EnemyActions : MonoBehaviour {
     GameObject areaDamage;
 	Transform char1;
     Transform char2;
+    Transform char3;
 
 	void Start () {
         areaDamage = (GameObject)Resources.Load("AreaDamage");
-		char1 = GameObject.Find ("Character1").transform;
-        char2 = GameObject.Find("Character2").transform;
+        char1 = GameObject.Find("Character1").transform;
+        if (Application.loadedLevel > 1) {
+            char2 = GameObject.Find("Character2").transform;
+        }
+
+        if (Application.loadedLevel > 2) {
+            char3 = GameObject.Find("Character3").transform;
+        }
+        
     }
 
 	void Update () {
         if (GameState.activeCharacter == "Character1") {
             transform.LookAt(char1);
-        } else {
+        } else if (GameState.activeCharacter == "Character2") {
             transform.LookAt(char2);
+        } else {
+            transform.LookAt(char3);
         }
 		
 	}
