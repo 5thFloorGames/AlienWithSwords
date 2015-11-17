@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
 		levelCompleted = false;
 
 		GameState.SetLevel (Application.loadedLevel);
-		Invoke("LateStart", 0.5f);
+		Invoke("LateStart", 0.1f);
 	}
 
 	void LateStart () {
@@ -30,11 +30,13 @@ public class GameManager : MonoBehaviour {
 
 	void Update () {
 
-		if (Input.GetKeyDown(KeyCode.N)) {
-			LevelComplete();
-		}
+        #if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.N)) {
+            LevelComplete();
+        }
+        #endif
 
-		if (Input.GetButton ("Cancel")) {
+        if (Input.GetButton ("Cancel")) {
 			QuitGame();
 		}
 		if (GameState.playersTurn) {

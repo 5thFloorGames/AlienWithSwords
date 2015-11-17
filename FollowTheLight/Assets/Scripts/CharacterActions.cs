@@ -12,11 +12,11 @@ public class CharacterActions : MonoBehaviour {
 	float bulletCooldown;
 	float previousFire;
 
-	public void enterCharacter() {
+	public void EnterCharacter() {
 		inCharacter = true;
 	}
 	
-	public void leaveCharacter() {
+	public void LeaveCharacter() {
 		inCharacter = false;
 	}
 	

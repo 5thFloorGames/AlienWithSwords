@@ -45,11 +45,11 @@ public class FPSController : MonoBehaviour {
 	private bool jumping;
 	private AudioSource audiosource;
 
-	public void enterCharacter() {
+	public void EnterCharacter() {
 		inCharacter = true;
 	}
 
-	public void leaveCharacter() {
+	public void LeaveCharacter() {
 		inCharacter = false;
 	}
 

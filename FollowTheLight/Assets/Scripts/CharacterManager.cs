@@ -13,6 +13,7 @@ public class CharacterManager : MonoBehaviour {
 		characters = new List<GameObject>();
 		CreateFirstCharacter ();
 		CreateSecondCharacter ();
+        AssignCharacterSpawningPoints();
 	}
 
 	void Update () {
@@ -25,8 +26,9 @@ public class CharacterManager : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded(int level) {
-		if (characters != null) {
-			ResetCharacterMovement ();
+        if (characters != null) {
+            AssignCharacterSpawningPoints();
+            ResetCharacterMovement ();
 		}
 	}
 
@@ -36,28 +38,24 @@ public class CharacterManager : MonoBehaviour {
 
 	void CreateFirstCharacter() {
 		string name = "Character1";
-
-		GameObject character = loadCharacterToScene (name, new Vector3(0, 1, 0), Quaternion.identity);
+		GameObject character = LoadCharacterToScene (name, new Vector3(0, 1, 0), Quaternion.identity);
 		character.name = name;
 
 		characters.Add (character);
-
 		AssignCharacterStats (character, 100, 100f);
 		EnterCharacter (character);
 	}
 
 	void CreateSecondCharacter() {
-		string name = "Character2";
-		
-		GameObject character = loadCharacterToScene (name, new Vector3(1, 1, 1), Quaternion.identity);
+		string name = "Character2";	
+		GameObject character = LoadCharacterToScene (name, new Vector3(0, 0, 0), Quaternion.identity);
 		character.name = name;
 
 		characters.Add (character);
-		
 		AssignCharacterStats (character, 100, 100f);
 	}
 
-	GameObject loadCharacterToScene(string name, Vector3 position, Quaternion rotation) {
+	GameObject LoadCharacterToScene(string name, Vector3 position, Quaternion rotation) {
 		GameObject prefab = (GameObject) Resources.Load(name);
 		return ((GameObject) Instantiate (prefab, position, rotation));
 	}
@@ -85,18 +83,21 @@ public class CharacterManager : MonoBehaviour {
 	void EnterCharacter(GameObject character) {
 		foreach (GameObject other in characters) {
 			if (other != character) {
-				other.GetComponent<FPSController> ().leaveCharacter ();
-				other.GetComponent<MovementMeasurements> ().leaveCharacter ();
-				other.GetComponentInChildren<CharacterActions>().leaveCharacter();
+                other.BroadcastMessage("LeaveCharacter");
 				other.GetComponentInChildren<AudioListener> ().enabled = false;
 				character.GetComponentInChildren<Camera> ().enabled = false;
 			}
 		}
-		character.GetComponent<FPSController> ().enterCharacter ();
-		character.GetComponent<MovementMeasurements> ().enterCharacter ();
-		character.GetComponentInChildren<CharacterActions>().enterCharacter ();
+        character.BroadcastMessage("EnterCharacter");
 		character.GetComponentInChildren<AudioListener> ().enabled = true;
 		character.GetComponentInChildren<Camera> ().enabled = true;
 	}
+
+    void AssignCharacterSpawningPoints() {
+        if (GameState.GetLevel() >= 1) {
+            GetCharacterObject("Character1").transform.position = new Vector3(0, 1, 0);
+            GetCharacterObject("Character2").transform.position = new Vector3(1, 1, 1);
+        }
+    }
 
 }

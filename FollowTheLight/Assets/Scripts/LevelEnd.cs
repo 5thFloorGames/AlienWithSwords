@@ -6,22 +6,22 @@ public class LevelEnd : MonoBehaviour {
 
 	Dictionary<string, bool> charactersEnding;
 	GameManager gm;
-	bool enabled;
+	bool endingActive;
 
 	void Start () {
-		enabled = false;
-		Invoke("LateStart", 0.8f);
+        endingActive = false;
+		Invoke("LateStart", 0.1f);
 	}
 
 	void OnTriggerEnter (Collider other) {
-		if (enabled) {
+		if (endingActive) {
 			charactersEnding [other.name] = true;
 			CheckEndOfAllCharacters ();
 		}
 	}
 
 	void OnTriggerExit (Collider other) {
-		if (enabled) {
+		if (endingActive) {
 			charactersEnding [other.name] = false;
 		}
 	}
@@ -34,7 +34,7 @@ public class LevelEnd : MonoBehaviour {
 		}
 
 		gm = (GameManager)GameObject.Find ("GameManager").GetComponent<GameManager>();
-		enabled = true;
+        endingActive = true;
 	}
 
 	void CheckEndOfAllCharacters() {

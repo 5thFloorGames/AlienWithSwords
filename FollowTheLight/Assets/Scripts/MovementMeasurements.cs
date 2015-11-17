@@ -14,11 +14,11 @@ public class MovementMeasurements : MonoBehaviour {
 	UserInterfaceManager uim;
 	FPSController fpsc;
 
-	public void enterCharacter() {
+	public void EnterCharacter() {
 		inCharacter = true;
 	}
 	
-	public void leaveCharacter() {
+	public void LeaveCharacter() {
 		inCharacter = false;
 	}
 
