@@ -10,6 +10,10 @@ public class CharacterState : MonoBehaviour {
 
 	UserInterfaceManager uim;
 
+	void Awake() {
+		DontDestroyOnLoad (gameObject);
+	}
+
 	public void Init(int amount) {
 		dead = false;
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
@@ -24,6 +28,12 @@ public class CharacterState : MonoBehaviour {
 
 	void Update () {
 	
+	}
+
+	void OnLevelWasLoaded(int level) {
+		if (level == 0) {
+			Destroy (gameObject);
+		}
 	}
 
     void takeDamage(int amount) {

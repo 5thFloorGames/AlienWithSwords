@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class UserInterfaceManager : MonoBehaviour {
 
 	GameObject enemyTurnUI;
+	GameObject levelCompletedUI;
 	GameObject crosshairs;
 	GameObject characterPanel;
 
@@ -13,10 +14,14 @@ public class UserInterfaceManager : MonoBehaviour {
 	Dictionary <string, Image> distanceMeters;
 	
 	void Awake () {
+
+		DontDestroyOnLoad (gameObject);
+
 		distanceMeters = new Dictionary<string, Image>();
 		healthMeters = new Dictionary<string, Image> ();
 
 		enemyTurnUI = (GameObject)transform.Find ("EnemyTurn").gameObject;
+		levelCompletedUI = (GameObject)transform.Find ("LevelCompleted").gameObject;
 		crosshairs = (GameObject)transform.Find ("Crosshairs").gameObject;
 
 		characterPanel = (GameObject)transform.Find ("CharacterPanel").gameObject;
@@ -38,12 +43,26 @@ public class UserInterfaceManager : MonoBehaviour {
 		
 	}
 
+	void OnLevelWasLoaded(int level) {
+		if (level == 0) {
+			Destroy (gameObject);
+		}
+	}
+
 	public void ShowEnemyUI() {
 		enemyTurnUI.SetActive (true);
 	}
 
 	public void HideEnemyUI() {
 		enemyTurnUI.SetActive (false);
+	}
+
+	public void ShowLevelCompletedUI() {
+		levelCompletedUI.SetActive (true);
+	}
+
+	public void HideLevelCompletedUI() {
+		levelCompletedUI.SetActive (false);
 	}
 
 	public void UpdateDistanceMeter(string characterName, float distance, float maximum) {

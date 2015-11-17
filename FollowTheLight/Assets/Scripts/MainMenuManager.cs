@@ -61,10 +61,10 @@ public class MainMenuManager : MonoBehaviour {
 
 	void CheckMusic() {
 		musicObject = GameObject.Find("MusicManager");
-				if (musicObject == null) {
-					musicObject = Instantiate<GameObject>((GameObject)Resources.Load("MusicManager"));
-					musicObject.name = "MusicManager";
-				}
+		if (musicObject == null) {
+			musicObject = Instantiate<GameObject>((GameObject)Resources.Load("MusicManager"));
+			musicObject.name = "MusicManager";
+		}
 	}
 	
 	void PlayChoosingSound() {

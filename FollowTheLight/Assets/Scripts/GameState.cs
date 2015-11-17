@@ -6,7 +6,7 @@ public class GameState : MonoBehaviour {
 	public static bool playersTurn;
 	
 	static int level = 1;
-	static int lastLevel = 1;
+	static int lastLevel = 3;
 
 	public static int GetLevel() {
 		return level;
@@ -16,7 +16,12 @@ public class GameState : MonoBehaviour {
 		return lastLevel;
 	}
 
+	public static void SetLevel(int number) {
+		level = number;
+	}
+
 	public static void LevelComplete(){
+		Debug.Log ("completed level " + level);
 		level++;
 		if (level > lastLevel) {
 			level = lastLevel;

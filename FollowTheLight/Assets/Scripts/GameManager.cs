@@ -3,9 +3,14 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-	private CharacterManager cm;
-	private EnemyManager em;
-	private UserInterfaceManager uim;
+	CharacterManager cm;
+	EnemyManager em;
+	UserInterfaceManager uim;
+	bool levelCompleted;
+
+	void Awake() {
+		DontDestroyOnLoad (gameObject);
+	}
 
 	void Start () {
         //this gets annoying when testing in editor, should remember to uncomment when built
@@ -13,17 +18,55 @@ public class GameManager : MonoBehaviour {
         cm = gameObject.GetComponent<CharacterManager> ();
 		em = gameObject.GetComponent<EnemyManager> ();
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
+		levelCompleted = false;
 
+		GameState.SetLevel (Application.loadedLevel);
+		Invoke("LateStart", 0.5f);
+	}
+
+	void LateStart () {
 		StartPlayerTurn ();
 	}
 
 	void Update () {
+
+		if (Input.GetKeyDown(KeyCode.N)) {
+			LevelComplete();
+		}
+
 		if (Input.GetButton ("Cancel")) {
 			QuitGame();
 		}
 		if (GameState.playersTurn) {
 			if (Input.GetButton ("Submit")) {
 				StartEnemyTurn();
+			}
+		}
+	}
+
+	void OnLevelWasLoaded(int level) {
+
+		if (level == 0) {
+			Destroy(gameObject);
+		}
+
+		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
+		uim.HideLevelCompletedUI ();
+		GameState.playersTurn = true;
+		levelCompleted = false;
+	}
+	
+	public void LevelComplete() {
+		if (!levelCompleted) {
+			levelCompleted = true;
+
+			uim.ShowLevelCompletedUI();
+			GameState.playersTurn = false;
+			if (GameState.GetLevel() == GameState.GetLastLevel()) {
+				QuitGame ();
+			} else {
+				GameState.LevelComplete();
+				LoadNextLevel();
 			}
 		}
 	}
@@ -48,6 +91,10 @@ public class GameManager : MonoBehaviour {
 		em.PlayersTurnActivated ();
 		GameState.playersTurn = true;
 		Debug.Log ("   player's turn again");
+	}
+
+	void LoadNextLevel() {
+		Application.LoadLevel (GameState.GetLevel());
 	}
 
 	IEnumerator EnemyTurn() {

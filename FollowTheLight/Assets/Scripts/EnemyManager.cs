@@ -9,15 +9,17 @@ public class EnemyManager : MonoBehaviour {
 	List<GameObject> enemies;
 	
 	void Start () {
-		enemyHolder = (Transform)GameObject.Find ("Enemies").transform;
-		enemy = (GameObject) Resources.Load("Enemy");
-		enemies = new List<GameObject> ();
-
 		InstantiateEnemies ();
 	}
 
 	void Update () {
 		
+	}
+
+	void OnLevelWasLoaded(int level) {
+		if (level != 0) {
+			InstantiateEnemies ();
+		}
 	}
 
 	public void PlayersTurnActivated() {
@@ -31,7 +33,14 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	void InstantiateEnemies() {
+		enemyHolder = (Transform)GameObject.Find ("Enemies").transform;
+		enemy = (GameObject) Resources.Load("Enemy");
+		enemies = new List<GameObject> ();
 		if (GameState.GetLevel() == 1) {
+			InstantiateEnemiesForFirstLevel();
+		}
+
+		if (GameState.GetLevel() == 2) {
 			InstantiateEnemiesForFirstLevel();
 		}
 	}

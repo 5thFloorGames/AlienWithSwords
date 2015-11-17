@@ -29,14 +29,13 @@ public class MovementMeasurements : MonoBehaviour {
 		fpsc.movementAvailable = true;
 	}
 
-	void Start() {
-
+	void Awake() {
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
 		fpsc = gameObject.GetComponent<FPSController> ();
-
+		
 		movementAvailable = true;
 		fpsc.movementAvailable = true;
-
+		
 		distanceTravelled = 0;
 		updatedDistance = 0;
 		lastPosition = transform.position;
