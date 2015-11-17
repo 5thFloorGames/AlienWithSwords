@@ -87,12 +87,14 @@ public class CharacterManager : MonoBehaviour {
 			if (other != character) {
 				other.GetComponent<FPSController> ().leaveCharacter ();
 				other.GetComponent<MovementMeasurements> ().leaveCharacter ();
+				other.GetComponentInChildren<CharacterActions>().leaveCharacter();
 				other.GetComponentInChildren<AudioListener> ().enabled = false;
 				character.GetComponentInChildren<Camera> ().enabled = false;
 			}
 		}
 		character.GetComponent<FPSController> ().enterCharacter ();
 		character.GetComponent<MovementMeasurements> ().enterCharacter ();
+		character.GetComponentInChildren<CharacterActions>().enterCharacter ();
 		character.GetComponentInChildren<AudioListener> ().enabled = true;
 		character.GetComponentInChildren<Camera> ().enabled = true;
 	}

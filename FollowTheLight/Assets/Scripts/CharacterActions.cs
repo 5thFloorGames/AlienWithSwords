@@ -5,10 +5,20 @@ public class CharacterActions : MonoBehaviour {
 
 	public int bulletDamage;
 
+	bool inCharacter;
+
 	GameObject bullet;
 	GameObject cameraObj;
 	float bulletCooldown;
 	float previousFire;
+
+	public void enterCharacter() {
+		inCharacter = true;
+	}
+	
+	public void leaveCharacter() {
+		inCharacter = false;
+	}
 	
 	void Start () {
 		bullet = (GameObject)Resources.Load ("Bullet");
@@ -16,7 +26,7 @@ public class CharacterActions : MonoBehaviour {
 	}
 
 	void Update () {
-		if (GameState.playersTurn) {
+		if (GameState.playersTurn && inCharacter) {
 			if (Time.time - previousFire >= bulletCooldown) {
 				if (Input.GetButton ("Fire1")){
 					previousFire = Time.time;
