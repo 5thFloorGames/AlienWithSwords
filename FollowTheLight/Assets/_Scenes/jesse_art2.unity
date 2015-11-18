@@ -2296,6 +2296,9 @@ Transform:
   m_Children:
   - {fileID: 2048819668}
   - {fileID: 1132803392}
+  - {fileID: 745322114}
+  - {fileID: 339982726}
+  - {fileID: 1781202067}
   m_Father: {fileID: 0}
   m_RootOrder: 5
 --- !u!1001 &328558594
@@ -2405,8 +2408,8 @@ Transform:
   m_LocalPosition: {x: 3.5999999, y: 1.5, z: -.479999989}
   m_LocalScale: {x: .300000012, y: .300000012, z: .300000012}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 322840231}
+  m_RootOrder: 3
 --- !u!95 &339982727
 Animator:
   serializedVersion: 3
@@ -6163,7 +6166,7 @@ Transform:
   - {fileID: 263133886}
   - {fileID: 199609611}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 9
 --- !u!95 &739157005
 Animator:
   serializedVersion: 3
@@ -6557,8 +6560,8 @@ Transform:
   m_LocalPosition: {x: 3.5, y: 1.505, z: 1.90999997}
   m_LocalScale: {x: .300000012, y: .300000012, z: .300000012}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 322840231}
+  m_RootOrder: 2
 --- !u!1 &758907758
 GameObject:
   m_ObjectHideFlags: 0
@@ -43515,12 +43518,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1781202065}
-  m_LocalRotation: {x: 0, y: -.707106769, z: 0, w: .707106829}
+  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106829}
   m_LocalPosition: {x: 3.39100003, y: 1.64300001, z: -2.82599998}
   m_LocalScale: {x: .300000012, y: .300000012, z: .300000012}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_Father: {fileID: 322840231}
+  m_RootOrder: 4
 --- !u!95 &1781202068
 Animator:
   serializedVersion: 3
@@ -43877,6 +43880,7 @@ GameObject:
   - 33: {fileID: 1838304055}
   - 64: {fileID: 1838304054}
   - 23: {fileID: 1838304053}
+  - 65: {fileID: 1838304057}
   m_Layer: 0
   m_Name: AppliedBrush (17)
   m_TagString: Untagged
@@ -44126,6 +44130,18 @@ MonoBehaviour:
     excludeFromFinal: 0
   prismSideCount: 6
   brushType: 0
+--- !u!65 &1838304057
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1838304051}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: .5, y: 2.50000191, z: 7.50000095}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1840896019
 Prefab:
   m_ObjectHideFlags: 0

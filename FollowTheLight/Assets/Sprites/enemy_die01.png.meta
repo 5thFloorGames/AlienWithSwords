@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0aa516fbcc34d2241b25355a4038d74c
-timeCreated: 1447844193
+timeCreated: 1447877273
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -81,7 +81,7 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: enemy_die01_2
       rect:
@@ -91,7 +91,7 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: enemy_die01_3
       rect:
@@ -101,7 +101,7 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: enemy_die01_4
       rect:
@@ -111,7 +111,7 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: enemy_die01_5
       rect:
@@ -121,7 +121,7 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: enemy_die01_6
       rect:
@@ -131,7 +131,7 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: enemy_die01_7
       rect:
@@ -141,7 +141,7 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: enemy_die01_8
       rect:
@@ -151,7 +151,7 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: enemy_die01_9
       rect:
@@ -161,33 +161,13 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: enemy_die01_10
       rect:
         serializedVersion: 2
         x: 2048
         y: 1024
-        width: 1024
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: enemy_die01_11
-      rect:
-        serializedVersion: 2
-        x: 3072
-        y: 1024
-        width: 1024
-        height: 1024
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: enemy_die01_12
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
         width: 1024
         height: 1024
       alignment: 0
