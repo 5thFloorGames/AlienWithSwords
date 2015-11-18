@@ -78,13 +78,14 @@ public class GameManager : MonoBehaviour {
 		Application.LoadLevel(0);
 	}
 
+	public void EnemyTurnOver() {
+		StartCoroutine(StartPlayerTurnIn (0.1f));
+	}
+
 	void StartEnemyTurn() {
-		Debug.Log ("enemies' turn start");
 		GameState.playersTurn = false;
 		uim.ShowEnemyUI ();
 		em.TriggerEnemyActions ();
-
-		StartCoroutine(EnemyTurn());
 	}
 
 	void StartPlayerTurn() {
@@ -92,15 +93,14 @@ public class GameManager : MonoBehaviour {
         cm.PlayersTurnActivated ();
 		em.PlayersTurnActivated ();
 		GameState.playersTurn = true;
-		Debug.Log ("   player's turn again");
 	}
 
 	void LoadNextLevel() {
 		Application.LoadLevel (GameState.GetLevel());
 	}
 
-	IEnumerator EnemyTurn() {
-		yield return new WaitForSeconds(4.0f);
+	IEnumerator StartPlayerTurnIn(float seconds) {
+		yield return new WaitForSeconds(seconds);
 		StartPlayerTurn ();
 	}
 	

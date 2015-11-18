@@ -10,7 +10,14 @@ public class LevelEnd : MonoBehaviour {
 
 	void Start () {
         endingActive = false;
-		Invoke("LateStart", 0.1f);
+		charactersEnding = new Dictionary<string, bool>();
+		GameObject[] characters = GameObject.FindGameObjectsWithTag ("Player");
+		foreach (GameObject character in characters) {
+			charactersEnding[character.name] = false;
+		}
+		
+		gm = (GameManager)GameObject.Find ("GameManager").GetComponent<GameManager>();
+		endingActive = true;
 	}
 
 	void OnTriggerEnter (Collider other) {
@@ -24,17 +31,6 @@ public class LevelEnd : MonoBehaviour {
 		if (endingActive) {
 			charactersEnding [other.name] = false;
 		}
-	}
-
-	void LateStart() {
-		charactersEnding = new Dictionary<string, bool>();
-		GameObject[] characters = GameObject.FindGameObjectsWithTag ("Player");
-		foreach (GameObject character in characters) {
-			charactersEnding[character.name] = false;
-		}
-
-		gm = (GameManager)GameObject.Find ("GameManager").GetComponent<GameManager>();
-        endingActive = true;
 	}
 
 	void CheckEndOfAllCharacters() {

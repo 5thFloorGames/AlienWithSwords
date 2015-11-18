@@ -4,9 +4,17 @@ using System.Collections.Generic;
 
 public class AreaDamageBehavior : MonoBehaviour {
 
-	public float time;
-	public float size;
-	public int damage;
+	int damage;
+	float timeForSuiciding = 0.1f;
+
+	public void Init (float time, float size, int damageAmount) {
+		time = time - timeForSuiciding;
+		damage = damageAmount;
+		iTween.ScaleTo(gameObject, iTween.Hash(
+			"scale", new Vector3 (size, size, size),
+			"time", time,
+			"oncomplete", "fadeAwayAndSuicide"));
+	}
 
 	void OnTriggerEnter (Collider other) {
 		Debug.Log (gameObject.name + " hit " + other.name);
@@ -16,11 +24,7 @@ public class AreaDamageBehavior : MonoBehaviour {
 	}
 
 	void Start () {
-		iTween.ScaleTo(gameObject, iTween.Hash(
-			"scale", new Vector3 (size, size, size),
-			"delay", 0.5f,
-			"time", time,
-			"oncomplete", "fadeAwayAndSuicide"));
+
 	}
 
 	void Update () {
@@ -34,7 +38,7 @@ public class AreaDamageBehavior : MonoBehaviour {
 	}
 
 	IEnumerator suicide() {
-		yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(timeForSuiciding);
 		Destroy (gameObject);
 	}
 
