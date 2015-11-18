@@ -13,7 +13,7 @@ public class EnemyManager : MonoBehaviour {
 	
 	void Start () {
 		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-		InstantiateEnemies ();
+		OnLevelWasLoaded (GameState.GetLevel());
 	}
 
 	void Update () {
@@ -22,7 +22,7 @@ public class EnemyManager : MonoBehaviour {
 
 	void OnLevelWasLoaded(int level) {
 		if (level != 0) {
-			InstantiateEnemies ();
+			Invoke("InstantiateEnemies", 0.1f);
 		}
 	}
 
@@ -49,7 +49,7 @@ public class EnemyManager : MonoBehaviour {
 
 	void InstantiateEnemies() {
 		enemyHolder = (Transform)GameObject.Find ("Enemies").transform;
-		enemy = (GameObject) Resources.Load("Enemy");
+		enemy = (GameObject) Resources.Load("Enemy1");
 		enemies = new List<GameObject> ();
 		if (GameState.GetLevel() == 1) {
 			InstantiateEnemiesForFirstLevel();

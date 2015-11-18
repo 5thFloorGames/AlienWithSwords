@@ -9,10 +9,6 @@ public class EnemyState : MonoBehaviour {
 	Image healthMeter;
 	GameObject em;
 
-	Transform char1;
-	Transform char2;
-	Transform char3;
-
 	int maximumHealth;
 
 	public void Init(int amount, GameObject manager) {
@@ -25,24 +21,11 @@ public class EnemyState : MonoBehaviour {
 	}
 	
 	void Start () {
-		char1 = GameObject.Find("Character1").transform;
-		if (GameState.GetLevel() > 1) {
-			char2 = GameObject.Find("Character2").transform;
-		}
-		
-		if (GameState.GetLevel() > 2) {
-			char3 = GameObject.Find("Character3").transform;
-		}
+
 	}
 
 	void Update () {
-		if (GameState.activeCharacter == "Character1") {
-			transform.LookAt(char1);
-		} else if (GameState.activeCharacter == "Character2") {
-			transform.LookAt(char2);
-		} else {
-			transform.LookAt(char3);
-		}
+
 	}
 
 	void TakeDamage(int amount) {

@@ -5,6 +5,7 @@ public class GameState : MonoBehaviour {
 
 	public static bool playersTurn;
     public static string activeCharacter;
+	public static int amountOfCharacters;
 	
 	static int level = 1;
 	static int lastLevel = 3;

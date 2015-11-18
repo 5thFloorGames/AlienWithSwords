@@ -9,6 +9,12 @@ public class CharacterManager : MonoBehaviour {
     bool secondLoaded;
     bool thirdLoaded;
 
+	void Awake() {
+		firstLoaded = false;
+		secondLoaded = false;
+		thirdLoaded = false;
+	}
+
 	void Start () {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 
@@ -45,17 +51,20 @@ public class CharacterManager : MonoBehaviour {
         if (!firstLoaded) {
             CreateFirstCharacter();
             firstLoaded = true;
-            uim.ShowCharacterInfos(1);
+			GameState.amountOfCharacters = 1;
+			uim.ShowCharacterInfos(GameState.amountOfCharacters);
         }
         if (!secondLoaded && level > 1) {
             CreateSecondCharacter();
             secondLoaded = true;
-            uim.ShowCharacterInfos(2);
+			GameState.amountOfCharacters = 2;
+			uim.ShowCharacterInfos(GameState.amountOfCharacters);
         }
         if (!thirdLoaded && level > 2) {
             CreateThirdCharacter();
             thirdLoaded = true;
-            uim.ShowCharacterInfos(3);
+			GameState.amountOfCharacters = 3;
+			uim.ShowCharacterInfos(GameState.amountOfCharacters);
         }
     }
 
