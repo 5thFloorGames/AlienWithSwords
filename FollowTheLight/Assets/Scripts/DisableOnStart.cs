@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DisableOnStart : MonoBehaviour {
 	
-	void Start () {
+	void Awake () {
 		gameObject.SetActive (false);
 	}
 

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DisableOnStartIfNotInEditor : MonoBehaviour {
 
-	void Start () {
+	void Awake () {
 		#if !UNITY_EDITOR
 		gameObject.SetActive (false);
 		#endif
