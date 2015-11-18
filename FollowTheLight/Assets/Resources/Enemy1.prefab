@@ -28,6 +28,7 @@ GameObject:
   - 114: {fileID: 11449176}
   - 114: {fileID: 11457290}
   - 195: {fileID: 19537606}
+  - 114: {fileID: 11430120}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Enemy
@@ -186,6 +187,17 @@ MonoBehaviour:
   m_FillAmount: .5
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11430120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b79eca549a9b417ea412d2cac1874b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11437514
 MonoBehaviour:
   m_ObjectHideFlags: 1

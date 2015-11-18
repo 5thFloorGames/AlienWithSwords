@@ -30,13 +30,7 @@ public class FirstEnemyActions : MonoBehaviour {
     }
 
 	void Update () {
-		if (GameState.activeCharacter == "Character1" && knownCharacters > 0) {
-			transform.LookAt(char1);
-		} else if (GameState.activeCharacter == "Character2" && knownCharacters > 1) {
-			transform.LookAt(char2);
-		} else if (GameState.activeCharacter == "Character3" && knownCharacters > 2) {
-			transform.LookAt(char3);
-		}
+
 	}
 
 	public void InitActions(GameObject manager) {
