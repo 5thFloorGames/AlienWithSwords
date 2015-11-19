@@ -4,8 +4,10 @@ using System.Collections;
 public class FirstEnemyActions : MonoBehaviour {
 
 	EnemyManager em;
+
     GameObject aoePrefab;
 	NavMeshAgent nva;
+	Animator animator;
 
 	float actionTime;
 	int actionDamage;
@@ -14,6 +16,7 @@ public class FirstEnemyActions : MonoBehaviour {
 	void Start () {
         aoePrefab = (GameObject)Resources.Load("AreaDamage");
 		nva = GetComponent<NavMeshAgent> ();
+		animator = gameObject.GetComponentInChildren<Animator>();
 
 		actionTime = 1.0f;
 		actionDamage = 5;

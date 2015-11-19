@@ -141,16 +141,16 @@ public class CharacterManager : MonoBehaviour {
     void AssignCharacterSpawningPoints() {
         if (firstLoaded) {
             if (GameState.GetLevel() > 0) {
-                GetCharacterObject("Character1").transform.position = new Vector3(0, 1, 0);
+                GetCharacterObject("Character1").GetComponent<Rigidbody>().position = new Vector3(0, 1, 0);
             }
         }
 
        if (secondLoaded) {
-            GetCharacterObject("Character2").transform.position = new Vector3(1, 1, 0);
+			GetCharacterObject("Character2").GetComponent<Rigidbody>().position = new Vector3(1, 1, 0);
        }
 
        if (thirdLoaded) {
-           GetCharacterObject("Character3").transform.position = new Vector3(2, 1, 0);
+			GetCharacterObject("Character3").GetComponent<Rigidbody>().position = new Vector3(2, 1, 0);
        }
     }
 

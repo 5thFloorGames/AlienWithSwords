@@ -48,9 +48,13 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	void InstantiateEnemies() {
+
 		enemyHolder = (Transform)GameObject.Find ("Enemies").transform;
 		enemy = (GameObject) Resources.Load("Enemy1");
 		enemies = new List<GameObject> ();
+
+		HandleEnemiesInScene ();
+
 		if (GameState.GetLevel() == 1) {
 			InstantiateEnemiesForFirstLevel();
 		}
@@ -71,10 +75,10 @@ public class EnemyManager : MonoBehaviour {
 	void EnemyBasicAssignments(GameObject obj, string name, int health) {
 		obj.name = name;
 		obj.tag = "Enemy";
-		obj.transform.parent = enemyHolder;
+		obj.transform.SetParent(enemyHolder);
 
 		EnemyState es = obj.GetComponent<EnemyState> ();
-		es.Init(health, gameObject);
+		es.Init (health, gameObject);
 
 		obj.SendMessage ("InitActions", gameObject);
 
@@ -83,6 +87,15 @@ public class EnemyManager : MonoBehaviour {
 
 	void DeleteEnemyFromList(GameObject enemyobj) {
 		enemies.Remove (enemyobj);
+	}
+
+	void HandleEnemiesInScene() {
+		GameObject[] additionalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+		foreach (GameObject enemy in additionalEnemies) {
+			if (enemy.GetComponent<EnemyState>() != null) {
+				EnemyBasicAssignments(enemy, "sceneEnemy", 50);
+			}
+		}
 	}
 
 	void AllEnemyActionsCompleted() {
