@@ -60,7 +60,7 @@ public class CharacterManager : MonoBehaviour {
 			GameState.amountOfCharacters = 2;
 			uim.ShowCharacterInfos(GameState.amountOfCharacters);
         }
-        if (!thirdLoaded && level > 2) {
+        if (!thirdLoaded && level > 1) {
             CreateThirdCharacter();
             thirdLoaded = true;
 			GameState.amountOfCharacters = 3;
