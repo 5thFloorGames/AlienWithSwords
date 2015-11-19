@@ -4,7 +4,7 @@ using System.Collections;
 public class GameState : MonoBehaviour {
 
 	public static bool playersTurn;
-    public static string activeCharacter;
+    public static GameObject activeCharacter;
 	public static int amountOfCharacters;
 	
 	static int level = 1;

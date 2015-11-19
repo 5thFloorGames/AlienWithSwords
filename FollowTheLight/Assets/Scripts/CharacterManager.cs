@@ -127,13 +127,15 @@ public class CharacterManager : MonoBehaviour {
 			if (other != character) {
                 other.BroadcastMessage("LeaveCharacter");
 				other.GetComponentInChildren<AudioListener> ().enabled = false;
-				character.GetComponentInChildren<Camera> ().enabled = false;
+				other.GetComponentInChildren<Camera> ().enabled = false;
+				other.transform.FindChild("Sprite").gameObject.SetActive(true);
 			}
 		}
         character.BroadcastMessage("EnterCharacter");
 		character.GetComponentInChildren<AudioListener> ().enabled = true;
 		character.GetComponentInChildren<Camera> ().enabled = true;
-        GameState.activeCharacter = character.name;
+		character.transform.FindChild("Sprite").gameObject.SetActive(false);
+        GameState.activeCharacter = character;
 	}
 
     void AssignCharacterSpawningPoints() {

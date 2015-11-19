@@ -7,11 +7,6 @@ public class FirstEnemyActions : MonoBehaviour {
     GameObject aoePrefab;
 	NavMeshAgent nva;
 
-	int knownCharacters;
-	Transform char1;
-	Transform char2;
-	Transform char3;
-
 	float actionTime;
 	int actionDamage;
 	float movementTime;
@@ -24,9 +19,6 @@ public class FirstEnemyActions : MonoBehaviour {
 		actionDamage = 5;
 
 		movementTime = 1.0f;
-
-		knownCharacters = 0;
-		CheckPlayerPositions ();
     }
 
 	void Update () {
@@ -43,30 +35,9 @@ public class FirstEnemyActions : MonoBehaviour {
         Invoke("StopMovingThenCast", movementTime);
 	}
 
-	void CheckPlayerPositions () {
-		if (GameState.amountOfCharacters > knownCharacters) {
-			char1 = GameObject.Find("Character1").transform;
-			knownCharacters += 1;
-			
-			if (GameState.amountOfCharacters > 1) {
-				char2 = GameObject.Find("Character2").transform;
-				knownCharacters += 1;
-			}
-			
-			if (GameState.amountOfCharacters > 2) {
-				char3 = GameObject.Find("Character3").transform;
-				knownCharacters += 1;
-			}
-			
-			if (GameState.amountOfCharacters > 3) {
-				Debug.Log ("enemy trying to look for more characters");
-			}
-		}
-	}
-
 	void MoveTowardsPlayer() {
 		nva.Resume ();
-		nva.destination = char1.position;
+		nva.destination = GameState.activeCharacter.transform.position;
 	}
 
     void CastAreaDamage() {
