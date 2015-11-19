@@ -21,9 +21,7 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded(int level) {
-		if (level != 0) {
-			Invoke("InstantiateEnemies", 0.1f);
-		}
+		Invoke("InstantiateEnemies", 0.1f);
 	}
 
 	public void PlayersTurnActivated() {
@@ -93,7 +91,7 @@ public class EnemyManager : MonoBehaviour {
 		GameObject[] additionalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
 		foreach (GameObject enemy in additionalEnemies) {
 			if (enemy.GetComponent<EnemyState>() != null) {
-				EnemyBasicAssignments(enemy, "sceneEnemy", 50);
+				EnemyBasicAssignments(enemy, "sceneEnemy", 75);
 			}
 		}
 	}

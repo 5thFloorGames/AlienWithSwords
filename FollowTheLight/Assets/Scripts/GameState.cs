@@ -8,7 +8,7 @@ public class GameState : MonoBehaviour {
 	public static int amountOfCharacters;
 	
 	static int level = 1;
-	static int lastLevel = 3;
+	static int lastLevel = 2;
 
 	public static int GetLevel() {
 		return level;

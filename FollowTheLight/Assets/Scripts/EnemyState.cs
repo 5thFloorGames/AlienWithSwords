@@ -48,9 +48,10 @@ public class EnemyState : MonoBehaviour {
 	}
 
 	void StartDying() {
+		gameObject.GetComponentInChildren<Collider> ().enabled = false;
 		animator.SetBool ("Dying", true);
 		em.SendMessage ("DeleteEnemyFromList", gameObject);
-		Invoke ("Death", 2.0f);
+		Invoke ("Death", 3.0f);
 	}
 
 	void Death() {
