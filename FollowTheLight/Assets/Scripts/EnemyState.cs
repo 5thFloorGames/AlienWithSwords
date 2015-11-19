@@ -8,6 +8,7 @@ public class EnemyState : MonoBehaviour {
 	public int currentHealth;
 	Image healthMeter;
 	GameObject em;
+	Animator animator;
 
 	int maximumHealth;
 
@@ -21,7 +22,7 @@ public class EnemyState : MonoBehaviour {
 	}
 	
 	void Start () {
-
+		animator = gameObject.GetComponentInChildren<Animator>();
 	}
 
 	void Update () {
@@ -36,7 +37,7 @@ public class EnemyState : MonoBehaviour {
 				currentHealth = 0;
 				//Debug.Log (gameObject.name + " is dead :(");
 				dead = true;
-				Death();
+				StartDying();
 			}
 			UpdateHealthToHealthMeter ();
 		}
@@ -46,8 +47,13 @@ public class EnemyState : MonoBehaviour {
 		healthMeter.fillAmount = ((float)currentHealth/maximumHealth);
 	}
 
-	void Death() {
+	void StartDying() {
+		animator.SetBool ("Dying", true);
 		em.SendMessage ("DeleteEnemyFromList", gameObject);
+		Invoke ("Death", 2.0f);
+	}
+
+	void Death() {
 		Destroy (gameObject);
 	}
 }

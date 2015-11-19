@@ -44,12 +44,14 @@ public class FirstEnemyActions : MonoBehaviour {
 	}
 
     void CastAreaDamage() {
+		animator.SetTrigger ("Attack");
         GameObject spawnedAreaDamage = (GameObject)Instantiate(aoePrefab, transform.position, Quaternion.identity);
 		spawnedAreaDamage.name = gameObject.name + "AOE";
 		AreaDamageBehavior adb = spawnedAreaDamage.GetComponent<AreaDamageBehavior> ();
 		// time, size, damage for the aoe effect and start casting it
-		adb.Init (actionTime, 20f, actionDamage);
-		Invoke ("ActionsCompletedInformManager", actionTime);
+		float animationDelay = 1.0f;
+		adb.Init (actionTime, 20f, actionDamage, animationDelay);
+		Invoke ("ActionsCompletedInformManager", actionTime + animationDelay);
     }
 
 	void ActionsCompletedInformManager() {

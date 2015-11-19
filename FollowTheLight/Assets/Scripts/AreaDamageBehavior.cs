@@ -7,12 +7,13 @@ public class AreaDamageBehavior : MonoBehaviour {
 	int damage;
 	float timeForSuiciding = 0.1f;
 
-	public void Init (float time, float size, int damageAmount) {
+	public void Init (float time, float size, int damageAmount, float delay) {
 		time = time - timeForSuiciding;
 		damage = damageAmount;
 		iTween.ScaleTo(gameObject, iTween.Hash(
 			"scale", new Vector3 (size, size, size),
 			"time", time,
+			"delay", delay,
 			"oncomplete", "fadeAwayAndSuicide"));
 	}
 
