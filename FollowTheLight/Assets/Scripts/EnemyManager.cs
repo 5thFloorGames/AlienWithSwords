@@ -54,11 +54,11 @@ public class EnemyManager : MonoBehaviour {
 		HandleEnemiesInScene ();
 
 		if (GameState.GetLevel() == 1) {
-			InstantiateEnemiesForFirstLevel();
+			//InstantiateEnemiesForFirstLevel();
 		}
 
 		if (GameState.GetLevel() == 2) {
-			InstantiateEnemiesForFirstLevel();
+			//InstantiateEnemiesForFirstLevel();
 		}
 	}
 
