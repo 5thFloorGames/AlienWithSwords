@@ -10,7 +10,14 @@ public class CharacterState : MonoBehaviour {
 
 	UserInterfaceManager uim;
 
+	AudioListener audioListener;
+	Camera characterCamera;
+	GameObject sprite;
+
 	void Awake() {
+		audioListener = GetComponentInChildren<AudioListener> ();
+		characterCamera = GetComponentInChildren<Camera> ();
+		sprite = transform.FindChild ("Sprite").gameObject;
 	}
 
 	public void Init(int amount) {
@@ -19,6 +26,18 @@ public class CharacterState : MonoBehaviour {
 		maximumHealth = amount;
 		health = amount;
 		updateHealthToUI ();
+	}
+
+	public void EnterCharacter() {
+		audioListener.enabled = true;
+		characterCamera.enabled = true;
+		sprite.SetActive(false);
+	}
+
+	public void LeaveCharacter() {
+		audioListener.enabled = false;
+		characterCamera.enabled = false;
+		sprite.SetActive(true);
 	}
 
 	void Start () {

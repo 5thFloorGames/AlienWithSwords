@@ -28,7 +28,7 @@ GameObject:
   - 65: {fileID: 6553802}
   - 23: {fileID: 2397768}
   m_Layer: 0
-  m_Name: Spawn
+  m_Name: Spawn1
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

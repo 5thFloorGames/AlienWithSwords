@@ -48,29 +48,28 @@ public class CharacterManager : MonoBehaviour {
 
 	void CheckSpawns() {
 		GameObject[] spawns = GameObject.FindGameObjectsWithTag ("Spawn");
+		if (spawns.Length == 0) {
+			Debug.Log ("You need a spawn point in the scene to have a character there (Resources). Name it Spawn1, Spawn2 or Spawn3.");
+		}
 		int spawnCount = 0;
 		foreach (GameObject spawn in spawns) {
 
 			spawnCount += 1;
 			string charName;
 
-			if (spawn.name == "Spawn1") {
+			if (spawn.name == "Spawn1" && !firstActive) {
 				charName = "Character1";
 				SpawnFirstCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
-				firstActive = true;
-				uim.ShowCharacterInfos(charName);
-			} else if (spawn.name == "Spawn2") {
+			} else if (spawn.name == "Spawn2" && !secondActive) {
 				charName = "Character2";
 				SpawnSecondCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
-				secondActive = true;
-				uim.ShowCharacterInfos(charName);
-			} else if (spawn.name == "Spawn3") {
+			} else if (spawn.name == "Spawn3" && !thirdActive) {
 				charName = "Character3";
 				SpawnThirdCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
-				thirdActive = true;
-				uim.ShowCharacterInfos(charName);
 			} else {
 				spawnCount -= 1;
+				Debug.Log ("A spawn point must always be named Spawn1, Spawn2 or Spawn3 based on the character you want it to spawn.");
+				Debug.Log ("You cannot spawn more than one of each character type.");
 			}
 		}
 		EnterCharacter (characters[0]);
@@ -79,19 +78,19 @@ public class CharacterManager : MonoBehaviour {
 
 	void SpawnFirstCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
 		GameObject character = LoadCharacterToScene (name, spawnSpot, rotation);
-		
+		firstActive = true;
 		AssignCharacterStats (character, 20, 10f);
 	}
 
 	void SpawnSecondCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
 		GameObject character = LoadCharacterToScene (name, spawnSpot, rotation);
-		
+		secondActive = true;
 		AssignCharacterStats (character, 10, 50f);
 	}
 
 	void SpawnThirdCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
 		GameObject character = LoadCharacterToScene (name, spawnSpot, rotation);
-		
+		thirdActive = true;
 		AssignCharacterStats (character, 30, 30f);
 	}
 
@@ -100,6 +99,7 @@ public class CharacterManager : MonoBehaviour {
 		GameObject character = ((GameObject) Instantiate (prefab, position, rotation));
         character.name = name;
         characters.Add(character);
+		uim.ShowCharacterInfos(name);
         return character;
 	}
 
@@ -133,15 +133,9 @@ public class CharacterManager : MonoBehaviour {
 		foreach (GameObject other in characters) {
 			if (other != character) {
                 other.BroadcastMessage("LeaveCharacter");
-				other.GetComponentInChildren<AudioListener> ().enabled = false;
-				other.GetComponentInChildren<Camera> ().enabled = false;
-				other.transform.FindChild("Sprite").gameObject.SetActive(true);
 			}
 		}
         character.BroadcastMessage("EnterCharacter");
-		character.GetComponentInChildren<AudioListener> ().enabled = true;
-		character.GetComponentInChildren<Camera> ().enabled = true;
-		character.transform.FindChild("Sprite").gameObject.SetActive(false);
         GameState.activeCharacter = character;
 	}
 
