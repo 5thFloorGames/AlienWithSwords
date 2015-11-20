@@ -38,9 +38,35 @@ public class FirstEnemyActions : MonoBehaviour {
         Invoke("StopMovingThenCast", movementTime);
 	}
 
+	private bool CheckIfPlayerInSight (Vector3 characterPos, GameObject character){
+		Vector3 direction = characterPos - transform.position;
+
+		Debug.DrawRay(transform.position, direction, Color.green, 4.0f);
+
+		RaycastHit hit;
+		Physics.Raycast(transform.position, direction, out hit, direction.magnitude);
+		if (hit.collider.gameObject == character) {
+			Debug.Log ("player found");
+			return true;
+		} else {
+			Debug.Log ("player not found");
+			return false;
+		}
+
+
+	}
+
 	void MoveTowardsPlayer() {
-		nva.Resume ();
-		nva.destination = GameState.activeCharacter.transform.position;
+		foreach (GameObject character in CharacterManager.Base.characters) {
+			Debug.Log (CheckIfPlayerInSight(character.transform.position, character));
+		}
+
+
+		var distance = Vector3.Distance(transform.position, GameState.activeCharacter.transform.position);
+		if (distance < 20) {
+			nva.Resume ();
+			nva.destination = GameState.activeCharacter.transform.position;
+		}
 	}
 
     void CastAreaDamage() {

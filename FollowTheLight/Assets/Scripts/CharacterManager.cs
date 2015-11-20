@@ -3,7 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class CharacterManager : MonoBehaviour {
-	List<GameObject> characters;
+
+	static CharacterManager _instance;
+	
+	public static CharacterManager Base {
+		get {
+			if (_instance == null) _instance = FindObjectOfType<CharacterManager>();
+			if (_instance == null) Debug.Log("WARNING: No CharacterManager in the scene!!!");
+			return _instance;
+		} set {
+			_instance = value; }
+	}
+
+	public List<GameObject> characters;
     UserInterfaceManager uim;
 	bool firstActive;
 	bool secondActive;
