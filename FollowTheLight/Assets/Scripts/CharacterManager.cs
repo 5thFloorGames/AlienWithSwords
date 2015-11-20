@@ -5,41 +5,40 @@ using System.Collections.Generic;
 public class CharacterManager : MonoBehaviour {
 	List<GameObject> characters;
     UserInterfaceManager uim;
-    bool firstLoaded;
-    bool secondLoaded;
-    bool thirdLoaded;
+	bool firstActive;
+	bool secondActive;
+	bool thirdActive;
 
 	void Awake() {
-		firstLoaded = false;
-		secondLoaded = false;
-		thirdLoaded = false;
+
 	}
 
 	void Start () {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
-
-        characters = new List<GameObject>();
-
         OnLevelWasLoaded(GameState.GetLevel());
 	}
 
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Alpha1) && firstLoaded) {
+		if (Input.GetKeyDown (KeyCode.Alpha1) && firstActive) {
 			EnterCharacter(GetCharacterObject("Character1"));
 		}
-		if (Input.GetKeyDown (KeyCode.Alpha2) && secondLoaded) {
+		if (Input.GetKeyDown (KeyCode.Alpha2) && secondActive) {
 			EnterCharacter(GetCharacterObject("Character2"));
 		}
-        if (Input.GetKeyDown(KeyCode.Alpha3) && thirdLoaded) {
+		if (Input.GetKeyDown(KeyCode.Alpha3) && thirdActive) {
             EnterCharacter(GetCharacterObject("Character3"));
         }
     }
 
 	void OnLevelWasLoaded(int level) {
-        if (characters != null) {
-            CheckCharacters(level);
-            AssignCharacterSpawningPoints();
-		}
+		firstActive = false;
+		secondActive = false;
+		thirdActive = false;
+
+		uim.HideCharacterInfos ();
+
+		characters = new List<GameObject>();
+		CheckSpawns();
 	}
 
 	public void PlayersTurnActivated() {
@@ -47,46 +46,54 @@ public class CharacterManager : MonoBehaviour {
         ResetCharacterActions();
 	}
 
-    void CheckCharacters(int level) {
-        if (!firstLoaded) {
-            CreateFirstCharacter();
-            firstLoaded = true;
-			GameState.amountOfCharacters = 1;
-			uim.ShowCharacterInfos(GameState.amountOfCharacters);
-        }
-        if (!secondLoaded && level > 1) {
-            CreateSecondCharacter();
-            secondLoaded = true;
-			GameState.amountOfCharacters = 2;
-			uim.ShowCharacterInfos(GameState.amountOfCharacters);
-        }
-        if (!thirdLoaded && level > 1) {
-            CreateThirdCharacter();
-            thirdLoaded = true;
-			GameState.amountOfCharacters = 3;
-			uim.ShowCharacterInfos(GameState.amountOfCharacters);
-        }
-    }
+	void CheckSpawns() {
+		GameObject[] spawns = GameObject.FindGameObjectsWithTag ("Spawn");
+		int spawnCount = 0;
+		foreach (GameObject spawn in spawns) {
 
-	void CreateFirstCharacter() {
-		string name = "Character1";
-		GameObject character = LoadCharacterToScene (name, new Vector3(0, 1, 0), Quaternion.identity);
+			spawnCount += 1;
+			string charName;
+
+			if (spawn.name == "Spawn1") {
+				charName = "Character1";
+				SpawnFirstCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+				firstActive = true;
+				uim.ShowCharacterInfos(charName);
+			} else if (spawn.name == "Spawn2") {
+				charName = "Character2";
+				SpawnSecondCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+				secondActive = true;
+				uim.ShowCharacterInfos(charName);
+			} else if (spawn.name == "Spawn3") {
+				charName = "Character3";
+				SpawnThirdCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+				thirdActive = true;
+				uim.ShowCharacterInfos(charName);
+			} else {
+				spawnCount -= 1;
+			}
+		}
+		EnterCharacter (characters[0]);
+		GameState.amountOfCharacters = spawnCount;
+	}
+
+	void SpawnFirstCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
+		GameObject character = LoadCharacterToScene (name, spawnSpot, rotation);
 		
-		AssignCharacterStats (character, 10, 10f);
-		EnterCharacter (character);
+		AssignCharacterStats (character, 20, 10f);
 	}
 
-	void CreateSecondCharacter() {
-		string name = "Character2";	
-		GameObject character = LoadCharacterToScene (name, new Vector3(0, 1, 0), Quaternion.identity);
-		AssignCharacterStats (character, 10, 10f);
+	void SpawnSecondCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
+		GameObject character = LoadCharacterToScene (name, spawnSpot, rotation);
+		
+		AssignCharacterStats (character, 10, 50f);
 	}
 
-    void CreateThirdCharacter() {
-        string name = "Character3";
-        GameObject character = LoadCharacterToScene(name, new Vector3(0, 1, 0), Quaternion.identity);
-        AssignCharacterStats(character, 10, 10f);
-    }
+	void SpawnThirdCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
+		GameObject character = LoadCharacterToScene (name, spawnSpot, rotation);
+		
+		AssignCharacterStats (character, 30, 30f);
+	}
 
 	GameObject LoadCharacterToScene(string name, Vector3 position, Quaternion rotation) {
 		GameObject prefab = (GameObject) Resources.Load(name);
@@ -137,21 +144,5 @@ public class CharacterManager : MonoBehaviour {
 		character.transform.FindChild("Sprite").gameObject.SetActive(false);
         GameState.activeCharacter = character;
 	}
-
-    void AssignCharacterSpawningPoints() {
-        if (firstLoaded) {
-            if (GameState.GetLevel() > 0) {
-                GetCharacterObject("Character1").transform.position = new Vector3(0, 1, 0);
-            }
-        }
-
-       if (secondLoaded) {
-			GetCharacterObject("Character2").transform.position = new Vector3(1, 1, 0);
-       }
-
-       if (thirdLoaded) {
-			GetCharacterObject("Character3").transform.position = new Vector3(2, 1, 0);
-       }
-    }
 
 }

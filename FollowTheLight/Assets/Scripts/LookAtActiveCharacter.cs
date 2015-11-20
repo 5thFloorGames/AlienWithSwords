@@ -8,7 +8,9 @@ public class LookAtActiveCharacter : MonoBehaviour {
 	}
 
 	void Update () {
-		transform.LookAt (GameState.activeCharacter.transform, Vector3.up);
+		if (GameState.activeCharacter != null) {
+			transform.LookAt (GameState.activeCharacter.transform, Vector3.up);
+		}
 	}
 
 }

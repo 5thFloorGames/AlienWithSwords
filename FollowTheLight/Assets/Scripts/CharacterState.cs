@@ -11,7 +11,6 @@ public class CharacterState : MonoBehaviour {
 	UserInterfaceManager uim;
 
 	void Awake() {
-		DontDestroyOnLoad (gameObject);
 	}
 
 	public void Init(int amount) {

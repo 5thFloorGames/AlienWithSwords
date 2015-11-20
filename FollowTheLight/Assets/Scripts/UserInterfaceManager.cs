@@ -82,14 +82,17 @@ public class UserInterfaceManager : MonoBehaviour {
         actionMeters[characterName].fillAmount = (actions / maximum);
     }
 
-    public void ShowCharacterInfos(int howMany) {
+	public void HideCharacterInfos() {
+		foreach (Transform charinf in characterPanel.transform) {
+			charinf.gameObject.SetActive(false);
+		}
+	}
+
+    public void ShowCharacterInfos(string characterName) {
         int i = 0;
         foreach (Transform charinf in characterPanel.transform) {
-            i += 1;
-            if (i <= howMany ) {
+            if (charinf.name == characterName) {
                 charinf.gameObject.SetActive(true);
-            } else {
-                charinf.gameObject.SetActive(false);
             }
         }
     }

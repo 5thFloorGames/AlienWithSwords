@@ -62,14 +62,6 @@ public class EnemyManager : MonoBehaviour {
 		}
 	}
 
-	void InstantiateEnemiesForFirstLevel() {
-		GameObject first = (GameObject) Instantiate (enemy, new Vector3(33, 3, 2), Quaternion.identity);
-		EnemyBasicAssignments (first, "first", 50);
-
-		GameObject second = (GameObject)Instantiate (enemy, new Vector3 (33, 3, -2), Quaternion.identity);
-		EnemyBasicAssignments (second, "second", 80);
-	}
-
 	void EnemyBasicAssignments(GameObject obj, string name, int health) {
 		obj.name = name;
 		obj.tag = "Enemy";
@@ -91,9 +83,17 @@ public class EnemyManager : MonoBehaviour {
 		GameObject[] additionalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
 		foreach (GameObject enemy in additionalEnemies) {
 			if (enemy.GetComponent<EnemyState>() != null) {
-				EnemyBasicAssignments(enemy, "sceneEnemy", 75);
+				EnemyBasicAssignments(enemy, "sceneEnemy", 30);
 			}
 		}
+	}
+
+	void InstantiateEnemiesForFirstLevel() {
+		GameObject first = (GameObject) Instantiate (enemy, new Vector3(33, 3, 2), Quaternion.identity);
+		EnemyBasicAssignments (first, "first", 50);
+		
+		GameObject second = (GameObject)Instantiate (enemy, new Vector3 (33, 3, -2), Quaternion.identity);
+		EnemyBasicAssignments (second, "second", 80);
 	}
 
 	void AllEnemyActionsCompleted() {
