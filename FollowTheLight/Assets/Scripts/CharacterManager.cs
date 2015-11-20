@@ -49,7 +49,7 @@ public class CharacterManager : MonoBehaviour {
 	void CheckSpawns() {
 		GameObject[] spawns = GameObject.FindGameObjectsWithTag ("Spawn");
 		if (spawns.Length == 0) {
-			Debug.Log ("You need a spawn point in the scene to have a character there (Resources). Name it Spawn1, Spawn2 or Spawn3.");
+			Debug.Log ("Create a spawn point in the scene to spawn a character (Resources). Name it Spawn1, Spawn2 or Spawn3.");
 		}
 		int spawnCount = 0;
 		foreach (GameObject spawn in spawns) {

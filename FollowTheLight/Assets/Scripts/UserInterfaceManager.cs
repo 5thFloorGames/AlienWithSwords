@@ -89,7 +89,6 @@ public class UserInterfaceManager : MonoBehaviour {
 	}
 
     public void ShowCharacterInfos(string characterName) {
-        int i = 0;
         foreach (Transform charinf in characterPanel.transform) {
             if (charinf.name == characterName) {
                 charinf.gameObject.SetActive(true);
