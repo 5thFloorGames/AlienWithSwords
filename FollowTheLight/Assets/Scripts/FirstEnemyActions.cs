@@ -38,18 +38,18 @@ public class FirstEnemyActions : MonoBehaviour {
         Invoke("StopMovingThenCast", movementTime);
 	}
 
-	private bool CheckIfPlayerInSight (Vector3 characterPos, GameObject character){
-		Vector3 direction = characterPos - transform.position;
+	private bool CheckIfPlayerInSight (GameObject character){
+		Vector3 direction = character.transform.position - transform.position;
 
 		Debug.DrawRay(transform.position, direction, Color.green, 4.0f);
 
 		RaycastHit hit;
 		Physics.Raycast(transform.position, direction, out hit, direction.magnitude);
 		if (hit.collider.gameObject == character) {
-			Debug.Log ("player found");
+			//Debug.Log (gameObject.name + " sees " + character.name);
 			return true;
 		} else {
-			Debug.Log ("player not found");
+			//Debug.Log (gameObject.name + " does not see " + hit.collider.name);
 			return false;
 		}
 
@@ -57,8 +57,9 @@ public class FirstEnemyActions : MonoBehaviour {
 	}
 
 	void MoveTowardsPlayer() {
-		foreach (GameObject character in CharacterManager.Base.characters) {
-			Debug.Log (CheckIfPlayerInSight(character.transform.position, character));
+
+		foreach (GameObject character in GameState.characters) {
+			Debug.Log (CheckIfPlayerInSight(character));
 		}
 
 

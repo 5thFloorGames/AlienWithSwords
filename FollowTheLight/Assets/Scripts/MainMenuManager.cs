@@ -14,7 +14,10 @@ public class MainMenuManager : MonoBehaviour {
 		audios = gameObject.GetComponents<AudioSource>();
 		hoverSound = audios [0];
 		CheckMusic();
-	}
+        if (Application.loadedLevel != 0) {
+            Debug.Log("WARNING: Please make sure to add your scene to the build from the build settings.");
+        }
+    }
 	
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Escape)) {

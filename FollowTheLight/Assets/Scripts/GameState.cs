@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameState : MonoBehaviour {
 
 	public static bool playersTurn;
     public static GameObject activeCharacter;
 	public static int amountOfCharacters;
+    public static List<GameObject> characters;
 	
-	static int level = 1;
-	static int lastLevel = 2;
+	static int level = 0;
+	static int lastLevel = 3;
 
 	public static int GetLevel() {
 		return level;
@@ -23,7 +25,6 @@ public class GameState : MonoBehaviour {
 	}
 
 	public static void LevelComplete(){
-		Debug.Log ("completed level " + level);
 		level++;
 		if (level > lastLevel) {
 			level = lastLevel;
@@ -31,6 +32,16 @@ public class GameState : MonoBehaviour {
 	}
 
 	public static void Reset(){
-		level = 1;
+		level = 0;
 	}
+
+    void OnLevelWasLoaded(int appLevel) {
+        StartCoroutine(DebugMessages());
+    }
+
+    IEnumerator DebugMessages() {
+        yield return new WaitForSeconds(0.2f);
+        Debug.Log("Level: " + level);
+        Debug.Log("Amount of characters: " + amountOfCharacters);
+    }
 }

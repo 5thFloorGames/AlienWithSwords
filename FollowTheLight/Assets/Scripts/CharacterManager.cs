@@ -4,33 +4,35 @@ using System.Collections.Generic;
 
 public class CharacterManager : MonoBehaviour {
 
-	static CharacterManager _instance;
-	
-	public static CharacterManager Base {
-		get {
-			if (_instance == null) _instance = FindObjectOfType<CharacterManager>();
-			if (_instance == null) Debug.Log("WARNING: No CharacterManager in the scene!!!");
-			return _instance;
-		} set {
-			_instance = value; }
-	}
-
-	public List<GameObject> characters;
+	List<GameObject> characters;
     UserInterfaceManager uim;
 	bool firstActive;
 	bool secondActive;
 	bool thirdActive;
+
+    bool initialized = false;
 
 	void Awake() {
 
 	}
 
 	void Start () {
-        uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
-        OnLevelWasLoaded(GameState.GetLevel());
+        if (!initialized) {
+            initialized = true;
+            HandleSpawning();
+            Invoke("SetInitializedToFalse", 0.1f);
+        }
 	}
 
-	void Update () {
+    void OnLevelWasLoaded(int level) {
+        if (!initialized && level != 0) {
+            initialized = true;
+            HandleSpawning();
+            Invoke("SetInitializedToFalse", 0.1f);
+        }
+    }
+
+    void Update () {
 		if (Input.GetKeyDown (KeyCode.Alpha1) && firstActive) {
 			EnterCharacter(GetCharacterObject("Character1"));
 		}
@@ -42,26 +44,32 @@ public class CharacterManager : MonoBehaviour {
         }
     }
 
-	void OnLevelWasLoaded(int level) {
-		firstActive = false;
-		secondActive = false;
-		thirdActive = false;
-
-		uim.HideCharacterInfos ();
-
-		characters = new List<GameObject>();
-		CheckSpawns();
-	}
-
-	public void PlayersTurnActivated() {
-		ResetCharacterMovement ();
+    public void PlayersTurnActivated() {
+        ResetCharacterMovement();
         ResetCharacterActions();
-	}
+    }
+
+    void HandleSpawning() {
+        uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
+
+        firstActive = false;
+        secondActive = false;
+        thirdActive = false;
+
+        if (uim != null) {
+            uim.HideCharacterInfos();
+        }
+
+        characters = new List<GameObject>();
+        GameState.characters = characters;
+        CheckSpawns();
+    }
 
 	void CheckSpawns() {
 		GameObject[] spawns = GameObject.FindGameObjectsWithTag ("Spawn");
 		if (spawns.Length == 0) {
 			Debug.Log ("Create a spawn point in the scene to spawn a character (Resources). Name it Spawn1, Spawn2 or Spawn3.");
+            return;
 		}
 		int spawnCount = 0;
 		foreach (GameObject spawn in spawns) {
@@ -111,7 +119,10 @@ public class CharacterManager : MonoBehaviour {
 		GameObject character = ((GameObject) Instantiate (prefab, position, rotation));
         character.name = name;
         characters.Add(character);
-		uim.ShowCharacterInfos(name);
+        GameState.characters.Add(character);
+        if (uim != null) {
+            uim.ShowCharacterInfos(name);
+        }
         return character;
 	}
 
@@ -150,5 +161,9 @@ public class CharacterManager : MonoBehaviour {
         character.BroadcastMessage("EnterCharacter");
         GameState.activeCharacter = character;
 	}
+
+    void SetInitializedToFalse() {
+        initialized = false;
+    }
 
 }

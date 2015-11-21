@@ -48,10 +48,11 @@ public class GameManager : MonoBehaviour {
 
 	void OnLevelWasLoaded(int level) {
 
-		if (level == 0) {
-			Destroy(gameObject);
-		}
-		levelCompleted = false;
+        if (level == 0) {
+            Destroy(gameObject);
+        }
+
+        levelCompleted = false;
         if (uim != null) {
             uim.HideLevelCompletedUI();
         }
