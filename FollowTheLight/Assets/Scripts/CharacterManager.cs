@@ -119,7 +119,6 @@ public class CharacterManager : MonoBehaviour {
 		GameObject character = ((GameObject) Instantiate (prefab, position, rotation));
         character.name = name;
         characters.Add(character);
-        GameState.characters.Add(character);
         if (uim != null) {
             uim.ShowCharacterInfos(name);
         }

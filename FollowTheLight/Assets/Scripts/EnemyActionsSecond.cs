@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SecondEnemyActions : MonoBehaviour {
+public class EnemyActionsSecond : MonoBehaviour {
 	
 	EnemyManager em;
 	
