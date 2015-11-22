@@ -108,36 +108,48 @@ public class CharacterManager : MonoBehaviour {
         CheckSpawns();
     }
 
-	void CheckSpawns() {
-		GameObject[] spawns = GameObject.FindGameObjectsWithTag ("Spawn");
-		if (spawns.Length == 0) {
-			Debug.Log ("Create a spawn point in the scene to spawn a character (Resources). Name it Spawn1, Spawn2 or Spawn3.");
+    void CheckSpawns() {
+        GameObject[] spawns = GameObject.FindGameObjectsWithTag("Spawn");
+        if (spawns.Length == 0) {
+            Debug.Log("Create a spawn point in the scene to spawn a character (Resources). Name it Spawn1, Spawn2 or Spawn3.");
             return;
-		}
-		int spawnCount = 0;
-		foreach (GameObject spawn in spawns) {
+        }
+        int spawnCount = 0;
+        foreach (GameObject spawn in spawns) {
 
-			spawnCount += 1;
-			string charName;
+            spawnCount += 1;
+            string charName;
 
-			if (spawn.name == "Spawn1" && !firstActive) {
-				charName = "Character1";
-				SpawnFirstCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
-			} else if (spawn.name == "Spawn2" && !secondActive) {
-				charName = "Character2";
-				SpawnSecondCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
-			} else if (spawn.name == "Spawn3" && !thirdActive) {
-				charName = "Character3";
-				SpawnThirdCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
-			} else {
-				spawnCount -= 1;
-				Debug.Log ("A spawn point must always be named Spawn1, Spawn2 or Spawn3 based on the character you want it to spawn.");
-				Debug.Log ("You cannot spawn more than one of each character type.");
-			}
-		}
-		EnterCharacter (characters[0]);
-		GameState.amountOfCharacters = spawnCount;
-	}
+            if (spawn.name == "Spawn1" && !firstActive) {
+                charName = "Character1";
+                SpawnFirstCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+            } else if (spawn.name == "Spawn2" && !secondActive) {
+                charName = "Character2";
+                SpawnSecondCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+            } else if (spawn.name == "Spawn3" && !thirdActive) {
+                charName = "Character3";
+                SpawnThirdCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+            } else {
+                spawnCount -= 1;
+                Debug.Log("A spawn point must always be named Spawn1, Spawn2 or Spawn3 based on the character you want it to spawn.");
+                Debug.Log("You cannot spawn more than one of each character type.");
+            }
+        }
+
+        GameState.amountOfCharacters = spawnCount;
+
+        if (GetCharacterObject("Character1") != null) {
+            EnterCharacter(GetCharacterObject("Character1"));
+            return;
+        } else if (GetCharacterObject("Character2") != null) {
+            EnterCharacter(GetCharacterObject("Character2"));
+            return;
+        } else if (GetCharacterObject("Character3") != null) {
+            EnterCharacter(GetCharacterObject("Character3"));
+            return;
+        }
+
+    }
 
 	void SpawnFirstCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
 		GameObject character = LoadCharacterToScene (name, spawnSpot, rotation);
