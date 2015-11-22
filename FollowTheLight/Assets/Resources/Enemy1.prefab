@@ -10,7 +10,7 @@ GameObject:
   - 224: {fileID: 22481264}
   - 222: {fileID: 22225730}
   - 114: {fileID: 11447264}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HealthMeter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ GameObject:
   - 114: {fileID: 11457290}
   - 195: {fileID: 19537606}
   - 114: {fileID: 11430120}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - 224: {fileID: 22475518}
   - 222: {fileID: 22276942}
   - 114: {fileID: 11409790}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HealthMeterBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ GameObject:
   - 223: {fileID: 22333924}
   - 114: {fileID: 11437514}
   - 114: {fileID: 11485286}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyInfo
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 403340}
   - 136: {fileID: 13623508}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Collider
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - 4: {fileID: 418100}
   - 212: {fileID: 21210042}
   - 95: {fileID: 9554030}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sprite
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 116702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 418100}

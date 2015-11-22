@@ -29,7 +29,7 @@ public class CharacterState : MonoBehaviour {
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
 		maximumHealth = amount;
 		health = amount;
-		updateHealthToUI ();
+		UpdateHealthToUI ();
 	}
 
 	public void EnterCharacter() {
@@ -67,7 +67,7 @@ public class CharacterState : MonoBehaviour {
 				dead = true;
                 AnnounceDeathToManager();
 			}
-			updateHealthToUI ();
+			UpdateHealthToUI ();
 		}
     }
 
@@ -75,7 +75,13 @@ public class CharacterState : MonoBehaviour {
         cm.CharacterDied(gameObject, type);
     }
 
-	void updateHealthToUI() {
+    void CharacterResurrected() {
+        dead = false;
+        health = maximumHealth;
+        UpdateHealthToUI();
+    }
+
+	void UpdateHealthToUI() {
 		uim.UpdateHealthMeter (gameObject.name, health, maximumHealth);
 	}
 }

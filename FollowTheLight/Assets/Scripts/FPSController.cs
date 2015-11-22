@@ -58,6 +58,10 @@ public class FPSController : MonoBehaviour {
         dead = true;
     }
 
+    void CharacterResurrected() {
+        dead = false;
+    }
+
 	private void Start() {
         dead = false;
 		characterController = GetComponent<CharacterController>();

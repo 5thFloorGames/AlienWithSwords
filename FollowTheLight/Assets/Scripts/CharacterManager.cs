@@ -44,6 +44,18 @@ public class CharacterManager : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Alpha3) && thirdActive) {
             EnterCharacter(GetCharacterObject("Character3"));
         }
+
+        #if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.I) && GetCharacterObject("Character1") != null) {
+            ResurrectCharacter(GetCharacterObject("Character1"), CharacterType.Character1);
+        }
+        if (Input.GetKeyDown(KeyCode.O) && GetCharacterObject("Character2") != null) {
+            ResurrectCharacter(GetCharacterObject("Character2"), CharacterType.Character2);
+        }
+        if (Input.GetKeyDown(KeyCode.P) && GetCharacterObject("Character3") != null) {
+            ResurrectCharacter(GetCharacterObject("Character3"), CharacterType.Character3);
+        }
+        #endif
     }
 
     public void PlayersTurnActivated() {
@@ -61,6 +73,17 @@ public class CharacterManager : MonoBehaviour {
         }
         character.BroadcastMessage("CharacterDied");
         CheckIfAllCharactersDead();
+    }
+
+    public void ResurrectCharacter(GameObject character, CharacterType type) {
+        if (type == CharacterType.Character1) {
+            firstActive = true;
+        } else if (type == CharacterType.Character2) {
+            secondActive = true;
+        } else if (type == CharacterType.Character3) {
+            thirdActive = true;
+        }
+        character.BroadcastMessage("CharacterResurrected");
     }
 
     void CheckIfAllCharactersDead() {

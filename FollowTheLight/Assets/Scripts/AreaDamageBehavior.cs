@@ -11,6 +11,7 @@ public class AreaDamageBehavior : MonoBehaviour {
     float lifeTime;
 
 	public void Init (int damageAmount, float delay, float timeFromEnemy) {
+
         explosion = GetComponent<ParticleSystem>();
         delayFromEnemy = delay;
         lifeTime = timeFromEnemy;
@@ -40,12 +41,11 @@ public class AreaDamageBehavior : MonoBehaviour {
         Debug.DrawRay((transform.position + new Vector3(0, 1, 0)), direction, Color.red, 4.0f);
 
         RaycastHit hit;
-        Physics.Raycast(transform.position, direction, out hit, (direction.magnitude + 1f));
+        Physics.Raycast(transform.position, direction, out hit, (direction.magnitude + 1f), ~(1 << 9));
+
         if (hit.collider.gameObject == character) {
-            //Debug.Log (gameObject.name + " sees " + character.name);
             return true;
         } else {
-            //Debug.Log (gameObject.name + " does not see " + hit.collider.name);
             return false;
         }
     }

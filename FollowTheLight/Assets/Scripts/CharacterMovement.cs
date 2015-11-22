@@ -69,6 +69,11 @@ public class CharacterMovement : MonoBehaviour {
         fpsc.movementAvailable = false;
     }
 
+    void CharacterResurrected() {
+        dead = false;
+        ResetMovement();
+    }
+
 
     // CharacterType managers calls these with a broadcast message
 
