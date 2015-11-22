@@ -105,4 +105,14 @@ public class UserInterfaceManager : MonoBehaviour {
             }
         }
     }
+
+    public void ActiveCharacterUI(string characterName) {
+        foreach (Transform charinf in characterPanel.transform) {
+            if (charinf.name == characterName) {
+                charinf.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            } else {
+                charinf.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }
+        }
+    }
 }

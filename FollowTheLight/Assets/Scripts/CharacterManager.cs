@@ -202,6 +202,7 @@ public class CharacterManager : MonoBehaviour {
 		}
         character.BroadcastMessage("EnterCharacter");
         GameState.activeCharacter = character;
+        uim.ActiveCharacterUI(character.name);
 	}
     
 
