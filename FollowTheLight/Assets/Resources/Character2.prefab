@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c38bf644a0be48de859486d10a9f7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumMovement: 0
+  maximumMovement: 40
 --- !u!114 &11445970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -364,7 +364,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05e6876ff09cde4bb713839e0283255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  maximumHealth: 30
+  type: 1
   dead: 0
 --- !u!114 &11448514
 MonoBehaviour:
@@ -594,6 +595,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalScale.z
       value: .399910986
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: health
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maximumMovement
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maximumHealth
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

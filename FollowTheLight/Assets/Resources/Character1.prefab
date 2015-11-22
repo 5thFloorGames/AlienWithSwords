@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c38bf644a0be48de859486d10a9f7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumMovement: 0
+  maximumMovement: 10
 --- !u!114 &11429044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -449,7 +449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  maxActions: 2
+  maxActions: 3
 --- !u!114 &11441118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -461,7 +461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05e6876ff09cde4bb713839e0283255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  maximumHealth: 20
+  type: 0
   dead: 0
 --- !u!136 &13613214
 CapsuleCollider:
@@ -577,7 +578,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxActions
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Extents.y
@@ -606,6 +607,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: health
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maximumMovement
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maximumHealth
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

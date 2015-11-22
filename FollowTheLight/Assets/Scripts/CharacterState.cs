@@ -3,11 +3,11 @@ using System.Collections;
 
 public class CharacterState : MonoBehaviour {
 
-    public int health;
-	public bool dead;
+    public int maximumHealth;
     public CharacterType type;
+    public bool dead;
 
-	int maximumHealth;
+    int health;
 
     CharacterManager cm;
 	UserInterfaceManager uim;
@@ -20,15 +20,13 @@ public class CharacterState : MonoBehaviour {
 		audioListener = GetComponentInChildren<AudioListener> ();
 		characterCamera = GetComponentInChildren<Camera> ();
 		sprite = transform.FindChild ("Sprite").gameObject;
-	}
+        dead = false;
+    }
 
-	public void Init(CharacterType setType, int amount, GameObject manager) {
-        type = setType;
-		dead = false;
+	public void Init(GameObject manager) {
         cm = manager.GetComponent<CharacterManager>();
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
-		maximumHealth = amount;
-		health = amount;
+		health = maximumHealth;
 		UpdateHealthToUI ();
 	}
 
@@ -69,6 +67,17 @@ public class CharacterState : MonoBehaviour {
 			}
 			UpdateHealthToUI ();
 		}
+    }
+
+    void Heal(int amount) {
+        if (!dead) {
+            Debug.Log(gameObject.name + " got " + amount + " healing");
+            health += amount;
+            if (health >= maximumHealth) {
+                health = maximumHealth;
+            }
+            UpdateHealthToUI();
+        }
     }
 
     void AnnounceDeathToManager() {

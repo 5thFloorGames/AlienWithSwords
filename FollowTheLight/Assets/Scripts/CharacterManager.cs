@@ -58,10 +58,37 @@ public class CharacterManager : MonoBehaviour {
         #endif
     }
 
+
+
+    void EnterCharacter(GameObject character) {
+        foreach (GameObject other in characters) {
+            if (other != character) {
+                other.BroadcastMessage("LeaveCharacter");
+            }
+        }
+        character.BroadcastMessage("EnterCharacter");
+        GameState.activeCharacter = character;
+        uim.ActiveCharacterUI(character.name);
+    }
+
     public void PlayersTurnActivated() {
         ResetCharacterMovement();
         ResetCharacterActions();
     }
+
+    void ResetCharacterMovement() {
+        foreach (GameObject character in characters) {
+            character.SendMessage("ResetMovement");
+        }
+    }
+
+    void ResetCharacterActions() {
+        foreach (GameObject character in characters) {
+            character.BroadcastMessage("ResetActions");
+        }
+    }
+
+
 
     public void CharacterDied(GameObject character, CharacterType type) {
         if (type == CharacterType.Character1) {
@@ -75,6 +102,12 @@ public class CharacterManager : MonoBehaviour {
         CheckIfAllCharactersDead();
     }
 
+    void CheckIfAllCharactersDead() {
+        if ((!firstActive && !secondActive && !thirdActive)) {
+            gameObject.GetComponent<GameManager>().AllCharactersDead();
+        }
+    }
+
     public void ResurrectCharacter(GameObject character, CharacterType type) {
         if (type == CharacterType.Character1) {
             firstActive = true;
@@ -86,11 +119,6 @@ public class CharacterManager : MonoBehaviour {
         character.BroadcastMessage("CharacterResurrected");
     }
 
-    void CheckIfAllCharactersDead() {
-        if ((!firstActive && !secondActive && !thirdActive)) {
-            gameObject.GetComponent<GameManager>().AllCharactersDead();
-        }
-    }
 
     void HandleSpawning() {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
@@ -118,17 +146,16 @@ public class CharacterManager : MonoBehaviour {
         foreach (GameObject spawn in spawns) {
 
             spawnCount += 1;
-            string charName;
 
             if (spawn.name == "Spawn1" && !firstActive) {
-                charName = "Character1";
-                SpawnFirstCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+                firstActive = true;
+                SpawnCharacter("Character1", (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
             } else if (spawn.name == "Spawn2" && !secondActive) {
-                charName = "Character2";
-                SpawnSecondCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+                secondActive = true;
+                SpawnCharacter("Character2", (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
             } else if (spawn.name == "Spawn3" && !thirdActive) {
-                charName = "Character3";
-                SpawnThirdCharacter(charName, (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+                thirdActive = true;
+                SpawnCharacter("Character3", (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
             } else {
                 spawnCount -= 1;
                 Debug.Log("A spawn point must always be named Spawn1, Spawn2 or Spawn3 based on the character you want it to spawn.");
@@ -151,23 +178,10 @@ public class CharacterManager : MonoBehaviour {
 
     }
 
-	void SpawnFirstCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
-		GameObject character = LoadCharacterToScene (name, spawnSpot, rotation);
-		firstActive = true;
-		AssignCharacterStats (character, CharacterType.Character1, 20, 10f);
-	}
-
-	void SpawnSecondCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
-		GameObject character = LoadCharacterToScene (name, spawnSpot, rotation);
-		secondActive = true;
-		AssignCharacterStats (character, CharacterType.Character2, 10, 50f);
-	}
-
-	void SpawnThirdCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
-		GameObject character = LoadCharacterToScene (name, spawnSpot, rotation);
-		thirdActive = true;
-		AssignCharacterStats (character, CharacterType.Character3, 30, 30f);
-	}
+    void SpawnCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
+        GameObject character = LoadCharacterToScene(name, spawnSpot, rotation);
+        character.GetComponent<CharacterState>().Init(gameObject);
+    }
 
 	GameObject LoadCharacterToScene(string name, Vector3 position, Quaternion rotation) {
 		GameObject prefab = (GameObject) Resources.Load(name);
@@ -180,22 +194,7 @@ public class CharacterManager : MonoBehaviour {
         return character;
 	}
 
-	void AssignCharacterStats(GameObject character, CharacterType type, int health, float maximumMovement) {
-		character.GetComponent<CharacterMovement> ().maximumMovement = maximumMovement;
-		character.GetComponent<CharacterState> ().Init (type, health, gameObject);
-	}
 
-	void ResetCharacterMovement() {
-		foreach (GameObject character in characters) {
-			character.SendMessage("ResetMovement");
-		}
-	}
-
-    void ResetCharacterActions() {
-        foreach (GameObject character in characters) {
-            character.BroadcastMessage("ResetActions");
-        }
-    }
 
 	GameObject GetCharacterObject(string name) {
 		foreach (GameObject character in characters) {
@@ -205,18 +204,6 @@ public class CharacterManager : MonoBehaviour {
 		}
 		return null;
 	}
-
-	void EnterCharacter(GameObject character) {
-		foreach (GameObject other in characters) {
-			if (other != character) {
-                other.BroadcastMessage("LeaveCharacter");
-			}
-		}
-        character.BroadcastMessage("EnterCharacter");
-        GameState.activeCharacter = character;
-        uim.ActiveCharacterUI(character.name);
-	}
-    
 
     void SetInitializedToFalse() {
         initialized = false;
