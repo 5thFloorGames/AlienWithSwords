@@ -4,23 +4,25 @@ using System.Collections.Generic;
 
 public class AreaDamageBehavior : MonoBehaviour {
 
-	int damage;
-	float timeForSuiciding = 0.1f;
+    ParticleSystem explosion;
 
-	public void Init (float time, float size, int damageAmount, float delay) {
-		time = time - timeForSuiciding;
+	int damage;
+    float delayFromEnemy;
+    float lifeTime;
+
+	public void Init (int damageAmount, float delay, float timeFromEnemy) {
+        explosion = GetComponent<ParticleSystem>();
+        delayFromEnemy = delay;
+        lifeTime = timeFromEnemy;
 		damage = damageAmount;
-		iTween.ScaleTo(gameObject, iTween.Hash(
-			"scale", new Vector3 (size, size, size),
-			"time", time,
-			"delay", delay,
-			"oncomplete", "fadeAwayAndSuicide"));
+        StartCoroutine(ExplosionOperations());
 	}
 
 	void OnTriggerEnter (Collider other) {
-		Debug.Log (gameObject.name + " hit " + other.name);
-		if (other.tag == "Player") {
-			 other.gameObject.SendMessageUpwards("takeDamage", damage);
+		if (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider))) {
+            if (CheckIfCharacterInSight(other.gameObject)) {
+                other.gameObject.SendMessageUpwards("takeDamage", damage);
+            }
 		}
 	}
 
@@ -32,16 +34,27 @@ public class AreaDamageBehavior : MonoBehaviour {
 		
 	}
 
-	void fadeAwayAndSuicide() {
-		// implement fading away for the final effects
-		gameObject.GetComponent<Collider> ().enabled = true;
-		StartCoroutine (suicide());
-	}
+    bool CheckIfCharacterInSight(GameObject character) {
+        Vector3 direction = character.transform.position - transform.position;
 
-	IEnumerator suicide() {
-		yield return new WaitForSeconds(timeForSuiciding);
-		Destroy (gameObject);
-	}
+        Debug.DrawRay(transform.position, direction, Color.green, 4.0f);
 
+        RaycastHit hit;
+        Physics.Raycast(transform.position, direction, out hit, direction.magnitude);
+        if (hit.collider.gameObject == character) {
+            //Debug.Log (gameObject.name + " sees " + character.name);
+            return true;
+        } else {
+            //Debug.Log (gameObject.name + " does not see " + hit.collider.name);
+            return false;
+        }
+    }
 
+    IEnumerator ExplosionOperations() {
+        yield return new WaitForSeconds(delayFromEnemy);
+        explosion.Emit(700);
+        gameObject.GetComponent<Collider>().enabled = true;
+        yield return new WaitForSeconds(lifeTime);
+        Destroy(gameObject);
+    }
 }

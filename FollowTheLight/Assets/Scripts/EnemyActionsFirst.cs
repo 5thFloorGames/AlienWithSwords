@@ -10,9 +10,9 @@ public class EnemyActionsFirst : MonoBehaviour {
 	NavMeshAgent nva;
 	Animator animator;
 
-	float actionTime;
 	int actionDamage;
 	float movementTime;
+    float aoeLifetime;
 
     bool playerSeen;
 
@@ -21,10 +21,10 @@ public class EnemyActionsFirst : MonoBehaviour {
 		nva = GetComponent<NavMeshAgent> ();
 		animator = gameObject.GetComponentInChildren<Animator>();
 
-		actionTime = 1.0f;
 		actionDamage = 5;
+        aoeLifetime = 1.7f;
 
-		movementTime = 1.0f;
+        movementTime = 1.0f;
     }
 
 	void Update () {
@@ -42,22 +42,18 @@ public class EnemyActionsFirst : MonoBehaviour {
         Invoke("StopMovingAndCastIfSeenPlayer", movementTime);
 	}
 
-	private bool CheckIfCharacterInSight (GameObject character){
-		Vector3 direction = character.transform.position - transform.position;
+	bool CheckIfCharacterInSight (GameObject character) {
+        Vector3 enemyView = transform.position + new Vector3(0, 2, 0);
+		Vector3 direction = (character.transform.position + new Vector3 (0, 1, 0)) - enemyView;
 
-		Debug.DrawRay(transform.position, direction, Color.green, 4.0f);
-
+		Debug.DrawRay(enemyView, direction, Color.green, 2.0f);
 		RaycastHit hit;
-		Physics.Raycast(transform.position, direction, out hit, direction.magnitude);
+		Physics.Raycast(enemyView, direction, out hit, direction.magnitude);
 		if (hit.collider.gameObject == character) {
-			//Debug.Log (gameObject.name + " sees " + character.name);
 			return true;
 		} else {
-			//Debug.Log (gameObject.name + " does not see " + hit.collider.name);
 			return false;
 		}
-
-
 	}
 
 	void CheckVisibleCharacters() {
@@ -91,10 +87,9 @@ public class EnemyActionsFirst : MonoBehaviour {
         GameObject spawnedAreaDamage = (GameObject)Instantiate(aoePrefab, transform.position, Quaternion.identity);
 		spawnedAreaDamage.name = gameObject.name + "Aoe";
 		AreaDamageBehavior adb = spawnedAreaDamage.GetComponent<AreaDamageBehavior> ();
-		// time, size, damage for the aoe effect and start casting it
-		float animationDelay = 1.0f;
-		adb.Init (actionTime, 20f, actionDamage, animationDelay);
-		Invoke ("ActionsCompletedInformManager", actionTime + animationDelay);
+		float animationDelay = 1.1f;
+		adb.Init (actionDamage, animationDelay, aoeLifetime);
+		Invoke ("ActionsCompletedInformManager", animationDelay + aoeLifetime);
     }
 
 	void ActionsCompletedInformManager() {
