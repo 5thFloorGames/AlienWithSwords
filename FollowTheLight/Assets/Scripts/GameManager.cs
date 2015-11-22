@@ -8,7 +8,11 @@ public class GameManager : MonoBehaviour {
 	UserInterfaceManager uim;
 	bool levelCompleted;
 
-	void Awake() {
+    LevelObjective objective;
+
+    bool initialized = false;
+
+    void Awake() {
 		DontDestroyOnLoad (gameObject);
         GameState.SetLevel(Application.loadedLevel);
     }
@@ -19,13 +23,31 @@ public class GameManager : MonoBehaviour {
         #endif
         cm = gameObject.GetComponent<CharacterManager> ();
 		em = gameObject.GetComponent<EnemyManager> ();
-		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
-		levelCompleted = false;
-		Invoke("LateStart", 0.1f);
+        uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
+
+        if (!initialized) {
+            initialized = true;
+            levelCompleted = false;
+            Invoke("LateStart", 0.1f);
+        }
 	}
 
-	void LateStart () {
+    void OnLevelWasLoaded(int level) {
+
+        if (level == 0) {
+            Destroy(gameObject);
+        }
+
+        if (!initialized && level != 0) {
+            initialized = true;
+            levelCompleted = false;
+            Invoke("LateStart", 0.1f);
+        }
+    }
+
+    void LateStart () {
 		StartPlayerTurn ();
+        initialized = false;
 	}
 
 	void Update () {
@@ -46,42 +68,64 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	void OnLevelWasLoaded(int level) {
 
-        if (level == 0) {
-            Destroy(gameObject);
-        }
-
-        levelCompleted = false;
-        if (uim != null) {
-            uim.HideLevelCompletedUI();
-        }
-        Invoke("StartPlayerTurn", 0.1f);
-	}
-	
-	public void LevelComplete() {
+    public void LevelComplete() {
 		if (!levelCompleted) {
 			levelCompleted = true;
 
 			uim.ShowLevelCompletedUI();
 			GameState.playersTurn = false;
-			if (GameState.GetLevel() == GameState.GetLastLevel()) {
-				QuitGame ();
-			} else {
-				GameState.LevelComplete();
-				LoadNextLevel();
-			}
+            StartCoroutine(LevelCompletedLoadNextIn(3.0f));
 		}
 	}
 
-	public void QuitGame() {
-		GameState.Reset ();
-		Application.LoadLevel(0);
-	}
+    IEnumerator LevelCompletedLoadNextIn(float seconds) {
+        yield return new WaitForSeconds(seconds);
+        uim.HideLevelCompletedUI();
+        if (GameState.GetLevel() == GameState.GetLastLevel()) {
+            QuitGame();
+        } else {
+            GameState.LevelComplete();
+            LoadNextLevel();
+        }
+    }
 
-	public void EnemyTurnOver() {
-		StartCoroutine(StartPlayerTurnIn (0.1f));
-	}
+    public void LevelFailed() {
+        if (!levelCompleted) {
+            levelCompleted = true;
+
+            uim.HideEnemyUI();
+            uim.ShowLevelFailedUI();
+            GameState.playersTurn = false;
+            StartCoroutine(LevelFailedLoadSameIn(3.0f));
+        }
+    }
+
+    IEnumerator LevelFailedLoadSameIn(float seconds) {
+        yield return new WaitForSeconds(seconds);
+        uim.HideLevelFailedUI();
+        LoadNextLevel();
+    }
+
+
+
+    public void AllCharactersDead() {
+        LevelFailed();
+    }
+
+    public void AllCharactersInLevelEnd() {
+        if (objective == LevelObjective.GetToLevelEnd) {
+            LevelComplete();
+        }
+    }
+
+    public void AllEnemiesDestroyed() {
+        if (objective == LevelObjective.DestroyEnemies) {
+            LevelComplete();
+        }
+    }
+
+
 
 	void StartEnemyTurn() {
 		GameState.playersTurn = false;
@@ -89,20 +133,36 @@ public class GameManager : MonoBehaviour {
 		em.TriggerEnemyActions ();
 	}
 
-	void StartPlayerTurn() {
+    public void EnemyTurnOver() {
+        StartCoroutine(StartPlayerTurnIn(0.1f));
+    }
+
+    IEnumerator StartPlayerTurnIn(float seconds) {
+        yield return new WaitForSeconds(seconds);
+        StartPlayerTurn();
+    }
+
+    void StartPlayerTurn() {
 		uim.HideEnemyUI ();
         cm.PlayersTurnActivated ();
 		em.PlayersTurnActivated ();
 		GameState.playersTurn = true;
 	}
 
-	void LoadNextLevel() {
-		Application.LoadLevel (GameState.GetLevel());
-	}
 
-	IEnumerator StartPlayerTurnIn(float seconds) {
-		yield return new WaitForSeconds(seconds);
-		StartPlayerTurn ();
-	}
-	
+
+    public void SetLevelObjective(LevelObjective obj) {
+        objective = obj;
+        Debug.Log("Objective: " + objective.ToString());
+    }
+
+    void LoadNextLevel() {
+        Application.LoadLevel(GameState.GetLevel());
+    }
+
+    void QuitGame() {
+        GameState.Reset();
+        Application.LoadLevel(0);
+    }
+
 }

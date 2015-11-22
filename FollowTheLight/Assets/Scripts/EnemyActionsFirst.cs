@@ -48,7 +48,7 @@ public class EnemyActionsFirst : MonoBehaviour {
 
 		Debug.DrawRay(enemyView, direction, Color.green, 2.0f);
 		RaycastHit hit;
-		Physics.Raycast(enemyView, direction, out hit, direction.magnitude);
+		Physics.Raycast(enemyView, direction, out hit, (direction.magnitude + 1.0f));
 		if (hit.collider.gameObject == character) {
 			return true;
 		} else {
@@ -61,7 +61,7 @@ public class EnemyActionsFirst : MonoBehaviour {
         List<GameObject> knownCharacters = new List<GameObject>();
 
 		foreach (GameObject character in GameState.characters) {
-            if (CheckIfCharacterInSight(character)) {
+            if (CheckIfCharacterInSight(character) && !character.GetComponent<CharacterState>().dead) {
                 knownCharacters.Add(character);
             }
 		}

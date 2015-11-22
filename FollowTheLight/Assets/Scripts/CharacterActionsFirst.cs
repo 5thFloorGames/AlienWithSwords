@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FirstCharacterActions : MonoBehaviour {
+public class CharacterActionsFirst : MonoBehaviour {
 
 	public int damage;
     public int maxActions;
 
 	bool inCharacter;
+    bool dead;
     int actions;
 
 	GameObject bullet;
@@ -21,6 +22,7 @@ public class FirstCharacterActions : MonoBehaviour {
     void Awake() {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 		hands = transform.FindChild ("Hands").gameObject;
+        dead = false;
     }
 
     void Start () {
@@ -30,9 +32,9 @@ public class FirstCharacterActions : MonoBehaviour {
 	}
 
 	void Update () {
-		if (GameState.playersTurn && inCharacter && actions > 0) {
+		if (GameState.playersTurn && inCharacter && actions > 0 && !dead) {
 			if (Time.time - previousFiringTime >= bulletCooldown) {
-				if (Input.GetButton ("Fire1")){
+				if (Input.GetButtonDown ("Fire1")){
 					previousFiringTime = Time.time;
 					Shoot();
                     actions -= 1;
@@ -56,7 +58,11 @@ public class FirstCharacterActions : MonoBehaviour {
     }
 
 
-    // Character Manager calls these with a broadcast message
+    // CharacterType Manager calls these with a broadcast message
+
+    void CharacterDied() {
+        dead = true;
+    }
 
     void ResetActions() {
         actions = maxActions;

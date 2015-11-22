@@ -21,7 +21,7 @@ public class AreaDamageBehavior : MonoBehaviour {
 	void OnTriggerEnter (Collider other) {
 		if (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider))) {
             if (CheckIfCharacterInSight(other.gameObject)) {
-                other.gameObject.SendMessageUpwards("takeDamage", damage);
+                other.gameObject.SendMessageUpwards("TakeDamage", damage);
             }
 		}
 	}
@@ -35,12 +35,12 @@ public class AreaDamageBehavior : MonoBehaviour {
 	}
 
     bool CheckIfCharacterInSight(GameObject character) {
-        Vector3 direction = character.transform.position - transform.position;
+        Vector3 direction = (character.transform.position + new Vector3(0, 1, 0)) - (transform.position + new Vector3(0, 1, 0));
 
-        Debug.DrawRay(transform.position, direction, Color.green, 4.0f);
+        Debug.DrawRay((transform.position + new Vector3(0, 1, 0)), direction, Color.red, 4.0f);
 
         RaycastHit hit;
-        Physics.Raycast(transform.position, direction, out hit, direction.magnitude);
+        Physics.Raycast(transform.position, direction, out hit, (direction.magnitude + 1f));
         if (hit.collider.gameObject == character) {
             //Debug.Log (gameObject.name + " sees " + character.name);
             return true;

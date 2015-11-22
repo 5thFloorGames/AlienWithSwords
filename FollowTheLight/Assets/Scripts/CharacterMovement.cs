@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovementMeasurements : MonoBehaviour {
+public class CharacterMovement : MonoBehaviour {
 
 	public float maximumMovement;
+
+    bool dead;
 
 	bool movementAvailable;
 	bool inCharacter;
@@ -15,15 +17,18 @@ public class MovementMeasurements : MonoBehaviour {
 	FPSController fpsc;
 
 	public void ResetMovement() {
-		distanceTravelled = 0;
-        lastPosition = transform.position;
-        lastPosition.y = 1;
-		updateDistanceToUI ();
-		movementAvailable = true;
-		fpsc.movementAvailable = true;
+        if (!dead) {
+            distanceTravelled = 0;
+            lastPosition = transform.position;
+            lastPosition.y = 1;
+            UpdateDistanceToUI();
+            movementAvailable = true;
+            fpsc.movementAvailable = true;
+        }
 	}
 
 	void Awake() {
+        dead = false;
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
 		fpsc = gameObject.GetComponent<FPSController> ();
 	}
@@ -31,35 +36,41 @@ public class MovementMeasurements : MonoBehaviour {
 	
 	void Update() {
 		if (GameState.playersTurn && inCharacter && movementAvailable) {
-			detectMovement();
+			DetectMovement();
 		}
 	}
 
-	void detectMovement() {
+	void DetectMovement() {
 		Vector3 currentPosition = transform.position;
 		currentPosition.y = 1;
 		distanceTravelled += Vector3.Distance(currentPosition, lastPosition);
 
 		if (distanceTravelled > maximumMovement) {
 			distanceTravelled = maximumMovement;
-			updateDistanceToUI ();
+			UpdateDistanceToUI ();
 			movementAvailable = false;
 			fpsc.movementAvailable = false;
 		} else {
 			lastPosition = currentPosition;
 			if (updatedDistance - distanceTravelled <= -0.01f) {
-				updateDistanceToUI ();
+				UpdateDistanceToUI ();
 			}
 		}
 	}
 
-	void updateDistanceToUI() {
+	void UpdateDistanceToUI() {
 		updatedDistance = (float)System.Math.Round (distanceTravelled, 2);
 		uim.UpdateDistanceMeter (gameObject.name, updatedDistance, maximumMovement);
 	}
 
+    void CharacterDied() {
+        dead = true;
+        movementAvailable = false;
+        fpsc.movementAvailable = false;
+    }
 
-    // Character managers calls these with a broadcast message
+
+    // CharacterType managers calls these with a broadcast message
 
     void EnterCharacter() {
         inCharacter = true;

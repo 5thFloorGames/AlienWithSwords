@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum LevelObjective { DestroyEnemies, GetToLevelEnd };
+
 public class LevelLoader : MonoBehaviour {
-	GameObject gameManager;
+
+    public LevelObjective levelObjective;
+
+    GameObject gameManager;
 	GameObject userInterface;
 	
 	void Awake () {
@@ -18,7 +23,12 @@ public class LevelLoader : MonoBehaviour {
 			gameManager = Instantiate<GameObject>((GameObject)Resources.Load("GameManager"));
 			gameManager.name = "GameManager";
 		}
+
 	}
+
+    void Start() {
+        gameManager.GetComponent<GameManager>().SetLevelObjective(levelObjective);
+    }
 
 	void Update () {
 	

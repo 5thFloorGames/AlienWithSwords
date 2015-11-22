@@ -30,6 +30,7 @@ public class FPSController : MonoBehaviour {
 	[SerializeField] private AudioClip landSound;           // the sound played when character touches back on ground.
 	
 	private bool inCharacter;
+    bool dead;
 
 	private Camera camra;
 	private bool jump;
@@ -53,7 +54,12 @@ public class FPSController : MonoBehaviour {
 		inCharacter = false;
 	}
 
+    void CharacterDied() {
+        dead = true;
+    }
+
 	private void Start() {
+        dead = false;
 		characterController = GetComponent<CharacterController>();
 		camra = GetComponentInChildren<Camera>();
 		originalCameraPosition = camra.transform.localPosition;
@@ -67,7 +73,7 @@ public class FPSController : MonoBehaviour {
 	}
 
 	private void Update() {
-		if (inCharacter) {
+		if (inCharacter && !dead) {
 			RotateView();
 			if (GameState.playersTurn && movementAvailable) {
 				// the jump state needs to read here to make sure it is not missed
@@ -118,8 +124,7 @@ public class FPSController : MonoBehaviour {
 			moveDir.z = desiredMove.z*speed;
 			
 			
-			if (characterController.isGrounded)
-			{
+			if (characterController.isGrounded) {
 				moveDir.y = -stickToGroundForce;
 				
 				if (jump)
@@ -130,8 +135,7 @@ public class FPSController : MonoBehaviour {
 					jumping = true;
 				}
 			}
-			else
-			{
+			else {
 				moveDir += Physics.gravity*gravityMultiplier*Time.fixedDeltaTime;
 			}
 			collisionFlags = characterController.Move(moveDir*Time.fixedDeltaTime);

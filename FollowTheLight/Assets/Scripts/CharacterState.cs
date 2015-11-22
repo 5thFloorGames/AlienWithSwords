@@ -5,9 +5,11 @@ public class CharacterState : MonoBehaviour {
 
     public int health;
 	public bool dead;
+    public CharacterType type;
 
 	int maximumHealth;
 
+    CharacterManager cm;
 	UserInterfaceManager uim;
 
 	AudioListener audioListener;
@@ -20,8 +22,10 @@ public class CharacterState : MonoBehaviour {
 		sprite = transform.FindChild ("Sprite").gameObject;
 	}
 
-	public void Init(int amount) {
+	public void Init(CharacterType setType, int amount, GameObject manager) {
+        type = setType;
 		dead = false;
+        cm = manager.GetComponent<CharacterManager>();
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
 		maximumHealth = amount;
 		health = amount;
@@ -45,7 +49,7 @@ public class CharacterState : MonoBehaviour {
 	}
 
 	void Update () {
-	
+	    
 	}
 
 	void OnLevelWasLoaded(int level) {
@@ -54,17 +58,21 @@ public class CharacterState : MonoBehaviour {
 		}
 	}
 
-    void takeDamage(int amount) {
+    void TakeDamage(int amount) {
 		if (!dead) {
 	        Debug.Log(gameObject.name + " took " +  amount + " damage");
 			health -= amount;
 			if (health <= 0) {
 				health = 0;
-				Debug.Log (gameObject.name + " is dead :(");
 				dead = true;
+                AnnounceDeathToManager();
 			}
 			updateHealthToUI ();
 		}
+    }
+
+    void AnnounceDeathToManager() {
+        cm.CharacterDied(gameObject, type);
     }
 
 	void updateHealthToUI() {

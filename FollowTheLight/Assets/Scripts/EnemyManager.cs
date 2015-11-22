@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum EnemyType { Enemy1, Enemy2 };
+
 public class EnemyManager : MonoBehaviour {
 
 	GameManager gm;
@@ -55,6 +57,9 @@ public class EnemyManager : MonoBehaviour {
 
 	void DeleteEnemyFromList(GameObject enemyobj) {
 		enemies.Remove (enemyobj);
+        if (enemies.Count == 0) {
+            gm.AllEnemiesDestroyed();
+        }
 	}
 
 	void GetEnemiesInScene() {

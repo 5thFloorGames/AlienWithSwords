@@ -7,6 +7,7 @@ public class UserInterfaceManager : MonoBehaviour {
 
 	GameObject enemyTurnUI;
     GameObject levelCompletedUI;
+    GameObject levelFailedUI;
 	GameObject characterPanel;
     //GameObject crosshairs;
 
@@ -24,6 +25,7 @@ public class UserInterfaceManager : MonoBehaviour {
 
 		enemyTurnUI = (GameObject)transform.Find ("EnemyTurn").gameObject;
 		levelCompletedUI = (GameObject)transform.Find ("LevelCompleted").gameObject;
+        levelFailedUI = (GameObject)transform.Find("LevelFailed").gameObject;
 		//crosshairs = (GameObject)transform.Find ("Crosshairs").gameObject;
 
 		characterPanel = (GameObject)transform.Find ("CharacterPanel").gameObject;
@@ -61,6 +63,14 @@ public class UserInterfaceManager : MonoBehaviour {
 	public void HideEnemyUI() {
 		enemyTurnUI.SetActive (false);
 	}
+
+    public void ShowLevelFailedUI() {
+        levelFailedUI.SetActive(true);
+    }
+
+    public void HideLevelFailedUI() {
+        levelFailedUI.SetActive(false);
+    }
 
 	public void ShowLevelCompletedUI() {
 		levelCompletedUI.SetActive (true);
