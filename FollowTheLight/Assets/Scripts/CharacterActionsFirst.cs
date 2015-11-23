@@ -54,7 +54,7 @@ public class CharacterActionsFirst : MonoBehaviour {
 	}
 
     void updateActionsToUI() {
-        uim.UpdateActionMeter(gameObject.transform.parent.name, actions, maxActions);
+        uim.UpdateActionPoints(gameObject.transform.parent.name, actions, maxActions);
     }
 
 
@@ -62,6 +62,11 @@ public class CharacterActionsFirst : MonoBehaviour {
 
     void CharacterDied() {
         dead = true;
+    }
+
+    void CharacterResurrected() {
+        dead = false;
+        ResetActions();
     }
 
     void ResetActions() {

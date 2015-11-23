@@ -59,7 +59,7 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void UpdateDistanceToUI() {
-		updatedDistance = (float)System.Math.Round (distanceTravelled, 2);
+		updatedDistance = distanceTravelled;
 		uim.UpdateDistanceMeter (gameObject.name, updatedDistance, maximumMovement);
 	}
 

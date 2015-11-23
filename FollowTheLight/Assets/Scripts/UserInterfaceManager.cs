@@ -12,16 +12,20 @@ public class UserInterfaceManager : MonoBehaviour {
     //GameObject crosshairs;
 
     Dictionary <string, Image> healthMeters;
+    Dictionary <string, Text> healthTexts;
 	Dictionary <string, Image> distanceMeters;
-    Dictionary <string, Image> actionMeters;
+    Dictionary <string, Text> distanceTexts;
+    Dictionary <string, Transform> actionPoints;
 	
 	void Awake () {
 
 		DontDestroyOnLoad (gameObject);
 
-		distanceMeters = new Dictionary<string, Image>();
-		healthMeters = new Dictionary<string, Image> ();
-        actionMeters = new Dictionary<string, Image> ();
+        healthMeters = new Dictionary<string, Image>();
+        healthTexts = new Dictionary<string, Text>();
+        distanceMeters = new Dictionary<string, Image>();
+        distanceTexts = new Dictionary<string, Text>();
+        actionPoints = new Dictionary<string, Transform> ();
 
 		enemyTurnUI = (GameObject)transform.Find ("EnemyTurn").gameObject;
 		levelCompletedUI = (GameObject)transform.Find ("LevelCompleted").gameObject;
@@ -31,17 +35,22 @@ public class UserInterfaceManager : MonoBehaviour {
 		characterPanel = (GameObject)transform.Find ("CharacterPanel").gameObject;
 
 		foreach (Transform charinf in characterPanel.transform) {
-			GameObject obj = charinf.FindChild("DistanceMeter").gameObject;
-			Image img = obj.GetComponent<Image>();
-			distanceMeters.Add(charinf.name, img);
-
-			obj = charinf.FindChild("HealthMeter").gameObject;
-			img = obj.GetComponent<Image>();
+			GameObject obj = charinf.FindChild("HealthMeter").gameObject;
+            Image img = obj.GetComponent<Image>();
 			healthMeters.Add(charinf.name, img);
 
-            obj = charinf.FindChild("ActionMeter").gameObject;
+            Text text = charinf.FindChild("HealthText").gameObject.GetComponent<Text>();
+            healthTexts.Add(charinf.name, text);
+
+            obj = charinf.FindChild("DistanceMeter").gameObject;
             img = obj.GetComponent<Image>();
-            actionMeters.Add(charinf.name, img);
+            distanceMeters.Add(charinf.name, img);
+
+            text = charinf.FindChild("DistanceText").gameObject.GetComponent<Text>();
+            distanceTexts.Add(charinf.name, text);
+
+            obj = charinf.FindChild("ActionPoints").gameObject;
+            actionPoints.Add(charinf.name, obj.transform);
         }
 
 	}
@@ -80,16 +89,26 @@ public class UserInterfaceManager : MonoBehaviour {
 		levelCompletedUI.SetActive (false);
 	}
 
-	public void UpdateDistanceMeter(string characterName, float distance, float maximum) {
-		distanceMeters [characterName].fillAmount =  (1 - distance / maximum);
+    public void UpdateHealthMeter(string characterName, float currentHealth, float maximum) {
+        healthMeters[characterName].fillAmount = (currentHealth / maximum);
+        healthTexts[characterName].text = currentHealth.ToString();
+    }
+
+    public void UpdateDistanceMeter(string characterName, float distance, float maximum) {
+		distanceMeters[characterName].fillAmount =  (1 - distance / maximum);
+        distanceTexts[characterName].text = (maximum - distance).ToString("F1");
 	}
 
-	public void UpdateHealthMeter(string characterName, float currentHealth, float maximum) {
-		healthMeters [characterName].fillAmount = (currentHealth / maximum);
-	}
-
-    public void UpdateActionMeter(string characterName, float actions, float maximum) {
-        actionMeters[characterName].fillAmount = (actions / maximum);
+    public void UpdateActionPoints(string characterName, int actions, float maximum) {
+        int counter = 0;
+        foreach (Transform actionPoint in actionPoints[characterName]) {
+            if (counter < actions) {
+                actionPoint.gameObject.SetActive(true);
+            } else {
+                actionPoint.gameObject.SetActive(false);
+            }
+            counter += 1;
+        }
     }
 
 	public void HideCharacterInfos() {

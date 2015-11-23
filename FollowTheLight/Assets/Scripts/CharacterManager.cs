@@ -149,13 +149,13 @@ public class CharacterManager : MonoBehaviour {
 
             if (spawn.name == "Spawn1" && !firstActive) {
                 firstActive = true;
-                SpawnCharacter("Character1", (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+                LoadCharacterToScene("Character1", (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
             } else if (spawn.name == "Spawn2" && !secondActive) {
                 secondActive = true;
-                SpawnCharacter("Character2", (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+                LoadCharacterToScene("Character2", (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
             } else if (spawn.name == "Spawn3" && !thirdActive) {
                 thirdActive = true;
-                SpawnCharacter("Character3", (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
+                LoadCharacterToScene("Character3", (spawn.transform.position + new Vector3(0, 1, 0)), spawn.transform.rotation);
             } else {
                 spawnCount -= 1;
                 Debug.Log("A spawn point must always be named Spawn1, Spawn2 or Spawn3 based on the character you want it to spawn.");
@@ -178,12 +178,7 @@ public class CharacterManager : MonoBehaviour {
 
     }
 
-    void SpawnCharacter(string name, Vector3 spawnSpot, Quaternion rotation) {
-        GameObject character = LoadCharacterToScene(name, spawnSpot, rotation);
-        character.GetComponent<CharacterState>().Init(gameObject);
-    }
-
-	GameObject LoadCharacterToScene(string name, Vector3 position, Quaternion rotation) {
+	void LoadCharacterToScene(string name, Vector3 position, Quaternion rotation) {
 		GameObject prefab = (GameObject) Resources.Load(name);
 		GameObject character = ((GameObject) Instantiate (prefab, position, rotation));
         character.name = name;
@@ -191,8 +186,8 @@ public class CharacterManager : MonoBehaviour {
         if (uim != null) {
             uim.ShowCharacterInfos(name);
         }
-        return character;
-	}
+        character.GetComponent<CharacterState>().Init(gameObject);
+    }
 
 
 
