@@ -2,8 +2,9 @@
 using System.Collections;
 
 public class CharacterActionsSecond : MonoBehaviour {
-	
-	public int damage;
+
+	public int strikeDamage;
+	public int slashDamage;
 	public int maxActions;
 	
 	bool inCharacter;
@@ -55,7 +56,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 		actions -= 1;
 		previousActionTime = Time.time;
 		weaponPivot.SetActive (true);
-		mwd.damageAmount = 15;
+		mwd.damageAmount = strikeDamage;
 
 		weaponPivot.transform.localRotation = Quaternion.Euler (-90f, 0f, 0f);
 		iTween.RotateTo (weaponPivot, iTween.Hash (
@@ -70,7 +71,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 		actions -= 1;
 		previousActionTime = Time.time;
 		weaponPivot.SetActive (true);
-		mwd.damageAmount = 5;
+		mwd.damageAmount = slashDamage;
 
 		weaponPivot.transform.localRotation = Quaternion.Euler (0f, -89f, 90f);
 		iTween.RotateTo (weaponPivot, iTween.Hash (
