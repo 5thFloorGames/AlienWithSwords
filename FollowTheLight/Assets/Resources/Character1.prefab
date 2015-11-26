@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 438976}
   - 212: {fileID: 21216786}
   - 114: {fileID: 11433780}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,7 +33,7 @@ GameObject:
   - 136: {fileID: 13613214}
   - 114: {fileID: 11428832}
   - 208: {fileID: 20854020}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Character1
   m_TagString: Player
   m_Icon: {fileID: 0}
