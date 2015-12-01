@@ -15,7 +15,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 	float previousActionTime;
 
 	GameObject cameraObj;
-	GameObject hands;
+	GameObject overlay;
 
 	GameObject weaponPivot;
 	MeleeWeaponDamages mwd;
@@ -25,7 +25,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 	void Awake() {
 		dead = false;
 		uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
-		hands = transform.FindChild ("Hands").gameObject;
+		overlay = transform.FindChild ("Overlay").gameObject;
 		weaponPivot = transform.FindChild ("WeaponPivot").gameObject;
 		mwd = weaponPivot.GetComponentInChildren<MeleeWeaponDamages> ();
 		weaponPivot.SetActive (false);
@@ -110,11 +110,11 @@ public class CharacterActionsSecond : MonoBehaviour {
 	
 	void EnterCharacter() {
 		inCharacter = true;
-		hands.SetActive (true);
+		overlay.SetActive (true);
 	}
 	
 	void LeaveCharacter() {
 		inCharacter = false;
-		hands.SetActive (false);
+		overlay.SetActive (false);
 	}
 }

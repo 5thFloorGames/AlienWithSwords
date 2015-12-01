@@ -12,7 +12,7 @@ public class CharacterActionsFirst : MonoBehaviour {
 
 	GameObject bullet;
 	GameObject cameraObj;
-	GameObject hands;
+	GameObject overlay;
 
 	float bulletCooldown;
 	float previousFiringTime;
@@ -21,7 +21,7 @@ public class CharacterActionsFirst : MonoBehaviour {
 
     void Awake() {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
-		hands = transform.FindChild ("Hands").gameObject;
+		overlay = transform.FindChild ("Overlay").gameObject;
         dead = false;
     }
 
@@ -76,11 +76,11 @@ public class CharacterActionsFirst : MonoBehaviour {
 
     void EnterCharacter() {
         inCharacter = true;
-		hands.SetActive (true);
+		overlay.SetActive (true);
     }
 
     void LeaveCharacter() {
         inCharacter = false;
-		hands.SetActive (false);
+		overlay.SetActive (false);
     }
 }
