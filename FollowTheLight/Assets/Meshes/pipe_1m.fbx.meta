@@ -6,10 +6,35 @@ ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
+    100002: coupling
+    100004: coupling1
+    100006: pipe_straight_1m(center)
+    100008: pipe_straight_1m(center*
+    100010: transform1
+    100012: transform2
+    100014: transform3
     400000: //RootNode
+    400002: coupling
+    400004: coupling1
+    400006: pipe_straight_1m(center)
+    400008: pipe_straight_1m(center*
+    400010: transform1
+    400012: transform2
+    400014: transform3
     2300000: //RootNode
+    2300002: coupling
+    2300004: coupling1
+    2300006: pipe_straight_1m(center)
+    2300008: pipe_straight_1m(center*
     3300000: //RootNode
+    3300002: coupling
+    3300004: coupling1
+    3300006: pipe_straight_1m(center)
+    3300008: pipe_straight_1m(center*
     4300000: pipe_straight_1m(center)
+    4300002: coupling
+    4300004: coupling1
+    4300006: pipe_straight_1m(center*
   materials:
     importMaterials: 1
     materialName: 0
