@@ -56,6 +56,9 @@ public class EnemyState : MonoBehaviour {
 	}
 
 	void Death() {
-		Destroy (gameObject);
+		GetComponentInChildren<Collider> ().enabled = false;
+		GameObject prefab = (GameObject) Resources.Load("BloodPool");
+		transform.FindChild ("EnemyInfo").gameObject.SetActive (false);
+		GameObject bloodPool = ((GameObject) Instantiate (prefab, transform.position, Quaternion.Euler (90f, transform.position.y, transform.position.z)));
 	}
 }
