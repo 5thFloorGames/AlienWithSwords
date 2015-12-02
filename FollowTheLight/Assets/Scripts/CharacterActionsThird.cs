@@ -4,20 +4,24 @@ using System.Collections;
 public class CharacterActionsThird : MonoBehaviour {
 	
 	public int healing;
+	public int damage;
 	public int maxActions;
 	
 	bool inCharacter;
 	bool dead;
 	int actions;
 	bool characterInAim;
+	bool enemyInAim;
 
 	GameObject cameraObj;
 	GameObject overlay;
+	LaserController lc;
 	
 	UserInterfaceManager uim;
 	
 	void Awake() {
-		characterInAim = true;
+		lc = GetComponentInChildren<LaserController> ();
+		CheckIfSomethingWithinAim ();
 		uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 		overlay = transform.FindChild ("Overlay").gameObject;
 		dead = false;
@@ -29,12 +33,15 @@ public class CharacterActionsThird : MonoBehaviour {
 	
 	void FixedUpdate () {
 		if (GameState.playersTurn && inCharacter && actions > 0 && !dead) {
-			CheckIfCharacterWithinAim();
-			if (Input.GetButtonDown ("Fire1") && characterInAim){
+			CheckIfSomethingWithinAim();
+			if (Input.GetButtonDown ("Fire1") && enemyInAim) {
+				DamageAimedCharacter();
+				UpdateActionsToUI();
+			}
+			if (Input.GetButtonDown ("Fire2") && characterInAim){
 				HealAimedCharacter();
 				UpdateActionsToUI();
 			}
-			
 		}
 	}
 	
@@ -42,39 +49,72 @@ public class CharacterActionsThird : MonoBehaviour {
 		uim.UpdateActionPoints(gameObject.transform.parent.name, actions, maxActions);
 	}
 
-	void CheckIfCharacterWithinAim () {
-		Vector3 start = gameObject.transform.position;
-		Vector3 direction = (gameObject.transform.rotation * new Vector3 (0, 0, 20f));
+	void CheckIfSomethingWithinAim () {
+		Vector3 start = transform.position;
+		Vector3 direction = (transform.rotation * new Vector3 (0, 0, 30f));
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
 			if (hit.collider.tag == "Player") {
 				if (!characterInAim) {
 					CharacterAimedAt ();
 				}
+			} else if (hit.collider.tag == "Enemy") {
+				if (!enemyInAim) {
+					EnemyAimedAt();
+				}
 			} else {
 				if (characterInAim) {
 					CharacterNotAimedAt ();
 				}
+				if (enemyInAim) {
+					EnemyNotAimedAt();
+				}
+			}
+		} else {
+			if (characterInAim) {
+				CharacterNotAimedAt();
+			}
+		}
+	}
+
+	void DamageAimedCharacter() {
+		Vector3 start = transform.position;
+		Vector3 direction = (transform.rotation * new Vector3 (0, 0, 30f));
+		RaycastHit hit;
+		if (Physics.Raycast (start, direction, out hit)) {
+			actions -= 1;
+			if (hit.collider.tag == "Enemy") {
+				hit.collider.gameObject.SendMessageUpwards ("TakeDamage", damage);
+				lc.ShootLaser(hit.collider.transform.position);
 			}
 		}
 	}
 
 	void HealAimedCharacter() {
 		Vector3 start = gameObject.transform.position;
-		Vector3 direction = (gameObject.transform.rotation * new Vector3 (0, 0, 20f));
+		Vector3 direction = (gameObject.transform.rotation * new Vector3 (0, 0, 30f));
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
 			actions -= 1;
 			if (hit.collider.tag == "Player") {
 				hit.collider.gameObject.SendMessageUpwards ("Heal", healing);
+				lc.HealLaser (hit.collider.transform.position);
 			}
 		}
+	}
+
+	void EnemyAimedAt() {
+		enemyInAim = true;
+	}
+
+	void EnemyNotAimedAt() {
+		enemyInAim = false;
 	}
 
 	void CharacterAimedAt() {
 		characterInAim = true;
 	}
-
+	
 	void CharacterNotAimedAt() {
 		characterInAim = false;
 	}
