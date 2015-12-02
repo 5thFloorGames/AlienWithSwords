@@ -6,12 +6,15 @@ public class CharacterActionsThird : MonoBehaviour {
 	public int healing;
 	public int damage;
 	public int maxActions;
-	
+
+	int actions;
 	bool inCharacter;
 	bool dead;
-	int actions;
 	bool characterInAim;
 	bool enemyInAim;
+
+	float actionCooldown;
+	float previousActionTime;
 
 	GameObject cameraObj;
 	GameObject overlay;
@@ -25,6 +28,9 @@ public class CharacterActionsThird : MonoBehaviour {
 		uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 		overlay = transform.FindChild ("Overlay").gameObject;
 		dead = false;
+
+		actionCooldown = 0.6f;
+		previousActionTime = Time.time;
 	}
 	
 	void Start () {
@@ -33,14 +39,16 @@ public class CharacterActionsThird : MonoBehaviour {
 	
 	void FixedUpdate () {
 		if (GameState.playersTurn && inCharacter && actions > 0 && !dead) {
-			CheckIfSomethingWithinAim();
-			if (Input.GetButtonDown ("Fire1") && enemyInAim) {
-				DamageAimedCharacter();
-				UpdateActionsToUI();
-			}
-			if (Input.GetButtonDown ("Fire2") && characterInAim){
-				HealAimedCharacter();
-				UpdateActionsToUI();
+			if (Time.time - previousActionTime >= actionCooldown) {
+				CheckIfSomethingWithinAim ();
+				if (Input.GetButtonDown ("Fire1") && enemyInAim) {
+					DamageAimedCharacter ();
+					UpdateActionsToUI ();
+				}
+				if (Input.GetButtonDown ("Fire2") && characterInAim) {
+					HealAimedCharacter ();
+					UpdateActionsToUI ();
+				}
 			}
 		}
 	}
@@ -78,6 +86,7 @@ public class CharacterActionsThird : MonoBehaviour {
 	}
 
 	void DamageAimedCharacter() {
+		previousActionTime = Time.time;
 		Vector3 start = transform.position;
 		Vector3 direction = (transform.rotation * new Vector3 (0, 0, 30f));
 		RaycastHit hit;
@@ -91,6 +100,7 @@ public class CharacterActionsThird : MonoBehaviour {
 	}
 
 	void HealAimedCharacter() {
+		previousActionTime = Time.time;
 		Vector3 start = gameObject.transform.position;
 		Vector3 direction = (gameObject.transform.rotation * new Vector3 (0, 0, 30f));
 		RaycastHit hit;
