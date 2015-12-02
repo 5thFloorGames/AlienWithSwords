@@ -12,21 +12,21 @@ public class LaserController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		lr.SetPosition(0, transform.position);
 	}
 
 	public void ShootLaser(Vector3 targetPosition) {
-		SetLaserPositions (targetPosition);
+		SetLaserTarget (targetPosition);
 		StartCoroutine (ShowLaserFor(0.5f));
 	}
 
 	public void HealLaser(Vector3 targetPosition) {
-		SetLaserPositions (targetPosition);
+		SetLaserTarget (targetPosition);
 		StartCoroutine (ShowLaserFor(0.5f));
 	}
 
-	void SetLaserPositions(Vector3 targetPosition) {
-		lr.SetPosition(0, transform.position);
+	void SetLaserTarget(Vector3 targetPosition) {
+
 		lr.SetPosition(1, targetPosition);
 	}
 
