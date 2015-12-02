@@ -37,7 +37,7 @@ public class CharacterActionsThird : MonoBehaviour {
 		UpdateActionsToUI();
 	}
 	
-	void FixedUpdate () {
+	void Update () {
 		if (GameState.playersTurn && inCharacter && actions > 0 && !dead) {
 			if (Time.time - previousActionTime >= actionCooldown) {
 				CheckIfSomethingWithinAim ();

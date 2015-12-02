@@ -12,7 +12,7 @@ public class BulletDamages : MonoBehaviour {
 	void OnCollisionEnter (Collision coll) {
 		GameObject other = coll.gameObject;
 		if (other.tag == "Enemy") {
-			other.gameObject.SendMessageUpwards("TakeDamage", damage);
+			other.SendMessageUpwards("TakeDamage", damage);
 		}
 		Destroy (gameObject);
 	}

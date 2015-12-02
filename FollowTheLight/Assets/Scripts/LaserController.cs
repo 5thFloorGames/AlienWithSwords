@@ -4,29 +4,34 @@ using System.Collections;
 public class LaserController : MonoBehaviour {
 
 	LineRenderer lr;
+	bool laserOn;
 
 	// Use this for initialization
 	void Start () {
 		lr = GetComponent <LineRenderer>();
+		laserOn = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		lr.SetPosition(0, transform.position);
+		if (laserOn) {
+			lr.SetPosition(0, transform.position);
+		}
 	}
 
 	public void ShootLaser(Vector3 targetPosition) {
+		laserOn = true;
 		SetLaserTarget (targetPosition);
 		StartCoroutine (ShowLaserFor(0.5f));
 	}
 
 	public void HealLaser(Vector3 targetPosition) {
+		laserOn = true;
 		SetLaserTarget (targetPosition);
 		StartCoroutine (ShowLaserFor(0.5f));
 	}
 
 	void SetLaserTarget(Vector3 targetPosition) {
-
 		lr.SetPosition(1, targetPosition);
 	}
 
@@ -38,5 +43,6 @@ public class LaserController : MonoBehaviour {
 
 	void ResetLaser() {
 		lr.enabled = false;
+		laserOn = false;
 	}
 }

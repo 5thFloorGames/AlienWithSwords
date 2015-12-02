@@ -36,7 +36,6 @@ public class EnemyActionsFirst : MonoBehaviour {
 	}
 
 	public void TriggerActions () {
-        // Debug.Log (gameObject.name + " enemy used an ability");
         playerSeen = false;
 		CheckVisibleCharacters ();
         Invoke("StopMovingAndCastIfSeenPlayer", movementTime);
@@ -88,7 +87,7 @@ public class EnemyActionsFirst : MonoBehaviour {
         GameObject spawnedAreaDamage = (GameObject)Instantiate(aoePrefab, transform.position, Quaternion.identity);
 		spawnedAreaDamage.name = gameObject.name + "Aoe";
 		AreaDamageBehavior adb = spawnedAreaDamage.GetComponent<AreaDamageBehavior> ();
-		float animationDelay = 1.1f;
+		float animationDelay = 1.0f;
 		adb.Init (actionDamage, animationDelay, aoeLifetime);
 		Invoke ("ActionsCompletedInformManager", animationDelay + aoeLifetime);
     }
