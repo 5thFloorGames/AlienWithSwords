@@ -30,14 +30,15 @@ public class EnemyState : MonoBehaviour {
 	}
 
 	void TakeDamage(int amount) {
-		if (!dead) {
-			//Debug.Log(gameObject.name + " took " +  amount + " damage");
+		if (!dead) {;
 			currentHealth -= amount;
 			if (currentHealth <= 0) {
 				currentHealth = 0;
-				//Debug.Log (gameObject.name + " is dead :(");
 				dead = true;
 				StartDying();
+			}
+			if (!dead) {
+				animator.SetTrigger("GetHit");
 			}
 			UpdateHealthToHealthMeter ();
 		}

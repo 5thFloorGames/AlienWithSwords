@@ -94,7 +94,7 @@ public class CharacterActionsThird : MonoBehaviour {
 			actions -= 1;
 			if (hit.collider.tag == "Enemy") {
 				hit.collider.gameObject.SendMessageUpwards ("TakeDamage", damage);
-				lc.ShootLaser(hit.collider.transform.position);
+				lc.ShootLaser(hit.point);
 			}
 		}
 	}
@@ -108,7 +108,7 @@ public class CharacterActionsThird : MonoBehaviour {
 			actions -= 1;
 			if (hit.collider.tag == "Player") {
 				hit.collider.gameObject.SendMessageUpwards ("Heal", healing);
-				lc.HealLaser (hit.collider.transform.position);
+				lc.HealLaser (hit.point);
 			}
 		}
 	}
