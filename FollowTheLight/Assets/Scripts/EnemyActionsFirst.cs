@@ -78,6 +78,7 @@ public class EnemyActionsFirst : MonoBehaviour {
 	}
 
     void MoveTowardsPosition(Vector3 position) {
+		animator.SetBool ("Walking", true);
         nva.Resume();
         nva.destination = position;
     }
@@ -98,6 +99,7 @@ public class EnemyActionsFirst : MonoBehaviour {
 
 	void StopMovingAndCastIfSeenPlayer() {
         if (playerSeen) {
+			animator.SetBool ("Walking", false);
             nva.Stop();
             CastAreaDamage();
         } else {
