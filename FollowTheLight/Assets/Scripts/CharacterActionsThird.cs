@@ -82,13 +82,16 @@ public class CharacterActionsThird : MonoBehaviour {
 			if (characterInAim) {
 				CharacterNotAimedAt();
 			}
+			if (enemyInAim) {
+				EnemyNotAimedAt();
+			}
 		}
 	}
 
 	void DamageAimedCharacter() {
 		previousActionTime = Time.time;
 		Vector3 start = transform.position;
-		Vector3 direction = (transform.rotation * new Vector3 (0, 0, 30f));
+		Vector3 direction = (transform.rotation * new Vector3 (0, 0, 100f));
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit)) {
 			actions -= 1;
@@ -102,7 +105,7 @@ public class CharacterActionsThird : MonoBehaviour {
 	void HealAimedCharacter() {
 		previousActionTime = Time.time;
 		Vector3 start = gameObject.transform.position;
-		Vector3 direction = (gameObject.transform.rotation * new Vector3 (0, 0, 30f));
+		Vector3 direction = (gameObject.transform.rotation * new Vector3 (0, 0, 100f));
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
 			actions -= 1;

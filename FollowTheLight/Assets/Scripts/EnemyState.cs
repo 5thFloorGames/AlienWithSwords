@@ -38,10 +38,18 @@ public class EnemyState : MonoBehaviour {
 				StartDying();
 			}
 			if (!dead) {
-				animator.SetTrigger("GetHit");
+				//animator.SetTrigger("GetHit");
 			}
 			UpdateHealthToHealthMeter ();
 		}
+	}
+
+	void AimedAt() {
+		animator.SetBool ("AimedAt", true);
+	}
+
+	void NotAimedAt() {
+		animator.SetBool ("AimedAt", false);
 	}
 
 	void UpdateHealthToHealthMeter() {
@@ -59,6 +67,6 @@ public class EnemyState : MonoBehaviour {
 		GetComponentInChildren<Collider> ().enabled = false;
 		GameObject prefab = (GameObject) Resources.Load("BloodPool");
 		transform.FindChild ("EnemyInfo").gameObject.SetActive (false);
-		GameObject bloodPool = ((GameObject) Instantiate (prefab, transform.position, Quaternion.identity));
+		Instantiate (prefab, transform.position, Quaternion.identity);
 	}
 }

@@ -18,6 +18,7 @@ public class MeleeRangeInformer : MonoBehaviour {
 		if ((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") {
 			GameObject enemyObj = other.gameObject.transform.parent.gameObject;
 			hitList.Add(enemyObj);
+			enemyObj.SendMessage("AimedAt");
 			CheckHitListSize();
 		}
 	}
@@ -25,6 +26,7 @@ public class MeleeRangeInformer : MonoBehaviour {
 	void OnTriggerExit (Collider other) {
 		if ((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") {
 			GameObject enemyObj = other.gameObject.transform.parent.gameObject;
+			enemyObj.SendMessage("NotAimedAt");
 			hitList.Remove(enemyObj);
 			CheckHitListSize();
 		}
@@ -46,5 +48,12 @@ public class MeleeRangeInformer : MonoBehaviour {
 
 	void UpdateHitStatus() {
 
+	}
+
+	public void EmptyTheHitList() {
+		foreach (GameObject enemyObj in hitList) {
+			enemyObj.SendMessage("NotAimedAt");
+		}
+		hitList = new List<GameObject>();
 	}
 }
