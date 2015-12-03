@@ -52,13 +52,13 @@ public class EnemyState : MonoBehaviour {
 		gameObject.GetComponentInChildren<Collider> ().enabled = false;
 		animator.SetBool ("Dying", true);
 		em.SendMessage ("DeleteEnemyFromList", gameObject);
-		Invoke ("Death", 3.0f);
+		Invoke ("Death", 0.5f);
 	}
 
 	void Death() {
 		GetComponentInChildren<Collider> ().enabled = false;
 		GameObject prefab = (GameObject) Resources.Load("BloodPool");
 		transform.FindChild ("EnemyInfo").gameObject.SetActive (false);
-		GameObject bloodPool = ((GameObject) Instantiate (prefab, transform.position, Quaternion.Euler (90f, transform.position.y, transform.position.z)));
+		GameObject bloodPool = ((GameObject) Instantiate (prefab, transform.position, Quaternion.identity));
 	}
 }

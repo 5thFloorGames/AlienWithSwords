@@ -41,15 +41,30 @@ public class CharacterActionsSecond : MonoBehaviour {
 		if (GameState.playersTurn && inCharacter && actions > 0 && !dead) {
 			if (Time.time - previousActionTime >= actionCooldown) {
 				if (Input.GetButtonDown ("Fire1")){
-					Strike();
-					updateActionsToUI();
-				}
-				if (Input.GetButtonDown ("Fire2")){
 					Slash();
 					updateActionsToUI();
 				}
+				//if (Input.GetButtonDown ("Fire2")){
+				//	Strike();
+				//	updateActionsToUI();
+				//}
 			}
 		}
+	}
+
+	void Slash() {
+		actions -= 1;
+		previousActionTime = Time.time;
+		weaponPivot.SetActive (true);
+		mwd.damageAmount = slashDamage;
+		
+		weaponPivot.transform.localRotation = Quaternion.Euler (0f, -89f, 90f);
+		iTween.RotateTo (weaponPivot, iTween.Hash (
+			"y", 89f,
+			"time", 0.5f,
+			"islocal", true,
+			"oncomplete", "PutWeaponAway",
+			"oncompletetarget", gameObject));
 	}
 	
 	void Strike() {
@@ -62,21 +77,6 @@ public class CharacterActionsSecond : MonoBehaviour {
 		iTween.RotateTo (weaponPivot, iTween.Hash (
 			"x", 30f,
 			"time", 0.6f,
-			"islocal", true,
-			"oncomplete", "PutWeaponAway",
-			"oncompletetarget", gameObject));
-	}
-
-	void Slash() {
-		actions -= 1;
-		previousActionTime = Time.time;
-		weaponPivot.SetActive (true);
-		mwd.damageAmount = slashDamage;
-
-		weaponPivot.transform.localRotation = Quaternion.Euler (0f, -89f, 90f);
-		iTween.RotateTo (weaponPivot, iTween.Hash (
-			"y", 89f,
-			"time", 0.5f,
 			"islocal", true,
 			"oncomplete", "PutWeaponAway",
 			"oncompletetarget", gameObject));
