@@ -30,14 +30,15 @@ public class EnemyState : MonoBehaviour {
 	}
 
 	void TakeDamage(int amount) {
-		if (!dead) {
-			//Debug.Log(gameObject.name + " took " +  amount + " damage");
+		if (!dead) {;
 			currentHealth -= amount;
 			if (currentHealth <= 0) {
 				currentHealth = 0;
-				//Debug.Log (gameObject.name + " is dead :(");
 				dead = true;
 				StartDying();
+			}
+			if (!dead) {
+				animator.SetTrigger("GetHit");
 			}
 			UpdateHealthToHealthMeter ();
 		}
@@ -51,10 +52,13 @@ public class EnemyState : MonoBehaviour {
 		gameObject.GetComponentInChildren<Collider> ().enabled = false;
 		animator.SetBool ("Dying", true);
 		em.SendMessage ("DeleteEnemyFromList", gameObject);
-		Invoke ("Death", 3.0f);
+		Invoke ("Death", 0.5f);
 	}
 
 	void Death() {
-		Destroy (gameObject);
+		GetComponentInChildren<Collider> ().enabled = false;
+		GameObject prefab = (GameObject) Resources.Load("BloodPool");
+		transform.FindChild ("EnemyInfo").gameObject.SetActive (false);
+		GameObject bloodPool = ((GameObject) Instantiate (prefab, transform.position, Quaternion.identity));
 	}
 }
