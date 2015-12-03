@@ -12,21 +12,23 @@ public class CharacterActionsThird : MonoBehaviour {
 	bool dead;
 	bool characterInAim;
 	bool enemyInAim;
+	GameObject aimedEnemy;
 
 	float actionCooldown;
 	float previousActionTime;
 
 	GameObject cameraObj;
 	GameObject overlay;
+	GameObject crosshairs;
 	LaserController lc;
 	
 	UserInterfaceManager uim;
 	
 	void Awake() {
 		lc = GetComponentInChildren<LaserController> ();
-		CheckIfSomethingWithinAim ();
 		uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 		overlay = transform.FindChild ("Overlay").gameObject;
+		crosshairs = overlay.transform.FindChild ("Crosshairs").gameObject;
 		dead = false;
 
 		actionCooldown = 0.6f;
@@ -38,9 +40,9 @@ public class CharacterActionsThird : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (GameState.playersTurn && inCharacter && actions > 0 && !dead) {
-			if (Time.time - previousActionTime >= actionCooldown) {
-				CheckIfSomethingWithinAim ();
+		if (GameState.playersTurn && inCharacter && !dead) {
+			CheckIfSomethingWithinAim ();
+			if (Time.time - previousActionTime >= actionCooldown && actions > 0) {
 				if (Input.GetButtonDown ("Fire1") && enemyInAim) {
 					DamageAimedCharacter ();
 					UpdateActionsToUI ();
@@ -63,28 +65,17 @@ public class CharacterActionsThird : MonoBehaviour {
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
 			if (hit.collider.tag == "Player") {
-				if (!characterInAim) {
-					CharacterAimedAt ();
-				}
+				CharacterAimedAt ();
 			} else if (hit.collider.tag == "Enemy") {
-				if (!enemyInAim) {
-					EnemyAimedAt();
-				}
+				EnemyAimedAt();
+				CheckIfDifferentEnemy(hit);
 			} else {
-				if (characterInAim) {
-					CharacterNotAimedAt ();
-				}
-				if (enemyInAim) {
-					EnemyNotAimedAt();
-				}
-			}
-		} else {
-			if (characterInAim) {
 				CharacterNotAimedAt();
-			}
-			if (enemyInAim) {
 				EnemyNotAimedAt();
 			}
+		} else {
+			CharacterNotAimedAt();
+			EnemyNotAimedAt();
 		}
 	}
 
@@ -116,20 +107,42 @@ public class CharacterActionsThird : MonoBehaviour {
 		}
 	}
 
-	void EnemyAimedAt() {
-		enemyInAim = true;
+	void CheckIfDifferentEnemy(RaycastHit hit) {
+		if (aimedEnemy != hit.transform.parent.gameObject) {
+			if (aimedEnemy) {
+				aimedEnemy.SendMessage("NotAimedAt");
+			}
+			aimedEnemy = hit.transform.parent.gameObject;
+			aimedEnemy.SendMessage("AimedAt");
+		}
 	}
-
+	
+	void EnemyAimedAt() {
+		if (!enemyInAim) {
+			crosshairs.transform.localScale = (new Vector3 (1.2f, 1.2f, 1.2f));
+			enemyInAim = true;
+		}
+	}
+	
 	void EnemyNotAimedAt() {
-		enemyInAim = false;
+		if (enemyInAim) {
+			crosshairs.transform.localScale = (new Vector3(1f, 1f, 1f));
+			aimedEnemy.SendMessage("NotAimedAt");
+			aimedEnemy = null;
+			enemyInAim = false;
+		}
 	}
 
 	void CharacterAimedAt() {
-		characterInAim = true;
+		if (!characterInAim) {
+			characterInAim = true;
+		}
 	}
 	
 	void CharacterNotAimedAt() {
-		characterInAim = false;
+		if (characterInAim) {
+			characterInAim = false;
+		}
 	}
 	
 	
@@ -155,6 +168,8 @@ public class CharacterActionsThird : MonoBehaviour {
 	}
 	
 	void LeaveCharacter() {
+		EnemyNotAimedAt ();
+		CharacterNotAimedAt ();
 		inCharacter = false;
 		overlay.SetActive (false);
 	}

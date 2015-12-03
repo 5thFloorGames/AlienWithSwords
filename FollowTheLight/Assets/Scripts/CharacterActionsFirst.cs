@@ -69,38 +69,40 @@ public class CharacterActionsFirst : MonoBehaviour {
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
 			if (hit.collider.tag == "Enemy") {
-				if (!enemyInAim) {
-					EnemyAimedAt();
-				}
-				if (aimedEnemy != hit.transform.parent.gameObject) {
-					if (aimedEnemy) {
-						aimedEnemy.SendMessage("NotAimedAt");
-					}
-					aimedEnemy = hit.transform.parent.gameObject;
-					aimedEnemy.SendMessage("AimedAt");
-				}
+				EnemyAimedAt();
+				CheckIfDifferentEnemy(hit);
 			} else {
-				if (enemyInAim) {
-					EnemyNotAimedAt();
-					aimedEnemy.SendMessage("NotAimedAt");
-					aimedEnemy = null;
-				}
-			}
-		} else {
-			if (enemyInAim) {
 				EnemyNotAimedAt();
 			}
+		} else {
+			EnemyNotAimedAt();
+		}
+	}
+
+	void CheckIfDifferentEnemy(RaycastHit hit) {
+		if (aimedEnemy != hit.transform.parent.gameObject) {
+			if (aimedEnemy) {
+				aimedEnemy.SendMessage("NotAimedAt");
+			}
+			aimedEnemy = hit.transform.parent.gameObject;
+			aimedEnemy.SendMessage("AimedAt");
 		}
 	}
 
 	void EnemyAimedAt() {
-		crossHairs.transform.localScale = (new Vector3(1.2f, 1.2f, 1.2f));
-		enemyInAim = true;
+		if (!enemyInAim) {
+			crossHairs.transform.localScale = (new Vector3 (1.2f, 1.2f, 1.2f));
+			enemyInAim = true;
+		}
 	}
 	
 	void EnemyNotAimedAt() {
-		crossHairs.transform.localScale = (new Vector3(1f, 1f, 1f));
-		enemyInAim = false;
+		if (enemyInAim) {
+			crossHairs.transform.localScale = (new Vector3(1f, 1f, 1f));
+			aimedEnemy.SendMessage("NotAimedAt");
+			aimedEnemy = null;
+			enemyInAim = false;
+		}
 	}
 
 	void AimCone() {
@@ -166,6 +168,7 @@ public class CharacterActionsFirst : MonoBehaviour {
     }
 
     void LeaveCharacter() {
+		EnemyNotAimedAt ();
         inCharacter = false;
 		overlay.SetActive (false);
     }

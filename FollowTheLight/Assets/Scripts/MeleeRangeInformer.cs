@@ -50,10 +50,17 @@ public class MeleeRangeInformer : MonoBehaviour {
 
 	}
 
-	public void EmptyTheHitList() {
-		foreach (GameObject enemyObj in hitList) {
-			enemyObj.SendMessage("NotAimedAt");
+	public void DeactivateTheHitList() {
+		if (hitList != null) {
+			foreach (GameObject enemyObj in hitList) {
+				enemyObj.SendMessage ("NotAimedAt");
+			}
 		}
-		hitList = new List<GameObject>();
+	}
+
+	public void ActivateTheHitList() {
+		foreach (GameObject enemyObj in hitList) {
+			enemyObj.SendMessage("AimedAt");
+		}
 	}
 }
