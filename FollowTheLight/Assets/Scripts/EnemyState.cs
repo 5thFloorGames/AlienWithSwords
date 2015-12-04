@@ -60,7 +60,12 @@ public class EnemyState : MonoBehaviour {
 		gameObject.GetComponentInChildren<Collider> ().enabled = false;
 		animator.SetBool ("Dying", true);
 		em.SendMessage ("DeleteEnemyFromList", gameObject);
+		Invoke ("AdjustSpriteForDying", 0.1f);
 		Invoke ("Death", 0.5f);
+	}
+
+	void AdjustSpriteForDying() {
+		transform.FindChild ("Sprite").transform.position += new Vector3 (0, 0.2f, 0);
 	}
 
 	void Death() {
@@ -69,4 +74,5 @@ public class EnemyState : MonoBehaviour {
 		transform.FindChild ("EnemyInfo").gameObject.SetActive (false);
 		Instantiate (prefab, transform.position, Quaternion.identity);
 	}
+
 }
