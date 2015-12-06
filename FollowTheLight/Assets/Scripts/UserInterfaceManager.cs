@@ -30,7 +30,6 @@ public class UserInterfaceManager : MonoBehaviour {
 		enemyTurnUI = (GameObject)transform.Find ("EnemyTurn").gameObject;
 		levelCompletedUI = (GameObject)transform.Find ("LevelCompleted").gameObject;
         levelFailedUI = (GameObject)transform.Find("LevelFailed").gameObject;
-		//crosshairs = (GameObject)transform.Find ("Crosshairs").gameObject;
 
 		characterPanel = (GameObject)transform.Find ("CharacterPanel").gameObject;
 
@@ -67,6 +66,10 @@ public class UserInterfaceManager : MonoBehaviour {
 
 	public void ShowEnemyUI() {
 		enemyTurnUI.SetActive (true);
+        if (GameState.GetLevel() == 1) {
+            TutorialMovementRestored();
+            TutorialActionsRestored();
+        }
 	}
 
 	public void HideEnemyUI() {
@@ -95,11 +98,15 @@ public class UserInterfaceManager : MonoBehaviour {
     }
 
     public void UpdateDistanceMeter(string characterName, float distance, float maximum) {
+        if (GameState.GetLevel() == 1) {
+            TutorialOom(distance, maximum);
+        }
+
 		distanceMeters[characterName].fillAmount =  (1 - distance / maximum);
         distanceTexts[characterName].text = (maximum - distance).ToString("F1");
 	}
 
-    public void UpdateActionPoints(string characterName, int actions, float maximum) {
+    public void UpdateActionPoints(string characterName, int actions, int maximum) {
         int counter = 0;
         foreach (Transform actionPoint in actionPoints[characterName]) {
             if (counter < actions) {
@@ -108,6 +115,9 @@ public class UserInterfaceManager : MonoBehaviour {
                 actionPoint.gameObject.SetActive(false);
             }
             counter += 1;
+        }
+        if (GameState.GetLevel() == 1) {
+            TutorialOoa(actions);
         }
     }
 
@@ -132,6 +142,31 @@ public class UserInterfaceManager : MonoBehaviour {
             } else {
                 charinf.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
+        }
+    }
+
+    void TutorialMovementRestored() {
+       TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
+       tth.MovementRestored();
+    }
+
+    void TutorialOom(float distance, float maximum) {
+        if (distance == maximum) {
+            TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
+            tth.OutOfMovementInform();
+        }
+    }
+
+    void TutorialActionsRestored() {
+        TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
+        tth.ActionsRestored();
+    }
+
+    void TutorialOoa(int actions) {
+        if (actions == 1) {
+            TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
+            tth.OutOfActionsInform();
+            tth.ClearText();
         }
     }
 }
