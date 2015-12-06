@@ -16,7 +16,7 @@ public class LevelEnd : MonoBehaviour {
     }
 
 	void OnTriggerEnter (Collider other) {
-        if ((other.GetType() == typeof(CapsuleCollider))) {
+        if (other.GetType() == typeof(CapsuleCollider)) {
             charactersEnding[other.name] = true;
             CheckEndOfAllCharacters();
         }

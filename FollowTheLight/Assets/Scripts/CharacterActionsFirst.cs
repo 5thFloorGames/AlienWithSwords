@@ -44,7 +44,7 @@ public class CharacterActionsFirst : MonoBehaviour {
 	void Update () {
 		if (GameState.playersTurn && inCharacter && !dead) {
 			CheckIfEnemyWithinAim ();
-			if (Time.time - previousFiringTime >= bulletCooldown && actions > 0) {
+			if (Time.time - previousFiringTime >= bulletCooldown && actions > 0 && enemyInAim) {
 				if (Input.GetButtonUp ("Fire1")){
 					previousFiringTime = Time.time;
 					Shoot();
