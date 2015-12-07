@@ -10,20 +10,13 @@ namespace Sabresaurus.SabreCSG
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
-////			return;
+
             CSGModel csgModel = (CSGModel)target;
 
 			if(GUILayout.Button("Export OBJ"))
 			{
 				csgModel.ExportOBJ();
 			}
-//			
-//			EditorGUILayout.PropertyField(prop1);
-//
-//			if(GUI.changed)
-//			{
-//				serializedObject.ApplyModifiedProperties();
-//			}
 			BuildMetrics buildMetrics = csgModel.BuildMetrics;
 
 			GUILayout.Label("Vertices: " + buildMetrics.TotalVertices);

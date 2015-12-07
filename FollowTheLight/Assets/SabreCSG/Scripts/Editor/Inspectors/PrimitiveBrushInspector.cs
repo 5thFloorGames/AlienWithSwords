@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEditor;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sabresaurus.SabreCSG
 {
@@ -14,12 +15,70 @@ namespace Sabresaurus.SabreCSG
 
 		Mesh sourceMesh = null;
 
-		SerializedProperty brushTypeProp;
+//		SerializedProperty brushTypeProp;
+		SerializedProperty prismSideCountProp;
+
+		PrimitiveBrushType? overridenBrushType = null;
 
 		void OnEnable () 
 		{
 			// Setup the SerializedProperties.
-			brushTypeProp = serializedObject.FindProperty ("brushType");
+//			brushTypeProp = serializedObject.FindProperty ("brushType");
+			prismSideCountProp = serializedObject.FindProperty ("prismSideCount");
+		}
+
+		PrimitiveBrush BrushTarget
+		{
+			get
+			{
+				return (PrimitiveBrush)target;
+			}
+		}
+
+		PrimitiveBrush[] BrushTargets
+		{
+			get
+			{
+				return Array.ConvertAll(targets, item => (PrimitiveBrush)item);
+			}
+		}
+
+		public void DrawBrushTypeField()
+		{
+			PrimitiveBrushType[] selectedTypes = BrushTargets.Select(item => item.BrushType).ToArray();
+
+			if(overridenBrushType.HasValue)
+			{
+				selectedTypes = new PrimitiveBrushType[] { overridenBrushType.Value };
+			}
+
+			PrimitiveBrushType? newType = SabreGUILayout.EnumPopupMixed("Brush Type", selectedTypes);
+
+			if(newType.HasValue)
+			{
+				overridenBrushType = newType;
+
+				if(newType.Value == PrimitiveBrushType.Prism)
+				{
+					EditorGUILayout.PropertyField(prismSideCountProp);
+				}
+			}
+
+			if (GUILayout.Button("Reset Polygons"))
+			{
+				Undo.RecordObjects(targets, "Reset Polygons");
+				foreach (var thisBrush in targets) 
+				{
+					if(overridenBrushType.HasValue)
+					{
+						((PrimitiveBrush)thisBrush).BrushType = overridenBrushType.Value;
+					}
+					((PrimitiveBrush)thisBrush).ResetPolygons();
+					((PrimitiveBrush)thisBrush).Invalidate();
+				}
+
+				overridenBrushType = null;
+			}
 		}
 
         public override void OnInspectorGUI()
@@ -47,16 +106,10 @@ namespace Sabresaurus.SabreCSG
 //				brushType = (PrimitiveBrushType)newIndex;
 //			}
 
-			EditorGUILayout.PropertyField(brushTypeProp);
 
-			if (GUILayout.Button("Reset Polygons"))
-			{
-				foreach (var thisBrush in targets) 
-				{
-					((PrimitiveBrush)thisBrush).ResetPolygons();
-					((PrimitiveBrush)thisBrush).Invalidate();
-				}
-			}
+			DrawBrushTypeField();
+
+
 
 			if (GUILayout.Button("Recalculate Normals"))
 			{
@@ -73,6 +126,8 @@ namespace Sabresaurus.SabreCSG
 			{
 				if(rescaleValue != 0)
 				{
+					Undo.RecordObjects(targets, "Rescale Polygons");
+					
 					foreach (var thisBrush in targets) 
 					{
 						((PrimitiveBrush)thisBrush).Rescale(rescaleValue);
@@ -80,14 +135,13 @@ namespace Sabresaurus.SabreCSG
 				}
 			}
 
-			
-			if (GUILayout.Button("Reset Pivot"))
-			{
-				foreach (var thisBrush in targets) 
-				{
-					((PrimitiveBrush)thisBrush).ResetPivot();
-				}
-			}
+//			if (GUILayout.Button("Reset Pivot"))
+//			{
+//				foreach (var thisBrush in targets) 
+//				{
+//					((PrimitiveBrush)thisBrush).ResetPivot();
+//				}
+//			}
 
 			GUILayout.EndHorizontal();
 			GUILayout.BeginHorizontal();
@@ -97,6 +151,8 @@ namespace Sabresaurus.SabreCSG
 			{
 				if(sourceMesh != null)
 				{
+					Undo.RecordObjects(targets, "Import Polygons From Mesh");
+					
 					Polygon[] polygons = PolygonFactory.GeneratePolygonsFromMesh(sourceMesh).ToArray();
 					bool convex = PolygonFactory.IsMeshConvex(polygons);
 					if(!convex)

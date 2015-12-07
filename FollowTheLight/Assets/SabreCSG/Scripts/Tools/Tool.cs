@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
+using System.Linq;
 
 namespace Sabresaurus.SabreCSG
 {
@@ -11,6 +12,9 @@ namespace Sabresaurus.SabreCSG
         // Used so we can reset some of the tool if the selected brush changes
         protected PrimitiveBrush targetBrush;
 		protected Transform targetBrushTransform;
+
+		protected PrimitiveBrush[] targetBrushes;
+		protected Transform[] targetBrushTransforms;
 
 		bool panInProgress = false;
 
@@ -52,6 +56,92 @@ namespace Sabresaurus.SabreCSG
                 }
             }
         }
+
+		public PrimitiveBrush[] TargetBrushes
+		{
+			get
+			{
+				return targetBrushes;
+			}
+			set
+			{
+				targetBrushes = value;
+				targetBrushTransforms = targetBrushes.Select(brush => brush.transform).ToArray();
+			}
+		}
+
+		// Calculate the bounds for all selected brushes, respecting the current pivotRotation mode to produce 
+		// bounds aligned to the first selected brush in Local mode, or bounds aligned to the absolute grid in Global
+		// mode.
+		public Bounds GetBounds()
+		{
+			Bounds bounds;
+
+			if(Tools.pivotRotation == PivotRotation.Local)
+			{
+				bounds = targetBrush.GetBounds();
+
+				for (int i = 0; i < targetBrushes.Length; i++) 
+				{
+					if(targetBrushes[i] != targetBrush)
+					{
+						bounds.Encapsulate(targetBrushes[i].GetBoundsLocalTo(targetBrush.transform));
+					}
+				}
+			}
+			else // Absolute/Global
+			{
+				bounds = targetBrush.GetBoundsTransformed();
+				for (int i = 0; i < targetBrushes.Length; i++) 
+				{
+					if(targetBrushes[i] != targetBrush)
+					{
+						bounds.Encapsulate(targetBrushes[i].GetBoundsTransformed());
+					}
+				}
+			}
+
+			return bounds;
+		}
+
+		// Takes into account pivotRotation and the way Tool.GetBounds() works with absolute vs local modes
+		public Vector3 TransformPoint(Vector3 point)
+		{
+			if(Tools.pivotRotation == PivotRotation.Local)
+			{
+				return targetBrushTransform.TransformPoint(point);	
+			}
+			else
+			{
+				return point;
+			}
+		}
+
+		// Takes into account pivotRotation and the way Tool.GetBounds() works with absolute vs local modes
+		public Vector3 InverseTransformDirection(Vector3 direction)
+		{
+			if(Tools.pivotRotation == PivotRotation.Local)
+			{
+				return targetBrushTransform.InverseTransformDirection(direction);	
+			}
+			else
+			{
+				return direction;
+			}
+		}
+
+		// Takes into account pivotRotation and the way Tool.GetBounds() works with absolute vs local modes
+		public Vector3 TransformDirection(Vector3 direction)
+		{
+			if(Tools.pivotRotation == PivotRotation.Local)
+			{
+				return targetBrushTransform.TransformDirection(direction);	
+			}
+			else
+			{
+				return direction;
+			}
+		}
 
 		protected bool CameraPanInProgress
 		{

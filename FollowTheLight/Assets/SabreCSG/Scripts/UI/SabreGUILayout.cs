@@ -46,6 +46,18 @@ namespace Sabresaurus.SabreCSG
 			return style;
 		}
 
+		public static GUIStyle GetForeStyle()
+		{
+			if(EditorGUIUtility.isProSkin)
+			{
+				return FormatStyle(Color.white);
+			}
+			else
+			{
+				return FormatStyle(Color.black);
+			}
+		}
+
 	    public static GUIStyle FormatStyle(Color textColor)
 	    {
 	        GUIStyle style = new GUIStyle(GUI.skin.label);
@@ -70,6 +82,47 @@ namespace Sabresaurus.SabreCSG
 			return style;
 		}
 
+		public static T? EnumPopupMixed<T> (string label, T[] selected, params GUILayoutOption[] options) where T : struct, IConvertible
+		{
+			if (!typeof(T).IsEnum)
+			{
+				throw new ArgumentException("EnumPopupMixed must be passed an enum");
+			}
+
+			string[] names = Enum.GetNames(typeof(T));
+
+			int selectedIndex = (int)(object)selected[0];
+
+			for (int i = 1; i < selected.Length; i++) 
+			{
+				if(selectedIndex != (int)(object)selected[i])
+				{
+					selectedIndex = names.Length;
+
+					break;
+				}
+			}
+
+			// Mixed selection, add a name entry for "Mixed"
+			if(selectedIndex == names.Length)
+			{
+				Array.Resize(ref names, names.Length+1);
+				
+				int mixedIndex = names.Length-1;
+				names[mixedIndex] = "Mixed";
+			}
+
+			int newIndex = EditorGUILayout.Popup(label, selectedIndex, names, options);
+
+			if(newIndex == names.Length-1)
+			{
+				return null;
+			}
+			else
+			{
+				return (T)Enum.ToObject(typeof(T), newIndex);
+			}
+		}
 
 	    public static T DrawEnumGrid<T>(T value, params GUILayoutOption[] options) where T : struct, IConvertible
 	    {

@@ -20,7 +20,7 @@ namespace Sabresaurus.SabreCSG
 				new Vertex(new Vector3(-1, -1, 1), new Vector3(-1, 0, 0), new Vector2(0,0)),
 				new Vertex(new Vector3(-1, 1, 1), new Vector3(-1, 0, 0), new Vector2(0,1)),
 				new Vertex(new Vector3(-1, 1, -1), new Vector3(-1, 0, 0), new Vector2(1,1)),
-			}, null, false);
+			}, null, false, false);
 
 	        // Front
 	        polygons[1] = new Polygon(new Vertex[] {
@@ -28,7 +28,7 @@ namespace Sabresaurus.SabreCSG
 				new Vertex(new Vector3(1, 1, -1), new Vector3(1, 0, 0), new Vector2(0,1)),
 				new Vertex(new Vector3(1, 1, 1), new Vector3(1, 0, 0), new Vector2(1,1)),
 				new Vertex(new Vector3(1, -1, 1), new Vector3(1, 0, 0), new Vector2(1,0)),
-			}, null, false);
+			}, null, false, false);
 
 	        // Bottom
 	        polygons[2] = new Polygon(new Vertex[] {
@@ -36,7 +36,7 @@ namespace Sabresaurus.SabreCSG
 				new Vertex(new Vector3(1, -1, -1), new Vector3(0, -1, 0), new Vector2(0,0)),
 				new Vertex(new Vector3(1, -1, 1), new Vector3(0, -1, 0), new Vector2(0,1)),
 				new Vertex(new Vector3(-1, -1, 1), new Vector3(0, -1, 0), new Vector2(1,1)),
-			}, null, false);
+			}, null, false, false);
 
 	        // Top
 	        polygons[3] = new Polygon(new Vertex[] {
@@ -44,7 +44,7 @@ namespace Sabresaurus.SabreCSG
 				new Vertex(new Vector3(-1, 1, 1), new Vector3(0, 1, 0), new Vector2(0,0)),
 				new Vertex(new Vector3(1, 1, 1), new Vector3(0, 1, 0), new Vector2(0,1)),
 				new Vertex(new Vector3(1, 1, -1), new Vector3(0, 1, 0), new Vector2(1,1)),
-			}, null, false);
+			}, null, false, false);
 
 	        // Right
 			polygons[4] = new Polygon(new Vertex[] {
@@ -52,7 +52,7 @@ namespace Sabresaurus.SabreCSG
 				new Vertex(new Vector3(-1, 1, -1), new Vector3(0, 0, -1), new Vector2(0,1)),
 				new Vertex(new Vector3(1, 1, -1), new Vector3(0, 0, -1), new Vector2(1,1)),
 				new Vertex(new Vector3(1, -1, -1), new Vector3(0, 0, -1), new Vector2(1,0)),
-			}, null, false);
+			}, null, false, false);
 
 	        // Back
 			polygons[5] = new Polygon(new Vertex[] {
@@ -60,7 +60,7 @@ namespace Sabresaurus.SabreCSG
 				new Vertex(new Vector3(1, -1, 1), new Vector3(0, 0, 1), new Vector2(0,0)),
 				new Vertex(new Vector3(1, 1, 1), new Vector3(0, 0, 1), new Vector2(0,1)),
 				new Vertex(new Vector3(-1, 1, 1), new Vector3(0, 0, 1), new Vector2(1,1)),
-			}, null, false);
+			}, null, false, false);
 
 	        return polygons;
 	    }
@@ -88,7 +88,7 @@ namespace Sabresaurus.SabreCSG
 					new Vertex(new Vector3(Mathf.Sin(i * angleDelta), 1, Mathf.Cos(i * angleDelta)), 
 					           new Vector3(Mathf.Sin(i * angleDelta), 0, Mathf.Cos(i * angleDelta)), 
 					           new Vector2(i * (1f/sideCount),1)),
-				}, null, false);
+				}, null, false, false);
 			}
 			
 			Vertex[] capVertices = new Vertex[sideCount];
@@ -96,14 +96,14 @@ namespace Sabresaurus.SabreCSG
 			{
 				capVertices[i] = new Vertex(new Vector3(Mathf.Sin(i * angleDelta), 1, Mathf.Cos(i * angleDelta)), Vector3.up, new Vector2(Mathf.Sin(i * angleDelta), Mathf.Cos(i * angleDelta)));
 			}
-			polygons[sideCount + 0] = new Polygon(capVertices, null, false);
+			polygons[sideCount + 0] = new Polygon(capVertices, null, false, false);
 			
 			capVertices = new Vertex[sideCount];
 			for (int i = 0; i < sideCount; i++)
 			{
 				capVertices[i] = new Vertex(new Vector3(Mathf.Sin(i * -angleDelta), -1, Mathf.Cos(i * -angleDelta)), Vector3.down, new Vector2(Mathf.Sin(i * angleDelta), Mathf.Cos(i * angleDelta)));
 			}
-			polygons[sideCount + 1] = new Polygon(capVertices, null, false);
+			polygons[sideCount + 1] = new Polygon(capVertices, null, false, false);
 			
 			return polygons;
 		}
@@ -131,7 +131,7 @@ namespace Sabresaurus.SabreCSG
 					new Vertex(new Vector3(Mathf.Sin(i * angleDelta), 1, Mathf.Cos(i * angleDelta)), 
 					           normal,
 					           new Vector2(0,1)),
-				}, null, false);
+				}, null, false, false);
 			}
 			
 			Vertex[] capVertices = new Vertex[sideCount];
@@ -139,14 +139,14 @@ namespace Sabresaurus.SabreCSG
 			{
 				capVertices[i] = new Vertex(new Vector3(Mathf.Sin(i * angleDelta), 1, Mathf.Cos(i * angleDelta)), Vector3.up, new Vector2(Mathf.Sin(i * angleDelta), Mathf.Cos(i * angleDelta)));
 			}
-			polygons[sideCount + 0] = new Polygon(capVertices, null, false);
+			polygons[sideCount + 0] = new Polygon(capVertices, null, false, false);
 			
 			capVertices = new Vertex[sideCount];
 			for (int i = 0; i < sideCount; i++)
 			{
 				capVertices[i] = new Vertex(new Vector3(Mathf.Sin(i * -angleDelta), -1, Mathf.Cos(i * -angleDelta)), Vector3.down, new Vector2(Mathf.Sin(i * angleDelta), Mathf.Cos(i * angleDelta)));
 			}
-			polygons[sideCount + 1] = new Polygon(capVertices, null, false);
+			polygons[sideCount + 1] = new Polygon(capVertices, null, false, false);
 			
 			return polygons;
 		}
@@ -283,7 +283,7 @@ namespace Sabresaurus.SabreCSG
 	                    vertices[d].UV = new Vector2(vertices[d].UV.y, 1 - vertices[d].UV.x);
 	                }
 
-					polygons[i + j * count] = new Polygon(vertices, null, false);
+					polygons[i + j * count] = new Polygon(vertices, null, false, false);
 	            }
 	        }
 
@@ -366,7 +366,7 @@ namespace Sabresaurus.SabreCSG
 						                         sourceMesh.uv[vertexIndex]);
 					}
 					// Generate a new polygon using these vertices and add it to the output polygon list
-					Polygon polygon = new Polygon(vertices, null, false);
+					Polygon polygon = new Polygon(vertices, null, false, false);
 					generatedPolygons.Add(polygon);
 				}
 			}
@@ -377,6 +377,10 @@ namespace Sabresaurus.SabreCSG
 
 	    public static void GenerateMeshFromPolygons(Polygon[] polygons, ref Mesh mesh, out List<int> polygonIndices)
 	    {
+			if(mesh == null)
+			{
+				mesh = new Mesh();
+			}
 			mesh.Clear();
 //	        mesh = new Mesh();
 	        List<Vector3> vertices = new List<Vector3>();
@@ -666,7 +670,7 @@ namespace Sabresaurus.SabreCSG
 			{
 				newPolygonVertices[i] = new Vertex(positions[i], -plane.normal, (cancellingRotation * positions[i]) * 0.5f);
 			}
-			Polygon newPolygon = new Polygon(newPolygonVertices, null, false);
+			Polygon newPolygon = new Polygon(newPolygonVertices, null, false, false);
 			
 			if(newPolygon.Plane.normal == Vector3.zero)
 			{
@@ -683,7 +687,53 @@ namespace Sabresaurus.SabreCSG
 		}
 		
 		const float TEST_EPSILON = 0.003f;
-		
+
+		public static Polygon[] ExtrudePolygon(Polygon sourcePolygon)
+		{
+			Polygon newPolygon = sourcePolygon.DeepCopy();
+			newPolygon.UniqueIndex = -1;
+			newPolygon.Flip();
+
+			Vector3 normal = sourcePolygon.Plane.normal;
+
+			Polygon oppositePolygon = sourcePolygon.DeepCopy();
+			oppositePolygon.UniqueIndex = -1;
+
+			Vertex[] vertices = oppositePolygon.Vertices;
+			for (int i = 0; i < vertices.Length; i++) 
+			{
+				vertices[i].Position += normal;
+			}
+			oppositePolygon.SetVertices(vertices);
+
+			Polygon[] brushSides = new Polygon[sourcePolygon.Vertices.Length];
+
+			for (int i = 0; i < newPolygon.Vertices.Length; i++) 
+			{
+				Vertex vertex1 = newPolygon.Vertices[i].DeepCopy();
+				Vertex vertex2 = newPolygon.Vertices[(i+1)%newPolygon.Vertices.Length].DeepCopy();
+
+				Vertex vertex3 = vertex1.DeepCopy();
+				vertex3.Position += normal;
+
+				Vertex vertex4 = vertex2.DeepCopy();
+				vertex4.Position += normal;
+
+				Vertex[] newVertices = new Vertex[] { vertex1, vertex2, vertex4, vertex3 };
+
+				brushSides[i] = new Polygon(newVertices, sourcePolygon.Material, false, false);
+				brushSides[i].Flip();
+				brushSides[i].ResetVertexNormals();
+			}
+
+			List<Polygon> polygons = new List<Polygon>();
+			polygons.Add(newPolygon);
+			polygons.Add(oppositePolygon);
+			polygons.AddRange(brushSides);
+
+			return polygons.ToArray();
+		}
+
 		// This basically tests against a really thick plane to see if some of the points are on each side of the thick 
 		// plane. This makes sure we only split if we definitely need to (protecting against issues 
 		// related to splitting very small polygons breaking other code).

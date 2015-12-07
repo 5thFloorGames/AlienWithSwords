@@ -37,16 +37,12 @@ namespace Sabresaurus.SabreCSG
 			}
 		}
 
-		int positionIndexOffset = 0;
-		int uvIndexOffset = 0;
-		int normalIndexOffset = 0;
+
 
 		public void ResetForNext ()
 		{
-//			positionIndexOffset = positions.Count+1;
-//			uvIndexOffset = uvs.Count+1;
-//			normalIndexOffset = normals.Count+1;
-//
+			
+
 //			positions.Clear();
 //			uvs.Clear();
 //			normals.Clear();
@@ -64,14 +60,14 @@ namespace Sabresaurus.SabreCSG
 			{
 				if (positions[i] == vertex.Position)
 				{
-					face.PositionIndex = i+1 + positionIndexOffset;
+					face.PositionIndex = i+1;
 				}
 			}
 
 			if(face.PositionIndex == 0)
 			{
 				positions.Add(vertex.Position);
-				face.PositionIndex = positions.Count + positionIndexOffset;
+				face.PositionIndex = positions.Count;
 			}
 
 			// UV
@@ -79,14 +75,14 @@ namespace Sabresaurus.SabreCSG
 			{
 				if (uvs[i] == vertex.UV)
 				{
-					face.UVIndex = i+1 + uvIndexOffset;
+					face.UVIndex = i+1;
 				}
 			}
 			
 			if(face.UVIndex == 0)
 			{
 				uvs.Add(vertex.UV);
-				face.UVIndex = uvs.Count + uvIndexOffset;
+				face.UVIndex = uvs.Count;
 			}
 
 			// Normal
@@ -94,14 +90,14 @@ namespace Sabresaurus.SabreCSG
 			{
 				if (normals[i] == vertex.Normal)
 				{
-					face.NormalIndex = i+1 + normalIndexOffset;
+					face.NormalIndex = i+1;
 				}
 			}
 			
 			if(face.NormalIndex == 0)
 			{
 				normals.Add(vertex.Normal);
-				face.NormalIndex = normals.Count + normalIndexOffset;
+				face.NormalIndex = normals.Count;
 			}
 
 			return face;

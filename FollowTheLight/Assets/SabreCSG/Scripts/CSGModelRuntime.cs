@@ -9,8 +9,11 @@ namespace Sabresaurus.SabreCSG
 	    void Start()
 	    {	
 			Transform meshGroup = transform.FindChild("MeshGroup");
-			// Reanchor the meshes to the root
-			meshGroup.parent = null;
+			if(meshGroup != null)
+			{
+				// Reanchor the meshes to the root
+				meshGroup.parent = null;
+			}
 
 			// Remove this game object
 			Destroy (this.gameObject);	

@@ -11,7 +11,8 @@ namespace Sabresaurus.SabreCSG
     {
         // Rotation and position is used with the handles to construct the clip plane
         Vector3 planePosition;
-        public UnityEngine.Plane clipPlane = new UnityEngine.Plane(Vector3.up, 0);
+
+		Plane displayPlane = new Plane(Vector3.up, 0);
 
 		// These three points are used to define the clip plane
 		Vector3[] points = new Vector3[3];
@@ -38,7 +39,7 @@ namespace Sabresaurus.SabreCSG
 			points[1] = Vector3.zero;
 			points[2] = Vector3.zero;
 
-            clipPlane = new UnityEngine.Plane(Vector3.up, planePosition);
+            displayPlane = new UnityEngine.Plane(Vector3.up, planePosition);
 
 			isFlipped = false;
 
@@ -62,9 +63,9 @@ namespace Sabresaurus.SabreCSG
 					
 					Vector3 accumulatedDelta = newPosition - startPosition;
 					
-					if(CurrentSettings.Instance.PositionSnappingEnabled)
+					if(CurrentSettings.PositionSnappingEnabled)
 					{
-						float snapDistance = CurrentSettings.Instance.PositionSnapDistance;
+						float snapDistance = CurrentSettings.PositionSnapDistance;
 						accumulatedDelta = MathHelper.RoundVector3(accumulatedDelta, snapDistance);
 					}
 					
@@ -185,9 +186,9 @@ namespace Sabresaurus.SabreCSG
 
 				points[0] = worldPoint;
 
-				if(CurrentSettings.Instance.PositionSnappingEnabled)
+				if(CurrentSettings.PositionSnappingEnabled)
 				{
-					float snapDistance = CurrentSettings.Instance.PositionSnapDistance;
+					float snapDistance = CurrentSettings.PositionSnapDistance;
 					points[0] = MathHelper.RoundVector3(points[0], snapDistance);
 				}
 				
@@ -200,9 +201,9 @@ namespace Sabresaurus.SabreCSG
 			{
 				points[1] = worldPoint;
 				
-				if(CurrentSettings.Instance.PositionSnappingEnabled)
+				if(CurrentSettings.PositionSnappingEnabled)
 				{
-					float snapDistance = CurrentSettings.Instance.PositionSnapDistance;
+					float snapDistance = CurrentSettings.PositionSnapDistance;
 					points[1] = MathHelper.RoundVector3(points[1], snapDistance);
 				}
 				points[2] = points[0] + sceneView.camera.transform.forward;
@@ -249,9 +250,9 @@ namespace Sabresaurus.SabreCSG
 
 					points[0] = hitPoint;
 
-					if(CurrentSettings.Instance.PositionSnappingEnabled)
+					if(CurrentSettings.PositionSnappingEnabled)
 					{
-						float snapDistance = CurrentSettings.Instance.PositionSnapDistance;
+						float snapDistance = CurrentSettings.PositionSnapDistance;
 						points[0] = MathHelper.RoundVector3(points[0], snapDistance);
 					}
 
@@ -264,9 +265,9 @@ namespace Sabresaurus.SabreCSG
 				{
 					points[1] = hitPoint;
 
-					if(CurrentSettings.Instance.PositionSnappingEnabled)
+					if(CurrentSettings.PositionSnappingEnabled)
 					{
-						float snapDistance = CurrentSettings.Instance.PositionSnapDistance;
+						float snapDistance = CurrentSettings.PositionSnapDistance;
 						points[1] = MathHelper.RoundVector3(points[1], snapDistance);
 					}
 					points[2] = points[0] - hitPolygon.Plane.normal;
@@ -315,7 +316,7 @@ namespace Sabresaurus.SabreCSG
 				float largestExtent = targetBrush.GetBounds().GetLargestExtent();
 				float planeSize = largestExtent * 4f;
 //				clipPlane.
-	            SabreGraphics.DrawPlane(clipPlane, planePosition, new Color(0f, 1f, 0f, .3f), new Color(1f, 0f, 0f, .3f), planeSize);
+	            SabreGraphics.DrawPlane(displayPlane, planePosition, new Color(0f, 1f, 0f, .3f), new Color(1f, 0f, 0f, .3f), planeSize);
 
 				Camera sceneViewCamera = sceneView.camera;
 			
@@ -369,8 +370,9 @@ namespace Sabresaurus.SabreCSG
 //			GUI.backgroundColor = Color.red;
             Rect rectangle = new Rect(0, 50, 270, 130);
 			GUIStyle toolbar = new GUIStyle(EditorStyles.toolbar);
+			toolbar.normal.background = SabreGraphics.ClearTexture;
 			toolbar.fixedHeight = rectangle.height;
-			GUILayout.Window(1001, rectangle, OnToolbarGUI, "",toolbar);
+			GUILayout.Window(140006, rectangle, OnToolbarGUI, "",toolbar);
         }
 
         void OnToolbarGUI(int windowID)
@@ -389,7 +391,6 @@ namespace Sabresaurus.SabreCSG
 			}
 			if (SabreGUILayout.Button("Flip Plane"))
             {
-//				Undo.RecordObject(targetBrush, "Reversed Plane");
 				isFlipped = !isFlipped;
             }
             EditorGUILayout.EndHorizontal();
@@ -397,24 +398,19 @@ namespace Sabresaurus.SabreCSG
 			GUI.enabled = (pointSelected > -1);
 			if(SabreGUILayout.Button("Snap To Grid"))
 			{
-				float snapDistance = CurrentSettings.Instance.PositionSnapDistance;
+				float snapDistance = CurrentSettings.PositionSnapDistance;
 				Vector3 newPosition = points[pointSelected];
 				newPosition = targetBrush.transform.TransformPoint(newPosition);
 				newPosition = MathHelper.RoundVector3(newPosition, snapDistance);
 				newPosition = targetBrush.transform.InverseTransformPoint(newPosition);
 
 				points[pointSelected] = newPosition;
-
 			}
 
-//			points[0] = EditorGUILayout.Vector3Field("Point1", points[0]);
-//			points[1] = EditorGUILayout.Vector3Field("Point2", points[1]);
-//			points[2] = EditorGUILayout.Vector3Field("Point3", points[2]);
-
-			clipPlane = new Plane(points[2], points[1], points[0]);
+			displayPlane = new Plane(points[2], points[1], points[0]);
 			if(isFlipped)
 			{
-				clipPlane = clipPlane.Flip();
+				displayPlane = displayPlane.Flip();
 			}
 
 			planePosition = (points[0] + points[1] + points[2]) / 3f;
@@ -433,28 +429,34 @@ namespace Sabresaurus.SabreCSG
 					Undo.RecordObject(targetBrush, "Clipped Brush");
 				}
 
-	            // Ensure normal is normalised
-	            clipPlane.normal = clipPlane.normal.normalized;
+				// Recalculate the clip plane from the world points, converting to local space for this transform
+				Plane localClipPlane = new Plane(targetBrushTransform.InverseTransformPoint(points[2]),
+					targetBrushTransform.InverseTransformPoint(points[1]), 
+					targetBrushTransform.InverseTransformPoint(points[0]));
 
-	            // Create the final clip plane, inverting the brush's transform so the plane is local to the object
-				UnityEngine.Plane targetPlane = new UnityEngine.Plane(targetBrush.transform.InverseTransformDirection(clipPlane.normal), targetBrush.transform.InverseTransformPoint(planePosition));
+				// If the user has specified to flip the plane, flip the plane we just calculated
+				if(isFlipped)
+				{
+					localClipPlane = localClipPlane.Flip();
+				}
 
 	            // Clip the polygons against the plane
 				List<Polygon> polygonsFront;
 				List<Polygon> polygonsBack;
 				
-				if(PolygonFactory.SplitPolygonsByPlane(targetBrush.Polygons.ToList(), targetPlane, false, out polygonsFront, out polygonsBack))
+				if(PolygonFactory.SplitPolygonsByPlane(targetBrush.Polygons.ToList(), localClipPlane, false, out polygonsFront, out polygonsBack))
 				{
 					// Update the brush with the new polygons
 					targetBrush.SetPolygons(polygonsFront.ToArray(), true);
 
+					// If they have decided to split instead of clip, create a second brush with the other side
 					if(keepBothSides)
 					{
 						GameObject newObject = targetBrush.Duplicate();
 
 						// Finally give the new brush the other set of polygons
 						newObject.GetComponent<PrimitiveBrush>().SetPolygons(polygonsBack.ToArray(), true);
-
+						newObject.transform.SetSiblingIndex(targetBrush.transform.GetSiblingIndex());
 						Undo.RegisterCreatedObjectUndo(newObject, "Split Brush");
 					}
 				}

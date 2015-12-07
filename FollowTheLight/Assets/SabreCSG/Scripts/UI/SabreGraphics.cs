@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 namespace Sabresaurus.SabreCSG
 {
@@ -12,6 +13,7 @@ namespace Sabresaurus.SabreCSG
 	    private static Material marqueeBorderMaterial = null;
 	    private static Material marqueeFillMaterial = null;
 	    private static Material selectedBrushMaterial = null;
+		private static Material selectedBrushDashedMaterial = null;
 	    private static Material gizmoMaterial = null;
 //	    private static Material gizmoSelectedMaterial = null;
 	    private static Material vertexMaterial = null;
@@ -22,13 +24,17 @@ namespace Sabresaurus.SabreCSG
 		private static Texture2D subtractIconTexture = null;
 		private static Texture2D dialogOverlayTexture = null;
 
+		private static Texture2D clearTexture = null;
+		private static Texture2D halfWhiteTexture = null;
+		private static Texture2D halfBlackTexture = null;
+
 		public static Texture2D AddIconTexture 
 		{
 			get 
 			{
 				if(addIconTexture == null)
 				{
-					addIconTexture = UnityEditor.AssetDatabase.LoadMainAssetAtPath("Assets/SabreCSG/Gizmos/Add.png") as Texture2D;
+					addIconTexture = UnityEditor.AssetDatabase.LoadMainAssetAtPath(CSGModel.GetSabreCSGPath() + "Gizmos/Add.png") as Texture2D;
 				}
 				return addIconTexture;
 			}
@@ -40,7 +46,7 @@ namespace Sabresaurus.SabreCSG
 			{
 				if(subtractIconTexture == null)
 				{
-					subtractIconTexture = UnityEditor.AssetDatabase.LoadMainAssetAtPath("Assets/SabreCSG/Gizmos/Subtract.png") as Texture2D;
+					subtractIconTexture = UnityEditor.AssetDatabase.LoadMainAssetAtPath(CSGModel.GetSabreCSGPath() + "Gizmos/Subtract.png") as Texture2D;
 				}
 				return subtractIconTexture;
 			}
@@ -50,11 +56,71 @@ namespace Sabresaurus.SabreCSG
 		{
 			get 
 			{
-//				if(dialogOverlayTexture == null)
+				if(dialogOverlayTexture == null)
 				{
-					dialogOverlayTexture = UnityEditor.AssetDatabase.LoadMainAssetAtPath("Assets/SabreCSG/Gizmos/DialogOverlay75.png") as Texture2D;
+					dialogOverlayTexture = UnityEditor.AssetDatabase.LoadMainAssetAtPath(CSGModel.GetSabreCSGPath() + "Gizmos/DialogOverlay75.png") as Texture2D;
 				}
 				return dialogOverlayTexture;
+			}
+		}
+
+		public static Texture2D ClearTexture
+		{
+			get
+			{
+				if(clearTexture == null)
+				{
+					clearTexture = new Texture2D(2,2, TextureFormat.RGBA32, false);
+					for (int x = 0; x < clearTexture.width; x++) 
+					{
+						for (int y = 0; y < clearTexture.height; y++) 
+						{
+							clearTexture.SetPixel(x,y,Color.clear);
+						}	
+					}
+					clearTexture.Apply();
+				}
+				return clearTexture;
+			}
+		}
+
+		public static Texture2D HalfWhiteTexture
+		{
+			get
+			{
+				if(halfWhiteTexture == null)
+				{
+					halfWhiteTexture = new Texture2D(2,2, TextureFormat.RGBA32, false);
+					for (int x = 0; x < halfWhiteTexture.width; x++) 
+					{
+						for (int y = 0; y < halfWhiteTexture.height; y++) 
+						{
+							halfWhiteTexture.SetPixel(x,y,new Color(1,1,1,0.5f));
+						}	
+					}
+					halfWhiteTexture.Apply();
+				}
+				return halfWhiteTexture;
+			}
+		}
+
+		public static Texture2D HalfBlackTexture
+		{
+			get
+			{
+				if(halfBlackTexture == null)
+				{
+					halfBlackTexture = new Texture2D(2,2, TextureFormat.RGBA32, false);
+					for (int x = 0; x < halfBlackTexture.width; x++) 
+					{
+						for (int y = 0; y < halfBlackTexture.height; y++) 
+						{
+							halfBlackTexture.SetPixel(x,y,new Color(0,0,0,0.5f));
+						}	
+					}
+					halfBlackTexture.Apply();
+				}
+				return halfBlackTexture;
 			}
 		}
 
@@ -87,6 +153,17 @@ namespace Sabresaurus.SabreCSG
 	        return selectedBrushMaterial;
 	    }
 
+		public static Material GetSelectedBrushDashedMaterial()
+		{
+			if (selectedBrushDashedMaterial == null)
+			{
+				selectedBrushDashedMaterial = new Material(Shader.Find("SabreCSG/Line Dashed"));
+				selectedBrushDashedMaterial.hideFlags = HideFlags.HideAndDontSave;
+				selectedBrushDashedMaterial.shader.hideFlags = HideFlags.HideAndDontSave;
+			}
+			return selectedBrushDashedMaterial;
+		}
+
 	    public static Material GetGizmoMaterial()
 	    {
 	        if (gizmoMaterial == null)
@@ -95,7 +172,7 @@ namespace Sabresaurus.SabreCSG
 				gizmoMaterial = new Material(shader);
 	            gizmoMaterial.hideFlags = HideFlags.HideAndDontSave;
 	            gizmoMaterial.shader.hideFlags = HideFlags.HideAndDontSave;
-				gizmoMaterial.mainTexture = UnityEditor.AssetDatabase.LoadMainAssetAtPath("Assets/SabreCSG/Gizmos/SquareGizmo8x8.png") as Texture;
+				gizmoMaterial.mainTexture = UnityEditor.AssetDatabase.LoadMainAssetAtPath(CSGModel.GetSabreCSGPath() + "Gizmos/SquareGizmo8x8.png") as Texture;
 	        }
 	        return gizmoMaterial;
 	    }
@@ -108,7 +185,7 @@ namespace Sabresaurus.SabreCSG
 				vertexMaterial = new Material(shader);
 	            vertexMaterial.hideFlags = HideFlags.HideAndDontSave;
 	            vertexMaterial.shader.hideFlags = HideFlags.HideAndDontSave;
-				vertexMaterial.mainTexture = UnityEditor.AssetDatabase.LoadMainAssetAtPath("Assets/SabreCSG/Gizmos/CircleGizmo8x8.png") as Texture;
+				vertexMaterial.mainTexture = UnityEditor.AssetDatabase.LoadMainAssetAtPath(CSGModel.GetSabreCSGPath() + "Gizmos/CircleGizmo8x8.png") as Texture;
 	        }
 	        return vertexMaterial;
 	    }
@@ -208,6 +285,56 @@ namespace Sabresaurus.SabreCSG
 
 			GL.Vertex(bottomRight);
 			GL.Vertex(topRight);
+		}
+
+		public static void DrawBox(Bounds bounds, Transform transform = null)
+		{
+			Vector3 center = bounds.center;
+
+			// Calculate each of the transformed axis with their corresponding length
+			Vector3 up = Vector3.up * bounds.extents.y;
+			Vector3 right = Vector3.right * bounds.extents.x;
+			Vector3 forward = Vector3.forward * bounds.extents.z;
+
+			if(transform != null)
+			{
+				center = transform.TransformPoint(bounds.center);
+
+				// Calculate each of the transformed axis with their corresponding length
+				up = transform.TransformVector(Vector3.up) * bounds.extents.y;
+			 	right = transform.TransformVector(Vector3.right) * bounds.extents.x;
+				forward = transform.TransformVector(Vector3.forward) * bounds.extents.z;
+			}
+
+			// Verticals
+			GL.Vertex(center - right - forward + up);
+			GL.Vertex(center - right - forward - up);
+			GL.Vertex(center - right + forward + up);
+			GL.Vertex(center - right + forward - up);
+			GL.Vertex(center + right - forward + up);
+			GL.Vertex(center + right - forward - up);
+			GL.Vertex(center + right + forward + up);
+			GL.Vertex(center + right + forward - up);
+
+			// Horizontal - forward/back
+			GL.Vertex(center - right + forward - up);
+			GL.Vertex(center - right - forward - up);
+			GL.Vertex(center + right + forward - up);
+			GL.Vertex(center + right - forward - up);
+			GL.Vertex(center - right + forward + up);
+			GL.Vertex(center - right - forward + up);
+			GL.Vertex(center + right + forward + up);
+			GL.Vertex(center + right - forward + up);
+
+			// Horizontal - right/left
+			GL.Vertex(center + right - forward - up);
+			GL.Vertex(center - right - forward - up);
+			GL.Vertex(center + right + forward - up);
+			GL.Vertex(center - right + forward - up);
+			GL.Vertex(center + right - forward + up);
+			GL.Vertex(center - right - forward + up);
+			GL.Vertex(center + right + forward + up);
+			GL.Vertex(center - right + forward + up);
 		}
 
 	    public static void DrawPlane(UnityEngine.Plane plane, Vector3 center, Color colorFront, Color colorBack, float size)
@@ -352,13 +479,13 @@ namespace Sabresaurus.SabreCSG
 			}
 			GL.End();
 
-			if(CurrentSettings.Instance.AngleSnappingEnabled)
+			if(CurrentSettings.AngleSnappingEnabled)
 			{
 				Quaternion cancellingRotation = Quaternion.Inverse(Quaternion.LookRotation(normal));
 				Vector3 planarInitialDirection = cancellingRotation * initialRotationDirection;
 				float angleOffset = Mathf.Atan2(planarInitialDirection.x,planarInitialDirection.y);
 
-				float angleSnapDistance = CurrentSettings.Instance.AngleSnapDistance;
+				float angleSnapDistance = CurrentSettings.AngleSnapDistance;
 
 				count = (int)(360f / angleSnapDistance);
 				deltaAngle = (2f * Mathf.PI) / count;
@@ -470,43 +597,87 @@ namespace Sabresaurus.SabreCSG
 			GL.End();
 		}
 
-	    public static void DrawThickLineTest()
-	    {
-	        // TODO: This would be nice to support, but right now it looks like it might be quite expensive
+		public static void DrawPolygonsOutline(Color color, params Polygon[] polygons)
+		{
+			Vector3 depthAdjust = -0.01f * SceneView.currentDrawingSceneView.camera.transform.forward;
+			GL.Begin(GL.LINES);
 
-	        //		SabreGraphics.GetSelectedBrushMaterial().SetPass(0);
-	        //		
-	        //		Vector3 testPoint1 = new Vector3(0,0,0);
-	        //		Vector3 testPoint2 = new Vector3(100,0,0);
-	        //		
-	        //		Vector3 screenPoint1 = sceneViewCamera.WorldToScreenPoint(testPoint1);
-	        //		Vector3 screenPoint2 = sceneViewCamera.WorldToScreenPoint(testPoint2);
-	        //		
-	        //		Vector3 perpendicular = new Vector3(screenPoint2.x - screenPoint1.x, screenPoint1.y - screenPoint2.y, screenPoint1.z).normalized;
-	        //		
-	        //		GL.Begin(GL.QUADS);
-	        //		GL.Color(Color.blue);
-	        //		GL.Vertex(sceneViewCamera.ScreenToWorldPoint(screenPoint1 + perpendicular * 5));
-	        //		GL.Vertex(sceneViewCamera.ScreenToWorldPoint(screenPoint1 - perpendicular * 5));
-	        //		GL.Vertex(sceneViewCamera.ScreenToWorldPoint(screenPoint2 - perpendicular * 5));
-	        //		GL.Vertex(sceneViewCamera.ScreenToWorldPoint(screenPoint2 + perpendicular * 5));
-	        //		
-	        //		//			GL.Vertex(testPoint1 + sceneView.camera.transform.up * 5);
-	        //		//			GL.Vertex(testPoint1 - sceneView.camera.transform.up * 5);
-	        //		//			GL.Vertex(testPoint2 - sceneView.camera.transform.up * 5);
-	        //		//			GL.Vertex(testPoint2 + sceneView.camera.transform.up * 5);
-	        //		GL.End();
+			for (int j = 0; j < polygons.Length; j++) 
+			{
+				Polygon polygon = polygons[j];
 
+				GL.Color(color);
 
+				for (int i = 0; i < polygon.Vertices.Length; i++)
+				{
+					Vector3 currentPosition = polygon.Vertices[i].Position + depthAdjust;
+					Vector3 nextPosition = polygon.Vertices[(i + 1)%polygon.Vertices.Length].Position + depthAdjust;
 
-	        //		GL.Begin(GL.LINES);
-	        //		GL.Color(Color.magenta);
-	        //		
-	        //		GL.Vertex(testPoint1);
-	        //		GL.Vertex(testPoint2);
-	        //		GL.End();
+					GL.Vertex(currentPosition);
+					GL.Vertex(nextPosition);
+				}
+			}
 
-	    }
+			GL.End();
+		}
+
+		public static void DrawPolygonsOutlineDashed(Color color, params Polygon[] polygons)
+		{
+			Vector3 depthAdjust = -0.01f * SceneView.currentDrawingSceneView.camera.transform.forward;
+			GL.Begin(GL.LINES);
+
+			for (int j = 0; j < polygons.Length; j++) 
+			{
+				Polygon polygon = polygons[j];
+
+				GL.Color(color);
+
+				for (int i = 0; i < polygon.Vertices.Length; i++)
+				{
+					Vector3 currentPosition = polygon.Vertices[i].Position + depthAdjust;
+					Vector3 nextPosition = polygon.Vertices[(i + 1)%polygon.Vertices.Length].Position + depthAdjust;
+
+					GL.TexCoord2(0,0);
+					GL.Vertex(currentPosition);
+					GL.TexCoord2(Vector3.Distance(nextPosition,currentPosition),0);
+					GL.Vertex(nextPosition);
+				}
+			}
+
+			GL.End();
+		}
+
+//		public static void DrawThickLineTest(Vector3 testPoint1, Vector3 testPoint2, float width)
+//	    {
+//			Camera sceneViewCamera = UnityEditor.SceneView.currentDrawingSceneView.camera;
+//    		
+////    		Vector3 screenPoint1 = sceneViewCamera.WorldToScreenPoint(testPoint1);
+////    		Vector3 screenPoint2 = sceneViewCamera.WorldToScreenPoint(testPoint2);
+//    		
+////    		Vector3 perpendicular = new Vector3(screenPoint2.x - screenPoint1.x, screenPoint1.y - screenPoint2.y, screenPoint1.z).normalized;
+//    		
+////			Vector3 up = sceneViewCamera.transform.up;
+//			Vector3 forward = sceneViewCamera.transform.forward * 0.01f;
+//
+//			Vector3 cameraVector = sceneViewCamera.transform.position - (testPoint1 + testPoint2)/2f;
+//			Vector3 lineVector = testPoint2 - testPoint1;
+//
+//			Vector3 up = Vector3.Cross(cameraVector.normalized, lineVector.normalized);
+//
+////			Vector3 up = Quaternion.LookRotation(sceneViewCamera.transform.forward, sceneViewCamera.transform.up) * Vector3.up;
+//
+//			GL.Color(Color.black);
+//			GL.Vertex(testPoint1 + up * width - forward);
+//			GL.Vertex(testPoint1 - up * width - forward);
+//			GL.Vertex(testPoint2 - up * width - forward);
+//			GL.Vertex(testPoint2 + up * width - forward);
+//
+//			GL.Color(Color.green);
+//			GL.Vertex(testPoint1 + up * width/2 - forward);
+//			GL.Vertex(testPoint1 - up * width/2 - forward);
+//			GL.Vertex(testPoint2 - up * width/2 - forward);
+//			GL.Vertex(testPoint2 + up * width/2 - forward);
+//	    }
 	}
 }
 #endif

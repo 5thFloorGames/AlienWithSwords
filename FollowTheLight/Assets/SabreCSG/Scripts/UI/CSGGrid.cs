@@ -14,7 +14,7 @@ namespace Sabresaurus.SabreCSG
 		{
 			SceneView sceneView = SceneView.currentDrawingSceneView;
 			EditorHelper.SceneViewCamera camera = EditorHelper.GetSceneViewCamera(sceneView);
-			float snapDistance = CurrentSettings.Instance.PositionSnapDistance;
+			float snapDistance = CurrentSettings.PositionSnapDistance;
 
 			Vector3 cameraPosition = sceneView.camera.transform.position;
 

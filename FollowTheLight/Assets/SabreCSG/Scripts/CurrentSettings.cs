@@ -21,60 +21,17 @@ namespace Sabresaurus.SabreCSG
 	}
 
 	[ExecuteInEditMode]
-	public class CurrentSettings : MonoBehaviour
+	public static class CurrentSettings
 	{
-	    #region Singleton
-	    private static CurrentSettings instance = null;
+	    static MainMode currentMode = MainMode.Free;
+	    static MainMode lastMode = MainMode.Free;
+		static bool brushesHidden = false;
+		static bool meshHidden = false;
 
-	    public static CurrentSettings Instance
-	    {
-	        get
-	        {
-	            // If the instance is null, we need to make sure we have one
-	            if (instance == null)
-	            {
-	                // First check if there's actually one in the scene already
-	                CurrentSettings currentSettings = FindObjectOfType<CurrentSettings>();
-	                if (currentSettings != null)
-	                {
-	                    // There was, so set instance to that
-	                    instance = currentSettings;
-	                }
-	                else
-	                {
-	                    // Couldn't find one in the scene, let's create a new one
-	                    GameObject spawnedObject = new GameObject("CurrentSettings", typeof(CurrentSettings));
-	                    instance = spawnedObject.GetComponent<CurrentSettings>();
-	                }
-	            }
+		static Material foregroundMaterial;
+		static GridMode gridMode = GridMode.SabreCSG;
 
-	            return instance;
-	        }
-	    }
-
-	    void Awake()
-	    {
-	        if (instance != null && instance != this)
-	        {
-	            // Instance already exists other than this one, so destroy this object so we don't create a duplicate
-	            Destroy(this.gameObject);
-	        }
-	        else
-	        {
-	            instance = this;
-	        }
-	    }
-	    #endregion
-
-	    MainMode currentMode = MainMode.Free;
-	    MainMode lastMode = MainMode.Free;
-		bool brushesHidden = false;
-		bool meshHidden = false;
-
-		Material foregroundMaterial;
-		GridMode gridMode = GridMode.SabreCSG;
-
-	    public bool PositionSnappingEnabled
+	    public static bool PositionSnappingEnabled
 	    {
 	        get
 	        {
@@ -86,7 +43,7 @@ namespace Sabresaurus.SabreCSG
 	        }
 	    }
 
-	    public float PositionSnapDistance
+	    public static float PositionSnapDistance
 	    {
 	        get
 	        {
@@ -101,34 +58,7 @@ namespace Sabresaurus.SabreCSG
 	        }
 		}
 		
-//		public bool UVSnappingEnabled
-//		{
-//			get
-//			{
-//				return PlayerPrefs.GetInt("SabreCSGuvSnappingEnabled", 1) != 0;
-//			}
-//			set
-//			{
-//				PlayerPrefs.SetInt("SabreCSGuvSnappingEnabled", value ? 1 : 0);
-//			}
-//		}
-		
-		public float UVSnapDistance
-		{
-			get
-			{
-				return PlayerPrefs.GetFloat("SabreCSGuvSnapDistance", 0.1f);
-			}
-			set
-			{
-				if(value > 0)
-				{
-					PlayerPrefs.SetFloat("SabreCSGuvSnapDistance", value);
-				}
-			}
-		}
-		
-		public bool AngleSnappingEnabled
+		public static bool AngleSnappingEnabled
 		{
 			get
 			{
@@ -140,7 +70,7 @@ namespace Sabresaurus.SabreCSG
 			}
 		}
 		
-		public float AngleSnapDistance
+		public static float AngleSnapDistance
 		{
 			get
 			{
@@ -155,7 +85,7 @@ namespace Sabresaurus.SabreCSG
 			}
 		}
 
-	    public Material ForegroundMaterial
+	    public static Material ForegroundMaterial
 	    {
 	        get
 	        {
@@ -167,7 +97,7 @@ namespace Sabresaurus.SabreCSG
 	        }
 		}
 
-		public GridMode GridMode 
+		public static GridMode GridMode 
 		{
 			get 
 			{
@@ -191,17 +121,17 @@ namespace Sabresaurus.SabreCSG
 			}
 		}
 
-	    public void ChangePosSnapDistance(float multiplier)
+	    public static void ChangePosSnapDistance(float multiplier)
 	    {
 	        PositionSnapDistance *= multiplier;
 	    }
 
-		public void ChangeAngSnapDistance(float multiplier)
+		public static void ChangeAngSnapDistance(float multiplier)
 		{
 			AngleSnapDistance *= multiplier;
 		}
 
-	    public bool BrushesHidden
+		public static bool BrushesHidden
 	    {
 	        get
 	        {
@@ -213,7 +143,7 @@ namespace Sabresaurus.SabreCSG
 	        }
 	    }
 
-		public bool MeshHidden
+		public static bool MeshHidden
 		{
 			get
 			{
@@ -226,7 +156,7 @@ namespace Sabresaurus.SabreCSG
 		}
 
 	    // TODO: This behaves differently to just !brushesHidden, need to make the two properties less ambiguous
-	    public bool BrushesVisible
+		public static bool BrushesVisible
 	    {
 	        get
 	        {
@@ -234,7 +164,7 @@ namespace Sabresaurus.SabreCSG
 	        }
 	    }
 
-	    public bool AllowMeshSelection
+		public static bool AllowMeshSelection
 	    {
 	        get
 	        {
@@ -242,7 +172,7 @@ namespace Sabresaurus.SabreCSG
 	        }
 	    }
 
-	    public MainMode CurrentMode
+		public static MainMode CurrentMode
 	    {
 	        get
 	        {
@@ -255,7 +185,7 @@ namespace Sabresaurus.SabreCSG
 	        }
 	    }
 
-	    public MainMode LastMode
+		public static MainMode LastMode
 	    {
 	        get
 	        {

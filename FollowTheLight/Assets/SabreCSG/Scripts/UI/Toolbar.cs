@@ -14,6 +14,9 @@ namespace Sabresaurus.SabreCSG
 
 		static string warningMessage = "Concave brushes detected";
 
+		static Rect createRect;
+		static Rect gridRect;
+
         public static CSGModel CSGModel
         {
             get
@@ -48,27 +51,28 @@ namespace Sabresaurus.SabreCSG
             Rect rectangle = new Rect(0, sceneView.position.height - BOTTOM_TOOLBAR_HEIGHT, sceneView.position.width, BOTTOM_TOOLBAR_HEIGHT);
 
             GUIStyle style = new GUIStyle(EditorStyles.toolbar);
-//			GUI.backgroundColor = Color.clear;
-			
-            style.fixedHeight = BOTTOM_TOOLBAR_HEIGHT;
-            GUILayout.Window(0, rectangle, OnBottomToolbarGUI, "", style);//, EditorStyles.textField);
 
-			GUI.backgroundColor = Color.clear;
-            rectangle = new Rect(0, 20, 320, 50);
-            GUILayout.Window(1, rectangle, OnTopToolbarGUI, "", style);
+            style.fixedHeight = BOTTOM_TOOLBAR_HEIGHT;
+			GUILayout.Window(140003, rectangle, OnBottomToolbarGUI, "", style);//, EditorStyles.textField);
+
+			style = new GUIStyle(EditorStyles.toolbar);
+
+			style.normal.background = SabreGraphics.ClearTexture;
+			rectangle = new Rect(0, 20, 320, 50);
+			GUILayout.Window(140004, rectangle, OnTopToolbarGUI, "", style);
 
 			if(!string.IsNullOrEmpty(warningMessage))
-			{
-				GUI.backgroundColor = Color.clear;
+			{				
 				style.fixedHeight = 70;
 				rectangle = new Rect(0, sceneView.position.height - BOTTOM_TOOLBAR_HEIGHT - style.fixedHeight, sceneView.position.width, style.fixedHeight);
-				GUILayout.Window(2, rectangle, OnWarningToolbar, "", style);
+				GUILayout.Window(140005, rectangle, OnWarningToolbar, "", style);
 			}
+            
         }
 
         private static void OnTopToolbarGUI(int windowID)
         {
-            csgModel.SetCurrentMode(SabreGUILayout.DrawEnumGrid(CurrentSettings.Instance.CurrentMode, GUILayout.Width(50)));
+            csgModel.SetCurrentMode(SabreGUILayout.DrawEnumGrid(CurrentSettings.CurrentMode, GUILayout.Width(50)));
         }
 
 		private static void OnWarningToolbar(int windowID)
@@ -103,7 +107,7 @@ namespace Sabresaurus.SabreCSG
 		{
 			if(userData.GetType() == typeof(GridMode))
 			{
-				CurrentSettings.Instance.GridMode = (GridMode)userData;
+				CurrentSettings.GridMode = (GridMode)userData;
 			}
 		}
 
@@ -122,29 +126,36 @@ namespace Sabresaurus.SabreCSG
 
 				for (int i = 0; i < names.Length; i++) 
 				{
-					menu.AddItem (new GUIContent (names[i]), false, OnSelectedCreateOption, Enum.Parse(typeof(PrimitiveBrushType), names[i]));
+					if(names[i] != "Custom")
+					{
+						menu.AddItem (new GUIContent (names[i]), false, OnSelectedCreateOption, Enum.Parse(typeof(PrimitiveBrushType), names[i]));
+					}
 				}
 
-				Rect rect = GUILayoutUtility.GetLastRect();
-				rect.width = 100;
-
-				menu.DropDown(rect);
+				menu.DropDown(createRect);
 			}
+
+			if (Event.current.type == EventType.Repaint)
+			{
+				createRect = GUILayoutUtility.GetLastRect();
+				createRect.width = 100;
+			}
+
 
             if (SabreGUILayout.Button("Rebuild"))
             {
 				csgModel.Build();
             }
 
-			// DISABLED as no longer necessary - CurrentSettings.Instance.Optimizations = (Optimizations)EditorGUILayout.EnumMaskField(CurrentSettings.Instance.Optimizations, GUILayout.Width(100));
+			// DISABLED as no longer necessary - CurrentSettings.Optimizations = (Optimizations)EditorGUILayout.EnumMaskField(CurrentSettings.Optimizations, GUILayout.Width(100));
 
-            bool lastBrushesHidden = CurrentSettings.Instance.BrushesHidden;
+            bool lastBrushesHidden = CurrentSettings.BrushesHidden;
 			if(lastBrushesHidden)
 			{
 				GUI.color = Color.red;
 			}
-            CurrentSettings.Instance.BrushesHidden = SabreGUILayout.Toggle(CurrentSettings.Instance.BrushesHidden, "Brushes Hidden");
-            if (CurrentSettings.Instance.BrushesHidden != lastBrushesHidden)
+            CurrentSettings.BrushesHidden = SabreGUILayout.Toggle(CurrentSettings.BrushesHidden, "Brushes Hidden");
+            if (CurrentSettings.BrushesHidden != lastBrushesHidden)
             {
                 // Has changed
                 csgModel.UpdateBrushVisibility();
@@ -153,13 +164,13 @@ namespace Sabresaurus.SabreCSG
 
 
 			GUI.color = Color.white;
-			bool lastMeshHidden = CurrentSettings.Instance.MeshHidden;
+			bool lastMeshHidden = CurrentSettings.MeshHidden;
 			if(lastMeshHidden)
 			{
 				GUI.color = Color.red;
 			}
-			CurrentSettings.Instance.MeshHidden = SabreGUILayout.Toggle(CurrentSettings.Instance.MeshHidden, "Mesh Hidden");
-			if (CurrentSettings.Instance.MeshHidden != lastMeshHidden)
+			CurrentSettings.MeshHidden = SabreGUILayout.Toggle(CurrentSettings.MeshHidden, "Mesh Hidden");
+			if (CurrentSettings.MeshHidden != lastMeshHidden)
 			{
 				// Has changed
 				csgModel.UpdateBrushVisibility();
@@ -169,7 +180,7 @@ namespace Sabresaurus.SabreCSG
 			GUI.color = Color.white;
 
 			
-			if(GUILayout.Button("Grid " + CurrentSettings.Instance.GridMode.ToString(), EditorStyles.toolbarDropDown, GUILayout.Width(90)))
+			if(GUILayout.Button("Grid " + CurrentSettings.GridMode.ToString(), EditorStyles.toolbarDropDown, GUILayout.Width(90)))
 			{
 				GenericMenu menu = new GenericMenu ();
 				
@@ -179,17 +190,20 @@ namespace Sabresaurus.SabreCSG
 				{
 					GridMode value = (GridMode)Enum.Parse(typeof(GridMode),names[i]);
 					bool selected = false;
-					if(CurrentSettings.Instance.GridMode == value)
+					if(CurrentSettings.GridMode == value)
 					{
 						selected = true;
 					}
 					menu.AddItem (new GUIContent (names[i]), selected, OnSelectedGridOption, value);
 				}
 				
-				Rect rect = GUILayoutUtility.GetLastRect();
-				rect.width = 100;
-				
-				menu.DropDown(rect);
+				menu.DropDown(gridRect);
+			}
+
+			if (Event.current.type == EventType.Repaint)
+			{
+				gridRect = GUILayoutUtility.GetLastRect();
+				gridRect.width = 100;
 			}
 
             GUILayout.FlexibleSpace();
@@ -200,7 +214,7 @@ namespace Sabresaurus.SabreCSG
 
 			// Display brush count
 			GUILayout.Label(csgModel.BrushCount.ToStringWithSuffix(" brush", " brushes"), SabreGUILayout.GetLabelStyle());
-//			CurrentSettings.Instance.GridMode = (GridMode)EditorGUILayout.EnumPopup(CurrentSettings.Instance.GridMode, EditorStyles.toolbarPopup, GUILayout.Width(80));
+//			CurrentSettings.GridMode = (GridMode)EditorGUILayout.EnumPopup(CurrentSettings.GridMode, EditorStyles.toolbarPopup, GUILayout.Width(80));
 
             if (Selection.activeGameObject != null)
             {
@@ -240,38 +254,38 @@ namespace Sabresaurus.SabreCSG
 			GUILayout.Space(10);
 
 			// Position snapping UI
-			CurrentSettings.Instance.PositionSnappingEnabled = SabreGUILayout.Toggle(CurrentSettings.Instance.PositionSnappingEnabled, "Pos Snapping");
-			CurrentSettings.Instance.PositionSnapDistance = EditorGUILayout.FloatField(CurrentSettings.Instance.PositionSnapDistance, GUILayout.Width(50));
+			CurrentSettings.PositionSnappingEnabled = SabreGUILayout.Toggle(CurrentSettings.PositionSnappingEnabled, "Pos Snapping");
+			CurrentSettings.PositionSnapDistance = EditorGUILayout.FloatField(CurrentSettings.PositionSnapDistance, GUILayout.Width(50));
 			
 			if (SabreGUILayout.Button("-", EditorStyles.miniButtonLeft))
 			{
-				CurrentSettings.Instance.ChangePosSnapDistance(.5f);
+				CurrentSettings.ChangePosSnapDistance(.5f);
 			}
 			if (SabreGUILayout.Button("+", EditorStyles.miniButtonRight))
 			{
-				CurrentSettings.Instance.ChangePosSnapDistance(2f);
+				CurrentSettings.ChangePosSnapDistance(2f);
 			}
 
 			// Rotation snapping UI
-			CurrentSettings.Instance.AngleSnappingEnabled = SabreGUILayout.Toggle(CurrentSettings.Instance.AngleSnappingEnabled, "Ang Snapping");
-			CurrentSettings.Instance.AngleSnapDistance = EditorGUILayout.FloatField(CurrentSettings.Instance.AngleSnapDistance, GUILayout.Width(50));
+			CurrentSettings.AngleSnappingEnabled = SabreGUILayout.Toggle(CurrentSettings.AngleSnappingEnabled, "Ang Snapping");
+			CurrentSettings.AngleSnapDistance = EditorGUILayout.FloatField(CurrentSettings.AngleSnapDistance, GUILayout.Width(50));
 
 			if (SabreGUILayout.Button("-", EditorStyles.miniButtonLeft))
 			{
-				CurrentSettings.Instance.ChangeAngSnapDistance(.5f);
+				CurrentSettings.ChangeAngSnapDistance(.5f);
 			}
 			if (SabreGUILayout.Button("+", EditorStyles.miniButtonRight))
 			{
-				CurrentSettings.Instance.ChangeAngSnapDistance(2f);
+				CurrentSettings.ChangeAngSnapDistance(2f);
 			}
 
 // Disabled test build options
-//			CurrentSettings.Instance.RestoreOriginalPolygons = SabreGUILayout.Toggle(CurrentSettings.Instance.RestoreOriginalPolygons, "Restore Original Polygons", GUILayout.Width(153));
-//			CurrentSettings.Instance.RemoveHiddenGeometry = SabreGUILayout.Toggle(CurrentSettings.Instance.RemoveHiddenGeometry, "Remove Hidden Geometry", GUILayout.Width(153));
+//			CurrentSettings.RestoreOriginalPolygons = SabreGUILayout.Toggle(CurrentSettings.RestoreOriginalPolygons, "Restore Original Polygons", GUILayout.Width(153));
+//			CurrentSettings.RemoveHiddenGeometry = SabreGUILayout.Toggle(CurrentSettings.RemoveHiddenGeometry, "Remove Hidden Geometry", GUILayout.Width(153));
 
 			GUILayout.FlexibleSpace();
 
-            if (CurrentSettings.Instance.CurrentMode != MainMode.Free)
+            if (CurrentSettings.CurrentMode != MainMode.Free)
 			{
 				if( Tools.current == UnityEditor.Tool.View && Tools.viewTool == ViewTool.Pan)
 				{
@@ -281,6 +295,7 @@ namespace Sabresaurus.SabreCSG
 
 			if (SabreGUILayout.Button("Disable"))
 			{
+				Selection.activeGameObject = null;
 				csgModel.EditMode = false;
 			}
 

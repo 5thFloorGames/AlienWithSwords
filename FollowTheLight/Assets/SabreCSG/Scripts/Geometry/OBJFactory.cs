@@ -12,75 +12,124 @@ namespace Sabresaurus.SabreCSG
 		public static void ExportToFile (string path, List<Polygon> polygons, Material defaultMaterial)
 		{
 			string exportedText = ExportToString(polygons, defaultMaterial);
-			File.WriteAllText(path, exportedText);
+
+			// Use a StreamWriter as File.WriteAllText isn't available on Web Player even in Editor
+			using (StreamWriter sw = new StreamWriter(path)) 
+			{
+				sw.Write(exportedText);
+			}
 		}
 
 		public static string ExportToString(List<Polygon> polygons, Material defaultMaterial)
 		{
+			// Create polygon subsets for each material
+			Dictionary<Material, List<Polygon>> polygonMaterialTable = new Dictionary<Material, List<Polygon>>();
+
+			// Iterate through every polygon adding it to the appropiate material list
+			foreach (Polygon polygon in polygons)
+			{
+				if(polygon.UserExcludeFromFinal)
+				{
+					continue;
+				}
+
+				Material material = polygon.Material;
+				if(material == null)
+				{
+					material = defaultMaterial;
+				}
+				if (!polygonMaterialTable.ContainsKey(material))
+				{
+					polygonMaterialTable.Add(material, new List<Polygon>());
+				}
+
+				polygonMaterialTable[material].Add(polygon);
+			}
+
 			// Use a string builder as this should allow faster concatenation
 			StringBuilder stringBuilder = new StringBuilder();
 
 			OBJVertexList vertexList = new OBJVertexList();
 
-			List<List<OBJFaceVertex>> faces = new List<List<OBJFaceVertex>>(polygons.Count);
+			int positionIndexOffset = 0;
+			int uvIndexOffset = 0;
+			int normalIndexOffset = 0;
 
-			// Iterate through every polygon and triangulate
-			foreach (Polygon polygon in polygons)
+			int meshIndex = 1;
+			// Create a separate mesh for polygons of each material so that we batch by material
+			foreach (KeyValuePair<Material, List<Polygon>> polygonMaterialGroup in polygonMaterialTable)
 			{
-				List<OBJFaceVertex> faceVertices = new List<OBJFaceVertex>(polygon.Vertices.Length);
+				List<List<OBJFaceVertex>> faces = new List<List<OBJFaceVertex>>(polygonMaterialGroup.Value.Count);
 
-				for (int i = 0; i < polygon.Vertices.Length; i++)
+				// Iterate through every polygon and triangulate
+				foreach (Polygon polygon in polygonMaterialGroup.Value)
 				{
-					OBJFaceVertex faceVertex = vertexList.AddOrGet(polygon.Vertices[i]);
-					faceVertices.Add(faceVertex);
+					List<OBJFaceVertex> faceVertices = new List<OBJFaceVertex>(polygon.Vertices.Length);
+
+					for (int i = 0; i < polygon.Vertices.Length; i++)
+					{
+						OBJFaceVertex faceVertex = vertexList.AddOrGet(polygon.Vertices[i]);
+						faceVertices.Add(faceVertex);
+					}
+
+					faces.Add(faceVertices);
 				}
 
-				faces.Add(faceVertices);
-			}
+				List<Vector3> positions = vertexList.Positions;
+				List<Vector2> uvs = vertexList.UVs;
+				List<Vector3> normals = vertexList.Normals;
 
-			List<Vector3> positions = vertexList.Positions;
-			List<Vector2> uvs = vertexList.UVs;
-			List<Vector3> normals = vertexList.Normals;
+				// Start a new group for the mesh
+				stringBuilder.AppendLine("g Mesh"+meshIndex);
 
-			stringBuilder.AppendLine("g Mesh"+0);
+				// Write all the positions
+				stringBuilder.AppendLine("# Vertex Positions: " + (positions.Count-positionIndexOffset));
 
-			stringBuilder.AppendLine("# Vertex Positions: " + positions.Count);
-
-			for (int i = 0; i < positions.Count; i++) 
-			{
-				stringBuilder.AppendLine("v " + (-positions[i].x) + " " + positions[i].y + " " + positions[i].z);
-			}
-
-			stringBuilder.AppendLine("# Vertex UVs: " + uvs.Count);
-
-			for (int i = 0; i < uvs.Count; i++) 
-			{
-				stringBuilder.AppendLine("vt " + uvs[i].x + " " + uvs[i].y);
-			}
-
-			stringBuilder.AppendLine("# Vertex Normals: " + normals.Count);
-
-			for (int i = 0; i < normals.Count; i++) 
-			{
-				stringBuilder.AppendLine("vn " + (-normals[i].x) + " " + normals[i].y + " " + normals[i].z);
-			}
-
-
-			stringBuilder.AppendLine("# Faces: " + faces.Count);
-			
-			
-			for (int i = 0; i < faces.Count; i++) 
-			{
-				stringBuilder.Append("f ");
-				for (int j = faces[i].Count-1; j >=0; j--) 
+				for (int i = positionIndexOffset; i < positions.Count; i++) 
 				{
-					stringBuilder.Append((faces[i][j].PositionIndex) + "/" + (faces[i][j].UVIndex) + "/" + (faces[i][j].NormalIndex) + " ");
+					stringBuilder.AppendLine("v " + (-positions[i].x) + " " + positions[i].y + " " + positions[i].z);
 				}
+
+				// Write all the texture coordinates (UVs)
+				stringBuilder.AppendLine("# Vertex UVs: " + (uvs.Count-uvIndexOffset));
+
+				for (int i = uvIndexOffset; i < uvs.Count; i++) 
+				{
+					stringBuilder.AppendLine("vt " + uvs[i].x + " " + uvs[i].y);
+				}
+
+				// Write all the normals
+				stringBuilder.AppendLine("# Vertex Normals: " + (normals.Count-normalIndexOffset));
+
+				for (int i = normalIndexOffset; i < normals.Count; i++) 
+				{
+					stringBuilder.AppendLine("vn " + (-normals[i].x) + " " + normals[i].y + " " + normals[i].z);
+				}
+
+				// Write all the faces
+				stringBuilder.AppendLine("# Faces: " + faces.Count);
+				
+				for (int i = 0; i < faces.Count; i++) 
+				{
+					stringBuilder.Append("f ");
+					for (int j = faces[i].Count-1; j >=0; j--) 
+					{
+						stringBuilder.Append((faces[i][j].PositionIndex) + "/" + (faces[i][j].UVIndex) + "/" + (faces[i][j].NormalIndex) + " ");
+					}
+					stringBuilder.AppendLine();
+				}
+
+				// Add some padding between this and the next mesh
 				stringBuilder.AppendLine();
-			}
+				stringBuilder.AppendLine();
 
-			stringBuilder.AppendLine();
-			stringBuilder.AppendLine();
+				meshIndex++;
+
+				// Update the offsets so that the next pass only writes new vertex information
+				positionIndexOffset = positions.Count;
+				uvIndexOffset = uvs.Count;
+				normalIndexOffset = normals.Count;
+			}
 
 			return stringBuilder.ToString();
 		}

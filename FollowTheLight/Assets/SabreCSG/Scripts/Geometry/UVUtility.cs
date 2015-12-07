@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using System.Collections;
 
@@ -102,3 +103,4 @@ namespace Sabresaurus.SabreCSG
 	//    }
 	}
 }
+#endif
