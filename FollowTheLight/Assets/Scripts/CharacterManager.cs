@@ -36,13 +36,13 @@ public class CharacterManager : MonoBehaviour {
 
     void Update () {
 		if (Input.GetKeyDown (KeyCode.Alpha1) && firstActive) {
-			EnterCharacter(GetCharacterObject("Character1"));
+            SwitchCharacter(GetCharacterObject("Character1"));
 		}
 		if (Input.GetKeyDown (KeyCode.Alpha2) && secondActive) {
-			EnterCharacter(GetCharacterObject("Character2"));
+            SwitchCharacter(GetCharacterObject("Character2"));
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha3) && thirdActive) {
-            EnterCharacter(GetCharacterObject("Character3"));
+            SwitchCharacter(GetCharacterObject("Character3"));
         }
 
         #if UNITY_EDITOR
@@ -60,7 +60,8 @@ public class CharacterManager : MonoBehaviour {
 
 
 
-    void EnterCharacter(GameObject character) {
+    void SwitchCharacter(GameObject character) {
+        Debug.Log("enter" + character.name);
         foreach (GameObject other in characters) {
             if (other != character) {
                 other.BroadcastMessage("LeaveCharacter");
@@ -166,13 +167,13 @@ public class CharacterManager : MonoBehaviour {
         GameState.amountOfCharacters = spawnCount;
 
         if (GetCharacterObject("Character1") != null) {
-            EnterCharacter(GetCharacterObject("Character1"));
+            SwitchCharacter(GetCharacterObject("Character1"));
             return;
         } else if (GetCharacterObject("Character2") != null) {
-            EnterCharacter(GetCharacterObject("Character2"));
+            SwitchCharacter(GetCharacterObject("Character2"));
             return;
         } else if (GetCharacterObject("Character3") != null) {
-            EnterCharacter(GetCharacterObject("Character3"));
+            SwitchCharacter(GetCharacterObject("Character3"));
             return;
         }
 

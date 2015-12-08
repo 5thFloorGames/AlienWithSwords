@@ -15,14 +15,10 @@ public class UserInterfaceManager : MonoBehaviour {
 	Dictionary <string, Image> distanceMeters;
     Dictionary <string, Text> distanceTexts;
     Dictionary <string, Transform> actionPoints;
-
-    int startCheck;
 	
 	void Awake () {
 
 		DontDestroyOnLoad (gameObject);
-
-        startCheck = 0;
 
         healthMeters = new Dictionary<string, Image>();
         healthTexts = new Dictionary<string, Text>();
@@ -131,10 +127,7 @@ public class UserInterfaceManager : MonoBehaviour {
             }
             counter += 1;
         }
-        if (startCheck < 3) {
-            ActiveCharacterUI(GameState.activeCharacter.name);
-            startCheck += 1;
-        }
+        
         
     }
 
@@ -168,7 +161,7 @@ public class UserInterfaceManager : MonoBehaviour {
                 charinf.FindChild("CharacterName").GetComponent<Text>().CrossFadeAlpha(1f, 0.0f, true);
                 distanceMeters[name].CrossFadeAlpha(1f, 0.0f, true);
                 healthMeters[name].CrossFadeAlpha(1f, 0.0f, true);
-                foreach (Transform actionPoint in actionPoints[characterName]) {
+                foreach (Transform actionPoint in actionPoints[name]) {
                     actionPoint.gameObject.GetComponent<Image>().CrossFadeAlpha(1f, 0.0f, true);
                 }
             }
