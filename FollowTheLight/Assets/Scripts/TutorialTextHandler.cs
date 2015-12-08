@@ -13,21 +13,24 @@ public class TutorialTextHandler : MonoBehaviour {
     string toWriteSide;
     string strSide;
 
+   public bool actionsActivated;
 
     bool outOfMovement;
-    bool apShown;
     bool outOfActionPoints;
 
     int oomTimes;
     int ooaTimes;
 
+    bool endOfTurnShown;
+
 
 	void Start () {
         text = transform.FindChild("Text").GetComponent<Text>();
         sideText = transform.FindChild("SideText").GetComponent<Text>();
+        actionsActivated = false;
         outOfMovement = false;
-        apShown = false;
         outOfActionPoints = false;
+        endOfTurnShown = false;
         oomTimes = 0;
         ooaTimes = 0;
     }
@@ -45,6 +48,11 @@ public class TutorialTextHandler : MonoBehaviour {
     }
 
     public void ShowText(string givenString) {
+        if (!actionsActivated) {
+            if (givenString.Contains("Left click")) {
+                actionsActivated = true;
+            }
+        }
         toWrite = givenString.Replace("__", "\n");
         str = "";
         StartCoroutine(GenerateText());
@@ -86,7 +94,11 @@ public class TutorialTextHandler : MonoBehaviour {
         while (strSide.Length != toWriteSide.Length) {
             strSide += toWriteSide[strSide.Length];
             sideText.text = strSide;
-            yield return new WaitForSeconds(0.01f);
+            if (!toWriteSide[strSide.Length-1].Equals("\n")) {
+                yield return new WaitForSeconds(0.01f);
+            } else {
+                yield return new WaitForSeconds(2.0f);
+            }
         }
     }
 
@@ -99,30 +111,43 @@ public class TutorialTextHandler : MonoBehaviour {
     public void MovementRestored() {
         outOfMovement = false;
         ClearSideText();
+        StopCoroutine("EndTurnTextWithDelay");
     }
 
     public void OutOfActionsInform() {
         outOfActionPoints = true;
         ooaTimes += 1;
+        CheckStatus();
     }
 
     public void ActionsRestored() {
         outOfActionPoints = false;
         ClearSideText();
+        StopCoroutine("EndTurnTextWithDelay");
     }
 
     void CheckStatus() {
-        if (outOfMovement && oomTimes < 3) {
+        if (outOfMovement && !actionsActivated) {
             EndTurnText();
-        } else if (outOfActionPoints && ooaTimes < 3) {
-            EndTurnText();
+        } else if (outOfActionPoints && ooaTimes < 3 && oomTimes > 1) {
+            StartCoroutine("EndTurnTextWithDelay");
         } else if (outOfActionPoints && outOfMovement) {
-            EndTurnText();
+            StartCoroutine("EndTurnTextWithDelay");
         }
+    }
+
+    IEnumerator EndTurnTextWithDelay() {
+        yield return new WaitForSeconds(3.0f);
+        EndTurnText();
     }
 
 
     void EndTurnText() {
-        ShowSideText("To end your turn__press enter");
+        if (endOfTurnShown) {
+            ShowSideTextInstant("Tab");
+        } else {
+            ShowSideText("To end your turn__press tab");
+            endOfTurnShown = true;
+        }
     }
 }

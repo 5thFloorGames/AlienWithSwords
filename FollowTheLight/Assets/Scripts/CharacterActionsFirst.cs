@@ -65,8 +65,9 @@ public class CharacterActionsFirst : MonoBehaviour {
 
 	void CheckIfEnemyWithinAim () {
 		Vector3 start = transform.position;
-		Vector3 direction = (transform.rotation * new Vector3 (0, 0, 30f));
+		Vector3 direction = (transform.rotation * new Vector3 (0, 0, 500f));
 		RaycastHit hit;
+        Debug.DrawRay(start, direction, Color.red, 0.1f);
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
 			if (hit.collider.tag == "Enemy") {
 				EnemyAimedAt();

@@ -9,17 +9,20 @@ public class UserInterfaceManager : MonoBehaviour {
     GameObject levelCompletedUI;
     GameObject levelFailedUI;
 	GameObject characterPanel;
-    //GameObject crosshairs;
 
     Dictionary <string, Image> healthMeters;
     Dictionary <string, Text> healthTexts;
 	Dictionary <string, Image> distanceMeters;
     Dictionary <string, Text> distanceTexts;
     Dictionary <string, Transform> actionPoints;
+
+    int startCheck;
 	
 	void Awake () {
 
 		DontDestroyOnLoad (gameObject);
+
+        startCheck = 0;
 
         healthMeters = new Dictionary<string, Image>();
         healthTexts = new Dictionary<string, Text>();
@@ -93,6 +96,10 @@ public class UserInterfaceManager : MonoBehaviour {
 	}
 
     public void UpdateHealthMeter(string characterName, float currentHealth, float maximum) {
+        if (currentHealth == maximum) {
+            FlashHealth(characterName, 1);
+        }
+
         healthMeters[characterName].fillAmount = (currentHealth / maximum);
         healthTexts[characterName].text = currentHealth.ToString();
     }
@@ -101,12 +108,20 @@ public class UserInterfaceManager : MonoBehaviour {
         if (GameState.GetLevel() == 1) {
             TutorialOom(distance, maximum);
         }
-
+        if (distance == 0) {
+            FlashMovement(characterName, 1);
+        }
 		distanceMeters[characterName].fillAmount =  (1 - distance / maximum);
         distanceTexts[characterName].text = (maximum - distance).ToString("F1");
 	}
 
     public void UpdateActionPoints(string characterName, int actions, int maximum) {
+        if (GameState.GetLevel() == 1) {
+            TutorialOoa(actions, maximum);
+        }
+        if (actions == maximum) {
+            FlashActionPoints(characterName, 1);
+        }
         int counter = 0;
         foreach (Transform actionPoint in actionPoints[characterName]) {
             if (counter < actions) {
@@ -116,9 +131,11 @@ public class UserInterfaceManager : MonoBehaviour {
             }
             counter += 1;
         }
-        if (GameState.GetLevel() == 1) {
-            TutorialOoa(actions);
+        if (startCheck < 3) {
+            ActiveCharacterUI(GameState.activeCharacter.name);
+            startCheck += 1;
         }
+        
     }
 
 	public void HideCharacterInfos() {
@@ -137,13 +154,85 @@ public class UserInterfaceManager : MonoBehaviour {
 
     public void ActiveCharacterUI(string characterName) {
         foreach (Transform charinf in characterPanel.transform) {
-            if (charinf.name == characterName) {
-                charinf.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+            string name = charinf.name;
+            if (name != characterName) {
+                charinf.FindChild("CharacterImage").GetComponent<Image>().CrossFadeAlpha(0.3f, 0.0f, true);
+                charinf.FindChild("CharacterName").GetComponent<Text>().CrossFadeAlpha(0.3f, 0.0f, true);
+                distanceMeters[name].CrossFadeAlpha(0.3f, 0.0f, true);
+                healthMeters[name].CrossFadeAlpha(0.3f, 0.0f, true);
+                foreach (Transform actionPoint in actionPoints[name]) {
+                    actionPoint.gameObject.GetComponent<Image>().CrossFadeAlpha(0.3f, 0.0f, true);
+                }
             } else {
-                charinf.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                charinf.FindChild("CharacterImage").GetComponent<Image>().CrossFadeAlpha(1f, 0.0f, true);
+                charinf.FindChild("CharacterName").GetComponent<Text>().CrossFadeAlpha(1f, 0.0f, true);
+                distanceMeters[name].CrossFadeAlpha(1f, 0.0f, true);
+                healthMeters[name].CrossFadeAlpha(1f, 0.0f, true);
+                foreach (Transform actionPoint in actionPoints[characterName]) {
+                    actionPoint.gameObject.GetComponent<Image>().CrossFadeAlpha(1f, 0.0f, true);
+                }
             }
         }
     }
+
+
+
+    public void FlashMovement (string characterName, int times) {
+        if (GameState.activeCharacter == null || characterName != GameState.activeCharacter.name) {
+            return;
+        }
+        Image meter = distanceMeters[characterName];
+        Text txt = distanceTexts[characterName];
+        
+        StartCoroutine(FlashImage(meter, times));
+        StartCoroutine(FlashText(txt, times));
+    }
+
+    public void FlashActionPoints (string characterName, int times) {
+        if (GameState.activeCharacter == null || characterName != GameState.activeCharacter.name) {
+            return;
+        }
+        foreach (Transform actionPoint in actionPoints[characterName]) {
+            StartCoroutine(FlashImage(actionPoint.GetComponent<Image>(), times));
+        }
+    }
+
+    public void FlashHealth (string characterName, int times) {
+        if (GameState.activeCharacter == null || characterName != GameState.activeCharacter.name) {
+            return;
+        }
+        Image meter = healthMeters[characterName];
+        Text txt = healthTexts[characterName];
+
+        StartCoroutine(FlashImage(meter, times));
+        StartCoroutine(FlashText(txt, times));
+    }
+
+    IEnumerator FlashImage (Image img, int times) {
+        yield return new WaitForSeconds(0.25f);
+        int i = 0;
+        while (i < times) {
+            img.CrossFadeAlpha(0.0f, 0.2f, false);
+            yield return new WaitForSeconds(0.2f);
+            img.CrossFadeAlpha(1.0f, 0.2f, false);
+            yield return new WaitForSeconds(0.2f);
+            i += 1;
+        }
+    }
+
+    IEnumerator FlashText(Text txt, int times) {
+        yield return new WaitForSeconds(0.25f);
+        int i = 0;
+        while (i < times) {
+            txt.CrossFadeAlpha(0.0f, 0.2f, false);
+            yield return new WaitForSeconds(0.2f);
+            txt.CrossFadeAlpha(1.0f, 0.2f, false);
+            yield return new WaitForSeconds(0.2f);
+            i += 1;
+        }
+    }
+
+
 
     void TutorialMovementRestored() {
        TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
@@ -162,11 +251,11 @@ public class UserInterfaceManager : MonoBehaviour {
         tth.ActionsRestored();
     }
 
-    void TutorialOoa(int actions) {
-        if (actions == 1) {
-            TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
+    void TutorialOoa(int actions, int maximum) {
+        TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
+        tth.ClearText();
+        if (actions == 0) {
             tth.OutOfActionsInform();
-            tth.ClearText();
         }
     }
 }

@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &106754
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 476232}
+  - 65: {fileID: 6580814}
+  - 114: {fileID: 11452106}
+  m_Layer: 2
+  m_Name: ActionPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &120636
 GameObject:
   m_ObjectHideFlags: 1
@@ -10,7 +27,7 @@ GameObject:
   - 4: {fileID: 450926}
   - 65: {fileID: 6562724}
   - 114: {fileID: 11452112}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LookAround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,8 +44,8 @@ GameObject:
   - 4: {fileID: 412498}
   - 65: {fileID: 6581540}
   - 114: {fileID: 11418264}
-  m_Layer: 0
-  m_Name: ActionPoints
+  m_Layer: 2
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,11 +116,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.5, y: 7.80000019, z: 24.0799999}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalPosition: {x: 28.2999992, y: 7.19999981, z: 12.7700005}
+  m_LocalScale: {x: 15, y: 10, z: 15}
   m_Children: []
   m_Father: {fileID: 441318}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &441318
 Transform:
   m_ObjectHideFlags: 1
@@ -115,6 +132,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 450926}
+  - {fileID: 476232}
   - {fileID: 412498}
   m_Father: {fileID: 453546}
   m_RootOrder: 0
@@ -144,12 +162,36 @@ Transform:
   - {fileID: 410422}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &476232
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106754}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.92000008, y: 7.80000019, z: 23.4200001}
+  m_LocalScale: {x: 30, y: 0, z: 15}
+  m_Children: []
+  m_Father: {fileID: 441318}
+  m_RootOrder: 1
 --- !u!65 &6562724
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120636}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6580814
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106754}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -179,7 +221,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0321b01631713594a841536f576110c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  givenString: Left click to attack
+  givenString: Watch your health__you die if it drops to 0
+  uiEventSendMessage: ShowHealth
+  flashMessage: FlashHealth
   delay: 0
 --- !u!114 &11432798
 MonoBehaviour:
@@ -192,6 +236,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9eb3e8f4cfed384fa44ae13568e1c46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11452106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0321b01631713594a841536f576110c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  givenString: Left click to attack
+  uiEventSendMessage: ShowActions
+  flashMessage: FlashActionPoints
+  delay: 0
 --- !u!114 &11452112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,6 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   givenString: Mouse to look around__W, A, S, D to move
+  uiEventSendMessage: 
+  flashMessage: FlashMovement
   delay: 1
 --- !u!1001 &100100000
 Prefab:
