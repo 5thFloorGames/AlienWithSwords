@@ -118,14 +118,17 @@ public class UserInterfaceManager : MonoBehaviour {
         if (actions == maximum) {
             FlashActionPoints(characterName, 1);
         }
-        int counter = 0;
+
         foreach (Transform actionPoint in actionPoints[characterName]) {
-            if (counter < actions) {
-                actionPoint.gameObject.SetActive(true);
-            } else {
+            if (actions == 0) {
                 actionPoint.gameObject.SetActive(false);
+            } else if (actions > 0 && actionPoint.name == "Point1") {
+                actionPoint.gameObject.SetActive(true);
+            } else if (actions > 1 && actionPoint.name == "Point2") {
+                actionPoint.gameObject.SetActive(true);
+            } else if (actions > 3) {
+                actionPoint.gameObject.SetActive(true);
             }
-            counter += 1;
         }
         
         
@@ -148,22 +151,19 @@ public class UserInterfaceManager : MonoBehaviour {
     public void ActiveCharacterUI(string characterName) {
         foreach (Transform charinf in characterPanel.transform) {
             string name = charinf.name;
+            float alphaValue;
             if (name != characterName) {
-                charinf.FindChild("CharacterImage").GetComponent<Image>().CrossFadeAlpha(0.3f, 0.0f, true);
-                charinf.FindChild("CharacterName").GetComponent<Text>().CrossFadeAlpha(0.3f, 0.0f, true);
-                distanceMeters[name].CrossFadeAlpha(0.3f, 0.0f, true);
-                healthMeters[name].CrossFadeAlpha(0.3f, 0.0f, true);
-                foreach (Transform actionPoint in actionPoints[name]) {
-                    actionPoint.gameObject.GetComponent<Image>().CrossFadeAlpha(0.3f, 0.0f, true);
-                }
+                alphaValue = 0.3f;
             } else {
-                charinf.FindChild("CharacterImage").GetComponent<Image>().CrossFadeAlpha(1f, 0.0f, true);
-                charinf.FindChild("CharacterName").GetComponent<Text>().CrossFadeAlpha(1f, 0.0f, true);
-                distanceMeters[name].CrossFadeAlpha(1f, 0.0f, true);
-                healthMeters[name].CrossFadeAlpha(1f, 0.0f, true);
-                foreach (Transform actionPoint in actionPoints[name]) {
-                    actionPoint.gameObject.GetComponent<Image>().CrossFadeAlpha(1f, 0.0f, true);
-                }
+                alphaValue = 1.0f;
+            }
+            charinf.FindChild("CharacterImage").GetComponent<Image>().CrossFadeAlpha(alphaValue, 0.1f, true);
+            charinf.FindChild("CharacterName").GetComponent<Text>().CrossFadeAlpha(alphaValue, 0.1f, true);
+            distanceMeters[name].CrossFadeAlpha(alphaValue, 0.1f, true);
+            healthMeters[name].CrossFadeAlpha(alphaValue, 0.1f, true);
+            Transform apParent = charinf.FindChild("ActionPoints");
+            foreach (Transform ap in apParent) {
+                ap.GetComponent<Image>().CrossFadeAlpha(alphaValue, 0.1f, true);
             }
         }
     }

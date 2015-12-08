@@ -61,7 +61,6 @@ public class CharacterManager : MonoBehaviour {
 
 
     void SwitchCharacter(GameObject character) {
-        Debug.Log("enter" + character.name);
         foreach (GameObject other in characters) {
             if (other != character) {
                 other.BroadcastMessage("LeaveCharacter");
