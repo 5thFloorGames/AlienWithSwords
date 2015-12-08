@@ -11,3 +11,5 @@ EditorBuildSettings:
     path: Assets/_Scenes/Tutorial.unity
   - enabled: 1
     path: Assets/_Scenes/SabreTesting.unity
+  - enabled: 1
+    path: Assets/_Scenes/Jesse_Level02.unity
