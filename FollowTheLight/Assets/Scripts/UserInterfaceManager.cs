@@ -233,7 +233,6 @@ public class UserInterfaceManager : MonoBehaviour {
     }
 
 
-
     void TutorialMovementRestored() {
        TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
        tth.MovementRestored();

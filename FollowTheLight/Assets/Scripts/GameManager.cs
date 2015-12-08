@@ -26,9 +26,7 @@ public class GameManager : MonoBehaviour {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 
         if (!initialized) {
-            initialized = true;
-            levelCompleted = false;
-            Invoke("LateStart", 0.1f);
+			OnLevelWasLoaded(Application.loadedLevel);
         }
 	}
 

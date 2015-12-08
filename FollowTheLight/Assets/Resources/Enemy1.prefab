@@ -29,6 +29,7 @@ GameObject:
   - 114: {fileID: 11457290}
   - 195: {fileID: 19537606}
   - 114: {fileID: 11430120}
+  - 114: {fileID: 11467452}
   m_Layer: 9
   m_Name: Enemy1
   m_TagString: Enemy
@@ -135,7 +136,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 116702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.3400002, y: 5.65999985, z: 26.8099995}
+  m_LocalPosition: {x: 21.5, y: 3.20000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 418100}
@@ -270,6 +271,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dead: 0
   currentHealth: 0
+--- !u!114 &11467452
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a49f6131f97c45b6bb9e8d6c246c442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceFollowCharacter: 0
+  targetCharacter: 0
+  forceFollowFirstSeen: 0
 --- !u!114 &11485286
 MonoBehaviour:
   m_ObjectHideFlags: 1
