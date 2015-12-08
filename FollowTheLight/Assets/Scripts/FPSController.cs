@@ -65,7 +65,7 @@ public class FPSController : MonoBehaviour {
 	private void Start() {
         dead = false;
 		characterController = GetComponent<CharacterController>();
-		camra = GetComponentInChildren<Camera>();
+		camra = transform.FindChild("Camera").GetComponent<Camera>();
 		originalCameraPosition = camra.transform.localPosition;
 		fovKick.Setup(camra);
 		headBob.Setup(camra, stepInterval);

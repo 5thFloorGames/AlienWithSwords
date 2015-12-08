@@ -32,6 +32,7 @@ GameObject:
   - 114: {fileID: 11445970}
   - 136: {fileID: 13658792}
   - 114: {fileID: 11445854}
+  - 114: {fileID: 11415824}
   - 208: {fileID: 20885694}
   m_Layer: 8
   m_Name: Character2
@@ -55,7 +56,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &117518
 GameObject:
   m_ObjectHideFlags: 1
@@ -134,7 +135,6 @@ GameObject:
   - 4: {fileID: 419828}
   - 20: {fileID: 2010998}
   - 81: {fileID: 8179938}
-  - 114: {fileID: 11488210}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -142,22 +142,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &186798
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 480906}
-  - 108: {fileID: 10884572}
-  m_Layer: 8
-  m_Name: PlayerSpotlight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &194162
 GameObject:
   m_ObjectHideFlags: 1
@@ -224,7 +208,6 @@ Transform:
   m_Children:
   - {fileID: 419828}
   - {fileID: 471646}
-  - {fileID: 480906}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &443800
@@ -266,18 +249,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 422636}
   m_RootOrder: 1
---- !u!4 &480906
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186798}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 422636}
-  m_RootOrder: 2
 --- !u!4 &487066
 Transform:
   m_ObjectHideFlags: 1
@@ -308,7 +279,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181242}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
@@ -510,38 +481,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!108 &10884572
-Light:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186798}
-  m_Enabled: 1
-  serializedVersion: 6
-  m_Type: 2
-  m_Color: {r: 1, g: .956862748, b: .839215696, a: 1}
-  m_Intensity: 3.63000011
-  m_Range: 4
-  m_SpotAngle: 135
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 2
-    m_Resolution: -1
-    m_Strength: .589999974
-    m_Bias: .550000012
-    m_NormalBias: 1.55999994
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 4
-  m_BounceIntensity: 3.81999993
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
-  m_AreaSize: {x: 1, y: 1}
 --- !u!114 &11402544
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -565,6 +504,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b79eca549a9b417ea412d2cac1874b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11415824
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67349001919f647f5b0d71b280efff75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strikeDamage: 20
+  slashDamage: 10
+  maxActions: 1
 --- !u!114 &11445854
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -687,20 +640,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 20
---- !u!114 &11488210
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67349001919f647f5b0d71b280efff75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  strikeDamage: 20
-  slashDamage: 10
-  maxActions: 2
 --- !u!136 &13658792
 CapsuleCollider:
   m_ObjectHideFlags: 1

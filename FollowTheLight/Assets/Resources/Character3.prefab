@@ -1,21 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &123206
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 410090}
-  - 108: {fileID: 10851590}
-  m_Layer: 8
-  m_Name: PlayerSpotlight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &153860
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,6 +49,7 @@ GameObject:
   - 114: {fileID: 11469134}
   - 136: {fileID: 13694396}
   - 114: {fileID: 11425562}
+  - 114: {fileID: 11445630}
   - 208: {fileID: 20844076}
   m_Layer: 8
   m_Name: Character3
@@ -88,7 +73,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &191738
 GameObject:
   m_ObjectHideFlags: 1
@@ -116,7 +101,6 @@ GameObject:
   - 4: {fileID: 460706}
   - 20: {fileID: 2097652}
   - 81: {fileID: 8192958}
-  - 114: {fileID: 11426838}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -177,18 +161,6 @@ Transform:
   m_LocalScale: {x: .286756605, y: .286756605, z: .286756605}
   m_Children: []
   m_Father: {fileID: 467166}
-  m_RootOrder: 2
---- !u!4 &410090
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 123206}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 467166}
   m_RootOrder: 1
 --- !u!4 &460040
 Transform:
@@ -227,7 +199,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 460706}
-  - {fileID: 410090}
   - {fileID: 406216}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -283,7 +254,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197202}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
@@ -420,38 +391,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!108 &10851590
-Light:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 123206}
-  m_Enabled: 1
-  serializedVersion: 6
-  m_Type: 2
-  m_Color: {r: 1, g: .956862748, b: .839215696, a: 1}
-  m_Intensity: 3.63000011
-  m_Range: 4
-  m_SpotAngle: 135
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 2
-    m_Resolution: -1
-    m_Strength: .589999974
-    m_Bias: .550000012
-    m_NormalBias: 1.55999994
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 4
-  m_BounceIntensity: 3.81999993
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
-  m_AreaSize: {x: 1, y: 1}
 --- !u!114 &11416106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -475,12 +414,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumMovement: 20
---- !u!114 &11426838
+--- !u!114 &11445630
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 197202}
+  m_GameObject: {fileID: 162266}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85cb27a807afd45b796897e66eb73636, type: 3}

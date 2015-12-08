@@ -13,12 +13,12 @@ public class CharacterState : MonoBehaviour {
 	UserInterfaceManager uim;
 
 	AudioListener audioListener;
-	Camera characterCamera;
+	GameObject characterCamera;
 	GameObject sprite;
 
 	void Awake() {
 		audioListener = GetComponentInChildren<AudioListener> ();
-		characterCamera = GetComponentInChildren<Camera> ();
+		characterCamera = transform.FindChild("Camera").gameObject;
 		sprite = transform.FindChild ("Sprite").gameObject;
         dead = false;
     }
@@ -32,14 +32,14 @@ public class CharacterState : MonoBehaviour {
 
 	public void EnterCharacter() {
 		audioListener.enabled = true;
-		characterCamera.enabled = true;
+        characterCamera.SetActive(true);
 		sprite.SetActive(false);
 	}
 
 	public void LeaveCharacter() {
 		audioListener.enabled = false;
-		characterCamera.enabled = false;
-		sprite.SetActive(true);
+        characterCamera.SetActive(false);
+        sprite.SetActive(true);
 	}
 
 	void Start () {
