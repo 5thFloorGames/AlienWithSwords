@@ -146,7 +146,7 @@ public class CharacterActionsThird : MonoBehaviour {
 	}
 	
 	
-	// CharacterType Manager calls these with a broadcast message
+	// Character Manager calls these with a broadcast message
 	
 	void CharacterDied() {
 		dead = true;

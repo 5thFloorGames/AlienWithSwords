@@ -12,8 +12,6 @@ public class EnemyActionsFirst : MonoBehaviour {
 	int actionDamage;
     float aoeLifetime;
 
-    bool playerSeen;
-
 	void Start () {
 		move = GetComponent<EnemyMovement> ();
         aoePrefab = (GameObject)Resources.Load("AreaDamage");
@@ -33,11 +31,10 @@ public class EnemyActionsFirst : MonoBehaviour {
 	}
 
 	public void TriggerActions () {
-        playerSeen = false;
 		move.Go();
 	}
 
-	public void MovingCompleteStartAttack() {
+	public void MovingCompleteStartAttack(GameObject target) {
 		CastAreaDamage ();
 	}
 

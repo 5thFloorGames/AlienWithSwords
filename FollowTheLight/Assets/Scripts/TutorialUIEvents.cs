@@ -23,7 +23,7 @@ public class TutorialUIEvents : MonoBehaviour {
     void HideHealth() {
         GameObject meter = characterInfo.transform.FindChild("HealthMeter").gameObject;
         GameObject meterBg = characterInfo.transform.FindChild("HealthMeterBackground").gameObject;
-        GameObject meterText = characterInfo.transform.FindChild("HealthText").gameObject;
+        //GameObject meterText = characterInfo.transform.FindChild("HealthText").gameObject;
         meter.SetActive(false);
         meterBg.SetActive(false);
         //meterText.SetActive(false);
@@ -37,7 +37,7 @@ public class TutorialUIEvents : MonoBehaviour {
     void ShowHealth() {
         GameObject meter = characterInfo.transform.FindChild("HealthMeter").gameObject;
         GameObject meterBg = characterInfo.transform.FindChild("HealthMeterBackground").gameObject;
-        GameObject meterText = characterInfo.transform.FindChild("HealthText").gameObject;
+        //GameObject meterText = characterInfo.transform.FindChild("HealthText").gameObject;
         meter.SetActive(true);
         meterBg.SetActive(true);
         //meterText.SetActive(true);

@@ -12,6 +12,8 @@ public class EnemyMovement : MonoBehaviour {
 	bool lockedToTarget;
 	GameObject targetedCharacter;
 
+	LayerMask layerMask;
+
 	EnemyManager em;
 	NavMeshAgent nva;
 	Animator animator;
@@ -26,6 +28,9 @@ public class EnemyMovement : MonoBehaviour {
 		em = GameObject.Find ("GameManager").GetComponent<EnemyManager>();
 		nva = GetComponent<NavMeshAgent> ();
 		animator = gameObject.GetComponentInChildren<Animator>();
+		layerMask = (1 << 9);
+		layerMask |= Physics.IgnoreRaycastLayer;
+		layerMask = ~layerMask;
 	}
 
 	void Update () {
@@ -93,15 +98,15 @@ public class EnemyMovement : MonoBehaviour {
 			playerSeen = true;
 			if (knownCharacters.Contains(GameState.activeCharacter)) {
 				MoveTowardsPosition(GameState.activeCharacter.transform.position);
+				targetedCharacter = GameState.activeCharacter;
 				if (forceFollowFirstSeen) {
-					targetedCharacter = GameState.activeCharacter;
 					lockedToTarget = true;
 				}
 			} else {
 				GameObject randomPick = knownCharacters[Random.Range(0, (knownCharacters.Count-1))];
 				MoveTowardsPosition(randomPick.transform.position);
+				targetedCharacter = randomPick;
 				if (forceFollowFirstSeen) {
-					targetedCharacter = randomPick;
 					lockedToTarget = true;
 				}
 			}
@@ -115,7 +120,7 @@ public class EnemyMovement : MonoBehaviour {
 		
 		Debug.DrawRay(enemyView, direction, Color.green, 2.0f);
 		RaycastHit hit;
-		Physics.Raycast(enemyView, direction, out hit, (direction.magnitude + 1.0f));
+		Physics.Raycast(enemyView, direction, out hit, (direction.magnitude + 1.0f), layerMask);
 		if (hit.collider.gameObject == character) {
 			return true;
 		} else {
@@ -140,7 +145,7 @@ public class EnemyMovement : MonoBehaviour {
 	void StopMovingAndAttack() {
 		animator.SetBool ("Walking", false);
 		nva.Stop();
-		gameObject.SendMessage("MovingCompleteStartAttack");
+		gameObject.SendMessage("MovingCompleteStartAttack", targetedCharacter);
 	}
 
 	void ActionsCompletedInformManager() {
