@@ -14,9 +14,12 @@ public class CharacterActionsFirst : MonoBehaviour {
 	GameObject bullet;
 	GameObject cameraObj;
 	GameObject overlay;
+	GameObject crossHairs;
 
 	float bulletCooldown;
 	float previousFiringTime;
+	bool enemyInAim;
+	GameObject aimedEnemy;
 
 	Quaternion startingAngle = Quaternion.AngleAxis(-45f, Vector3.up);
 	Quaternion stepAngle = Quaternion.AngleAxis(3.75f, Vector3.up);
@@ -27,6 +30,7 @@ public class CharacterActionsFirst : MonoBehaviour {
     void Awake() {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 		overlay = transform.FindChild ("Overlay").gameObject;
+		crossHairs = overlay.transform.FindChild ("Crosshairs").gameObject;
         dead = false;
     }
 
@@ -38,8 +42,9 @@ public class CharacterActionsFirst : MonoBehaviour {
 	}
 
 	void Update () {
-		if (GameState.playersTurn && inCharacter && actions > 0 && !dead) {
-			if (Time.time - previousFiringTime >= bulletCooldown) {
+		if (GameState.playersTurn && inCharacter && !dead) {
+			CheckIfEnemyWithinAim ();
+			if (Time.time - previousFiringTime >= bulletCooldown && actions > 0 && enemyInAim) {
 				if (Input.GetButtonUp ("Fire1")){
 					previousFiringTime = Time.time;
 					Shoot();
@@ -47,7 +52,6 @@ public class CharacterActionsFirst : MonoBehaviour {
                     updateActionsToUI();
 				}
 			}
-
 		}
 	}
 
@@ -57,6 +61,49 @@ public class CharacterActionsFirst : MonoBehaviour {
 		firedBullet.GetComponent<BulletDamages> ().setDamage (damage);
 		Rigidbody bulletrb = firedBullet.GetComponent<Rigidbody> ();
 		bulletrb.AddForce(transform.rotation * bullet.transform.forward * 2000f);
+	}
+
+	void CheckIfEnemyWithinAim () {
+		Vector3 start = transform.position;
+		Vector3 direction = (transform.rotation * new Vector3 (0, 0, 500f));
+		RaycastHit hit;
+        Debug.DrawRay(start, direction, Color.red, 0.1f);
+		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
+			if (hit.collider.tag == "Enemy") {
+				EnemyAimedAt();
+				CheckIfDifferentEnemy(hit);
+			} else {
+				EnemyNotAimedAt();
+			}
+		} else {
+			EnemyNotAimedAt();
+		}
+	}
+
+	void CheckIfDifferentEnemy(RaycastHit hit) {
+		if (aimedEnemy != hit.transform.parent.gameObject) {
+			if (aimedEnemy) {
+				aimedEnemy.SendMessage("NotAimedAt");
+			}
+			aimedEnemy = hit.transform.parent.gameObject;
+			aimedEnemy.SendMessage("AimedAt");
+		}
+	}
+
+	void EnemyAimedAt() {
+		if (!enemyInAim) {
+			crossHairs.transform.localScale = (new Vector3 (1.2f, 1.2f, 1.2f));
+			enemyInAim = true;
+		}
+	}
+	
+	void EnemyNotAimedAt() {
+		if (enemyInAim) {
+			crossHairs.transform.localScale = (new Vector3(1f, 1f, 1f));
+			aimedEnemy.SendMessage("NotAimedAt");
+			aimedEnemy = null;
+			enemyInAim = false;
+		}
 	}
 
 	void AimCone() {
@@ -79,7 +126,6 @@ public class CharacterActionsFirst : MonoBehaviour {
 	}
 
 	void DetectThings() {
-
 		RaycastHit hit;
 		var angle = transform.rotation * startingAngle;
 		var direction = angle * Vector3.forward;
@@ -87,7 +133,7 @@ public class CharacterActionsFirst : MonoBehaviour {
 		for (var i = 0; i < 24; i++) {
 			Debug.DrawRay(pos, (direction * 30f), Color.blue, 3.0f);
 			if(Physics.Raycast(pos, direction, out hit, 30f)) {
-				var enemy = hit.collider.GetComponent<EnemyState>();
+				var enemy = hit.collider.GetComponentInParent<EnemyState>();
 				if(enemy) {
 					Debug.Log ("it's an enemy");
 				}
@@ -101,7 +147,7 @@ public class CharacterActionsFirst : MonoBehaviour {
     }
 
 
-    // CharacterType Manager calls these with a broadcast message
+    // Character Manager calls these with a broadcast message
 
     void CharacterDied() {
         dead = true;
@@ -123,6 +169,7 @@ public class CharacterActionsFirst : MonoBehaviour {
     }
 
     void LeaveCharacter() {
+		EnemyNotAimedAt ();
         inCharacter = false;
 		overlay.SetActive (false);
     }

@@ -19,6 +19,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 
 	GameObject weaponPivot;
 	MeleeWeaponDamages mwd;
+	MeleeRangeInformer slashRange;
 
 	UserInterfaceManager uim;
 	
@@ -28,6 +29,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 		overlay = transform.FindChild ("Overlay").gameObject;
 		weaponPivot = transform.FindChild ("WeaponPivot").gameObject;
 		mwd = weaponPivot.GetComponentInChildren<MeleeWeaponDamages> ();
+		slashRange = GetComponentInChildren<MeleeRangeInformer> ();
 		weaponPivot.SetActive (false);
 		actionCooldown = 0.7f;
 		previousActionTime = Time.time;
@@ -44,10 +46,6 @@ public class CharacterActionsSecond : MonoBehaviour {
 					Slash();
 					updateActionsToUI();
 				}
-				//if (Input.GetButtonDown ("Fire2")){
-				//	Strike();
-				//	updateActionsToUI();
-				//}
 			}
 		}
 	}
@@ -109,11 +107,13 @@ public class CharacterActionsSecond : MonoBehaviour {
 	}
 	
 	void EnterCharacter() {
+		slashRange.ActivateTheHitList ();
 		inCharacter = true;
 		overlay.SetActive (true);
 	}
 	
 	void LeaveCharacter() {
+		slashRange.DeactivateTheHitList ();
 		inCharacter = false;
 		overlay.SetActive (false);
 	}

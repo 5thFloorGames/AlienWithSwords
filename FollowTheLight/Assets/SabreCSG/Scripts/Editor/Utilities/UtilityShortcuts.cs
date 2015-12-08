@@ -23,7 +23,7 @@ namespace Sabresaurus.SabreCSG
 			Lightmapping.giWorkflowMode = Lightmapping.GIWorkflowMode.OnDemand;
 		}
 		
-		[MenuItem("Edit/Rebuild CSG #r", false, 100)]
+		[MenuItem("Edit/Rebuild CSG " + KeyMappings.Rebuild, false, 100)]
 		static void Rebuild()
 		{
 			Object[] csgModels = GameObject.FindObjectsOfType(typeof(CSGModel));

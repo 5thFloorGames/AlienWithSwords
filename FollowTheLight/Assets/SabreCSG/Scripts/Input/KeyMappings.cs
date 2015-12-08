@@ -31,6 +31,29 @@ namespace Sabresaurus.SabreCSG
 
 		// Resize Tool
 		public const KeyCode CancelMove = KeyCode.Escape;
+
+		// Used in UtilityShortcuts.cs with MenuItem attribute
+		// See http://unity3d.com/support/documentation/ScriptReference/MenuItem.html for advice on changing this
+		public const string Rebuild = "%#r";
+
+		/// <summary>
+		/// Helper method to determine if two keyboard events match
+		/// </summary>
+		/// <returns><c>true</c>, if matched, <c>false</c> otherwise.</returns>
+		public static bool EventsMatch(Event event1, Event event2)
+		{
+			if(event1.keyCode != event2.keyCode)
+			{
+				return false;
+			}
+
+			if(event1.modifiers != event2.modifiers)
+			{
+				return false;
+			}
+
+			return true;
+		}
 	}
 }
 #endif

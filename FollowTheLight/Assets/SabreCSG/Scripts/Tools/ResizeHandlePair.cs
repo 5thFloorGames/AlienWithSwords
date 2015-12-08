@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 
 namespace Sabresaurus.SabreCSG
@@ -66,3 +67,4 @@ namespace Sabresaurus.SabreCSG
         }
     }
 }
+#endif

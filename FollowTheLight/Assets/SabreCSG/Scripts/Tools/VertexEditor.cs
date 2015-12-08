@@ -55,9 +55,9 @@ namespace Sabresaurus.SabreCSG
 
 						Vector3 accumulatedDelta = newPosition - startPosition;
 
-						if(CurrentSettings.Instance.PositionSnappingEnabled)
+						if(CurrentSettings.PositionSnappingEnabled)
 						{
-							float snapDistance = CurrentSettings.Instance.PositionSnapDistance;
+							float snapDistance = CurrentSettings.PositionSnapDistance;
 //							newPosition = targetBrush.transform.TransformPoint(newPosition);
 							accumulatedDelta = MathHelper.RoundVector3(accumulatedDelta, snapDistance);
 //							newPosition = targetBrush.transform.InverseTransformPoint(newPosition);
@@ -169,7 +169,7 @@ namespace Sabresaurus.SabreCSG
 					{
 						Vector3 newPosition = vertex.Position;
 						
-						float snapDistance = CurrentSettings.Instance.PositionSnapDistance;
+						float snapDistance = CurrentSettings.PositionSnapDistance;
 						newPosition = targetBrush.transform.TransformPoint(newPosition);
 						newPosition = MathHelper.RoundVector3(newPosition, snapDistance);
 						newPosition = targetBrush.transform.InverseTransformPoint(newPosition);
@@ -432,9 +432,9 @@ namespace Sabresaurus.SabreCSG
 			// Draw UI specific to this editor
 			Rect rectangle = new Rect(0, 50, 140, 140);
 			GUIStyle toolbar = new GUIStyle(EditorStyles.toolbar);
+			toolbar.normal.background = SabreGraphics.ClearTexture;
 			toolbar.fixedHeight = rectangle.height;
-			GUI.backgroundColor = Color.clear;
-			GUILayout.Window(501, rectangle, OnToolbarGUI, "", toolbar);
+			GUILayout.Window(140002, rectangle, OnToolbarGUI, "", toolbar);
 		}
 
 		void OnMouseDown (SceneView sceneView, Event e)

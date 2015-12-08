@@ -14,6 +14,12 @@ public class BulletDamages : MonoBehaviour {
 		if (other.tag == "Enemy") {
 			other.SendMessageUpwards("TakeDamage", damage);
 		}
+		CreateHitEffect ();
 		Destroy (gameObject);
+	}
+
+	void CreateHitEffect() {
+		GameObject prefab = (GameObject) Resources.Load("BulletHitEffect");
+		Instantiate (prefab, transform.position + (transform.rotation * new Vector3(0, 0, -0.5f)), Quaternion.identity);
 	}
 }

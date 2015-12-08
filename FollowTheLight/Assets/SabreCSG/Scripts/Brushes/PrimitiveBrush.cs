@@ -21,13 +21,16 @@ namespace Sabresaurus.SabreCSG
         // Maps triangle index (input) to polygon index (output). i.e. int polyIndex = polygonIndices[triIndex];
         List<int> polygonIndices;
 
-		[SerializeField]
+		[SerializeField,HideInInspector]
 		int prismSideCount = 6;
 
 		[SerializeField,HideInInspector]
 		PrimitiveBrushType brushType = PrimitiveBrushType.Cube;
 
-	    private CSGModel parentCsgModel;
+		[SerializeField,HideInInspector]
+		bool tracked = false;
+
+		private CSGModel parentCsgModel;
 
 		public Polygon[] Polygons
         {
@@ -182,6 +185,12 @@ namespace Sabresaurus.SabreCSG
         {
             if (polygons == null || polygons.Length == 0)
             {
+				// Reset custom brushes back to a cube
+				if(brushType == PrimitiveBrushType.Custom)
+				{
+					brushType = PrimitiveBrushType.Cube;
+				}
+
 				ResetPolygons();
             }
         }
@@ -210,30 +219,56 @@ namespace Sabresaurus.SabreCSG
 //        }
 
 
-	    public CSGModel GetCSGModel()
-	    {
-	        if (parentCsgModel == null)
-	        {
-	            parentCsgModel = transform.GetComponentInParent<CSGModel>();
-	        }
-	        return parentCsgModel;
-	    }
+	    
 
 		void OnEnable()
 		{
-			bool newBrush = GetCSGModel().TrackBrush(this);
-			
-			if(newBrush)
-			{
-				MeshFilter meshFilter = gameObject.AddOrGetComponent<MeshFilter>();
-				MeshCollider meshCollider = gameObject.AddOrGetComponent<MeshCollider>();
-				
-				meshFilter.sharedMesh = new Mesh();
-				meshCollider.sharedMesh = new Mesh();
-			}
+			CSGModel parentCSGModel = GetCSGModel();
 
-//			Invalidate();
+			if(parentCSGModel != null)
+			{
+				bool newBrush = parentCSGModel.TrackBrush(this);
+				
+				if(newBrush)
+				{
+					MeshFilter meshFilter = gameObject.AddOrGetComponent<MeshFilter>();
+					MeshCollider meshCollider = gameObject.AddOrGetComponent<MeshCollider>();
+					
+					meshFilter.sharedMesh = new Mesh();
+					meshCollider.sharedMesh = new Mesh();
+				}
+				tracked = true;
+			}
+			else
+			{
+				tracked = false;
+			}
 		}
+
+		void Update()
+		{
+			if(!tracked)
+			{
+				CSGModel parentCSGModel = GetCSGModel();
+
+				if(parentCSGModel != null)
+				{
+					bool newBrush = parentCSGModel.TrackBrush(this);
+
+					if(newBrush)
+					{
+						MeshFilter meshFilter = gameObject.AddOrGetComponent<MeshFilter>();
+						MeshCollider meshCollider = gameObject.AddOrGetComponent<MeshCollider>();
+
+						meshFilter.sharedMesh = new Mesh();
+						meshCollider.sharedMesh = new Mesh();
+					}
+					Invalidate();
+					tracked = true;
+				}
+			}
+		}
+
 
         public override void Invalidate()
         {
@@ -241,11 +276,14 @@ namespace Sabresaurus.SabreCSG
 			{
 				return;
 			}
+
 			// Make sure there is a mesh filter on this object
 			MeshFilter meshFilter = gameObject.AddOrGetComponent<MeshFilter>();
 			MeshCollider meshCollider = gameObject.AddOrGetComponent<MeshCollider>();
 			MeshRenderer meshRenderer = gameObject.AddOrGetComponent<MeshRenderer>();
-			
+
+			meshRenderer.sharedMaterial = AssetDatabase.LoadMainAssetAtPath(CSGModel.GetSabreCSGPath() + "Materials/" + this.mode.ToString() + ".mat") as Material;
+
 			MeshCollider[] meshColliders = GetComponents<MeshCollider>();
 
 			if(meshColliders.Length > 1)
@@ -257,7 +295,10 @@ namespace Sabresaurus.SabreCSG
 			} 
 
 			Mesh renderMesh = meshFilter.sharedMesh;
-            PolygonFactory.GenerateMeshFromPolygons(polygons, ref renderMesh, out polygonIndices);
+			if(polygons != null)
+			{
+	            PolygonFactory.GenerateMeshFromPolygons(polygons, ref renderMesh, out polygonIndices);
+			}
 
 			// Displace the triangles for display along the normals very slightly (this is so we can overlay built
 			// geometry with semi-transparent geometry and avoid depth fighting)
@@ -266,7 +307,7 @@ namespace Sabresaurus.SabreCSG
 
 			Mesh collisionMesh = meshCollider.sharedMesh;
 
-			if(renderMesh == collisionMesh)
+			if(renderMesh == collisionMesh || collisionMesh == null)
 			{
 				collisionMesh = new Mesh();
 			}
@@ -293,7 +334,7 @@ namespace Sabresaurus.SabreCSG
 			meshFilter.hideFlags = HideFlags.NotEditable;// | HideFlags.HideInInspector;
 			meshRenderer.hideFlags = HideFlags.NotEditable;// | HideFlags.HideInInspector;
 
-			meshRenderer.sharedMaterial = AssetDatabase.LoadMainAssetAtPath("Assets/SabreCSG/Materials/" + this.mode.ToString() + ".mat") as Material;
+			meshRenderer.sharedMaterial = AssetDatabase.LoadMainAssetAtPath(CSGModel.GetSabreCSGPath() + "Materials/" + this.mode.ToString() + ".mat") as Material;
 
 			isBrushConvex = PolygonFactory.IsMeshConvex(polygons);
         }
@@ -333,6 +374,48 @@ namespace Sabresaurus.SabreCSG
 				return new Bounds(Vector3.zero, Vector3.zero);
 			}
         }
+
+		public Bounds GetBoundsTransformed()
+		{
+			if (polygons.Length > 0)
+			{
+				Bounds bounds = new Bounds(transform.TransformPoint(polygons[0].Vertices[0].Position), Vector3.zero);
+
+				for (int i = 0; i < polygons.Length; i++)
+				{
+					for (int j = 0; j < polygons[i].Vertices.Length; j++)
+					{
+						bounds.Encapsulate(transform.TransformPoint(polygons[i].Vertices[j].Position));
+					}
+				}
+				return bounds;
+			}
+			else
+			{
+				return new Bounds(Vector3.zero, Vector3.zero);
+			}
+		}
+
+		public Bounds GetBoundsLocalTo(Transform otherTransform)
+		{
+			if (polygons.Length > 0)
+			{
+				Bounds bounds = new Bounds(otherTransform.InverseTransformPoint(transform.TransformPoint(polygons[0].Vertices[0].Position)), Vector3.zero);
+
+				for (int i = 0; i < polygons.Length; i++)
+				{
+					for (int j = 0; j < polygons[i].Vertices.Length; j++)
+					{
+						bounds.Encapsulate(otherTransform.InverseTransformPoint(transform.TransformPoint(polygons[i].Vertices[j].Position)));
+					}
+				}
+				return bounds;
+			}
+			else
+			{
+				return new Bounds(Vector3.zero, Vector3.zero);
+			}
+		}
 
 		public override int[] GetPolygonIDs ()
 		{
@@ -442,6 +525,26 @@ namespace Sabresaurus.SabreCSG
 			EditorUtility.CopySerialized(this, newObject.GetComponent<PrimitiveBrush>());
 			
 			return newObject;
+		}
+
+		public CSGModel GetCSGModel()
+		{
+			if (parentCsgModel == null)
+			{
+				parentCsgModel = transform.GetComponentInParent<CSGModel>();
+			}
+			return parentCsgModel;
+		}
+
+		void OnDrawGizmosSelected()
+		{
+			CSGModel parentCSGModel = GetCSGModel();
+
+			if(parentCSGModel != null)
+			{
+				// Ensure Edit Mode is on
+				GetCSGModel().EditMode = true;
+			}
 		}
     }
 }

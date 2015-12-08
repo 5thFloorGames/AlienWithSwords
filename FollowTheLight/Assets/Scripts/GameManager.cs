@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour {
 			QuitGame();
 		}
 		if (GameState.playersTurn) {
-			if (Input.GetButton ("Submit")) {
+			if (Input.GetKeyDown (KeyCode.Tab)) {
 				StartEnemyTurn();
 			}
 		}
