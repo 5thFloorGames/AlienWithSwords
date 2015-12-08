@@ -17,7 +17,7 @@ public class CharacterActionsThird : MonoBehaviour {
 	float actionCooldown;
 	float previousActionTime;
 
-	GameObject cameraObj;
+	Transform cameraTf;
 	GameObject overlay;
 	GameObject crosshairs;
 	LaserController lc;
@@ -25,9 +25,10 @@ public class CharacterActionsThird : MonoBehaviour {
 	UserInterfaceManager uim;
 	
 	void Awake() {
-		lc = GetComponentInChildren<LaserController> ();
 		uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
-		overlay = transform.FindChild ("Overlay").gameObject;
+        lc = GetComponentInChildren<LaserController>();
+        cameraTf = transform.FindChild("Camera");
+        overlay = cameraTf.FindChild ("Overlay").gameObject;
 		crosshairs = overlay.transform.FindChild ("Crosshairs").gameObject;
 		dead = false;
 
@@ -56,12 +57,12 @@ public class CharacterActionsThird : MonoBehaviour {
 	}
 	
 	void UpdateActionsToUI() {
-		uim.UpdateActionPoints(gameObject.transform.parent.name, actions, maxActions);
+		uim.UpdateActionPoints(gameObject.name, actions, maxActions);
 	}
 
 	void CheckIfSomethingWithinAim () {
-		Vector3 start = transform.position;
-		Vector3 direction = (transform.rotation * new Vector3 (0, 0, 30f));
+		Vector3 start = cameraTf.position;
+		Vector3 direction = (cameraTf.rotation * new Vector3 (0, 0, 30f));
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
 			if (hit.collider.tag == "Player") {
@@ -81,8 +82,8 @@ public class CharacterActionsThird : MonoBehaviour {
 
 	void DamageAimedCharacter() {
 		previousActionTime = Time.time;
-		Vector3 start = transform.position;
-		Vector3 direction = (transform.rotation * new Vector3 (0, 0, 100f));
+		Vector3 start = cameraTf.position;
+		Vector3 direction = (cameraTf.rotation * new Vector3 (0, 0, 100f));
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit)) {
 			actions -= 1;
@@ -95,8 +96,8 @@ public class CharacterActionsThird : MonoBehaviour {
 
 	void HealAimedCharacter() {
 		previousActionTime = Time.time;
-		Vector3 start = gameObject.transform.position;
-		Vector3 direction = (gameObject.transform.rotation * new Vector3 (0, 0, 100f));
+		Vector3 start = cameraTf.position;
+		Vector3 direction = (cameraTf.rotation * new Vector3 (0, 0, 100f));
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
 			actions -= 1;

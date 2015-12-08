@@ -14,7 +14,11 @@ public class GameManager : MonoBehaviour {
 
     void Awake() {
 		DontDestroyOnLoad (gameObject);
-        GameState.SetLevel(Application.loadedLevel);
+        int lvl = Application.loadedLevel;
+        if (lvl == 0) {
+            lvl = 3;
+        }
+        GameState.SetLevel(lvl);
     }
 
 	void Start () {
@@ -26,7 +30,7 @@ public class GameManager : MonoBehaviour {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 
         if (!initialized) {
-			OnLevelWasLoaded(Application.loadedLevel);
+			OnLevelWasLoaded(GameState.GetLevel());
         }
 	}
 

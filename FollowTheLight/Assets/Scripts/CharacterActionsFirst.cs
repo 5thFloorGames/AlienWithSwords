@@ -12,7 +12,7 @@ public class CharacterActionsFirst : MonoBehaviour {
     int actions;
 
 	GameObject bullet;
-	GameObject cameraObj;
+	Transform cameraTf;
 	GameObject overlay;
 	GameObject crossHairs;
 
@@ -29,7 +29,8 @@ public class CharacterActionsFirst : MonoBehaviour {
 
     void Awake() {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
-		overlay = transform.FindChild ("Overlay").gameObject;
+        cameraTf = transform.FindChild("Camera");
+		overlay = cameraTf.FindChild("Overlay").gameObject;
 		crossHairs = overlay.transform.FindChild ("Crosshairs").gameObject;
         dead = false;
     }
@@ -56,16 +57,16 @@ public class CharacterActionsFirst : MonoBehaviour {
 	}
 
 	void Shoot() {
-		GameObject firedBullet = (GameObject)Instantiate (bullet, transform.position + transform.rotation *
-		                                                  new Vector3(0, 0, 1), transform.rotation);
+		GameObject firedBullet = (GameObject)Instantiate (bullet, cameraTf.position + cameraTf.rotation *
+		                                                  new Vector3(0, 0, 1), cameraTf.rotation);
 		firedBullet.GetComponent<BulletDamages> ().setDamage (damage);
 		Rigidbody bulletrb = firedBullet.GetComponent<Rigidbody> ();
-		bulletrb.AddForce(transform.rotation * bullet.transform.forward * 2000f);
+		bulletrb.AddForce(cameraTf.rotation * bullet.transform.forward * 2000f);
 	}
 
 	void CheckIfEnemyWithinAim () {
-		Vector3 start = transform.position;
-		Vector3 direction = (transform.rotation * new Vector3 (0, 0, 500f));
+		Vector3 start = cameraTf.position;
+		Vector3 direction = (cameraTf.rotation * new Vector3 (0, 0, 500f));
 		RaycastHit hit;
         Debug.DrawRay(start, direction, Color.red, 0.1f);
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
@@ -127,9 +128,9 @@ public class CharacterActionsFirst : MonoBehaviour {
 
 	void DetectThings() {
 		RaycastHit hit;
-		var angle = transform.rotation * startingAngle;
+		var angle = cameraTf.rotation * startingAngle;
 		var direction = angle * Vector3.forward;
-		var pos = transform.position;
+		var pos = cameraTf.position;
 		for (var i = 0; i < 24; i++) {
 			Debug.DrawRay(pos, (direction * 30f), Color.blue, 3.0f);
 			if(Physics.Raycast(pos, direction, out hit, 30f)) {
@@ -143,7 +144,7 @@ public class CharacterActionsFirst : MonoBehaviour {
 	}
 
     void updateActionsToUI() {
-        uim.UpdateActionPoints(gameObject.transform.parent.name, actions, maxActions);
+        uim.UpdateActionPoints(transform.name, actions, maxActions);
     }
 
 
