@@ -373,8 +373,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  coneDamage: 0
-  maxActions: 2
+  coneDamage: 5
+  maxActions: 1
 --- !u!114 &11428832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -636,7 +636,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxActions
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Extents.y
@@ -701,6 +701,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_BackGroundColor.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: coneDamage
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
