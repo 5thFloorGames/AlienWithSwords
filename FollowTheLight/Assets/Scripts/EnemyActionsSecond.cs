@@ -43,7 +43,7 @@ public class EnemyActionsSecond : MonoBehaviour {
     }
 
     IEnumerator ShootAtCharacter(GameObject target) {
-        Vector3 start = transform.position + Quaternion.Inverse(transform.rotation) * new Vector3(0, 0.8f, 1f);
+        Vector3 start = transform.position + new Vector3(0, 0.8f, 0);
         Vector3 end = target.transform.position + target.transform.rotation * new Vector3(0, 0.7f, 0);
         Vector3 direction = (end - start).normalized;
 

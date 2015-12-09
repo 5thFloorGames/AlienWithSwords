@@ -80,6 +80,14 @@ public class CharacterState : MonoBehaviour {
         }
     }
 
+    void AimedAt() {
+        Debug.Log(gameObject + " aimed at");
+    }
+
+    void NotAimedAt() {
+        Debug.Log(gameObject + " not anymore aimed at");
+    }
+
     void AnnounceDeathToManager() {
         cm.CharacterDied(gameObject, type);
     }

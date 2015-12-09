@@ -9,7 +9,7 @@ public class MeleeWeaponDamages : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
-		if (other.tag == "Enemy" && (other.GetType() == typeof(CapsuleCollider))) {
+		if (((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") || (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider)))) {
 			other.gameObject.SendMessageUpwards("TakeDamage", damageAmount);
 		}
 	}

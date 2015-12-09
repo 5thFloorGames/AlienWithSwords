@@ -8,26 +8,30 @@ public class MeleeRangeInformer : MonoBehaviour {
 	public AttackType attackType;
 	bool wouldHitEnemy;
 	List<GameObject> hitList;
+    CharacterActionsSecond cas;
+    Collider cldr;
 
 	void Start () {
+        cas = transform.root.GetComponent<CharacterActionsSecond>();
+        cldr = GetComponent<MeshCollider>();
 		wouldHitEnemy = false;
 		hitList = new List<GameObject> ();
 	}
 
 	void OnTriggerEnter (Collider other) {
-		if ((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") {
-			GameObject enemyObj = other.gameObject.transform.parent.gameObject;
-			hitList.Add(enemyObj);
-			enemyObj.SendMessage("AimedAt", transform.root.gameObject);
-			CheckHitListSize();
-		}
-	}
+        if (((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") || (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider)))) {
+            GameObject otherObj = other.transform.root.gameObject;
+            otherObj.SendMessage("AimedAt", transform.root.gameObject);
+            hitList.Add(otherObj);
+            CheckHitListSize();
+        }
+    }
 
 	void OnTriggerExit (Collider other) {
-		if ((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") {
-			GameObject enemyObj = other.gameObject.transform.parent.gameObject;
-			enemyObj.SendMessage("NotAimedAt");
-			hitList.Remove(enemyObj);
+		if (((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") || (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider)))) {
+            GameObject otherObj = other.transform.root.gameObject;
+            otherObj.SendMessage("NotAimedAt");
+            hitList.Remove(otherObj);
 			CheckHitListSize();
 		}
 	}
@@ -36,18 +40,14 @@ public class MeleeRangeInformer : MonoBehaviour {
 		if (hitList.Count > 0) {
 			if (!wouldHitEnemy) {
 				wouldHitEnemy = true;
-				UpdateHitStatus();
-			}
+                cas.EnemiesEnteredAimRange();
+            }
 		} else {
 			if (wouldHitEnemy) {
 				wouldHitEnemy = false;
-				UpdateHitStatus();
+                cas.NoEnemiesInAimRange();
 			}
 		}
-	}
-
-	void UpdateHitStatus() {
-
 	}
 
 	public void DeactivateTheHitList() {
@@ -56,12 +56,20 @@ public class MeleeRangeInformer : MonoBehaviour {
 				enemyObj.SendMessage ("NotAimedAt");
 			}
 		}
-	}
+        if (cldr == null) {
+            cldr = GetComponent<MeshCollider>();
+        }
+        cldr.enabled = false;
+    }
 
 	public void ActivateTheHitList() {
+        if (cldr == null) {
+            cldr = GetComponent<MeshCollider>();
+        }
+        cldr.enabled = true;
         if (hitList != null) {
             foreach (GameObject enemyObj in hitList) {
-                enemyObj.SendMessage("AimedAt", transform.root);
+                enemyObj.SendMessage("AimedAt", transform.root.gameObject);
             }
         }
 	}

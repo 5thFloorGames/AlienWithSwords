@@ -11,7 +11,7 @@ public class BulletDamages : MonoBehaviour {
 
 	void OnCollisionEnter (Collision coll) {
 		GameObject other = coll.gameObject;
-		if (other.tag == "Enemy") {
+		if (other.tag == "Enemy" || (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider)))) {
 			other.SendMessageUpwards("TakeDamage", damage);
 		}
 		CreateHitEffect ();

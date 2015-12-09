@@ -112,5 +112,6 @@ public class CharacterActionsSecond : MonoBehaviour {
 		slashRange.DeactivateTheHitList ();
 		inCharacter = false;
 		overlay.SetActive (false);
+        
 	}
 }
