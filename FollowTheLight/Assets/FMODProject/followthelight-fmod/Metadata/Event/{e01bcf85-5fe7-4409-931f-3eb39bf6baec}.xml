@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.01.07.00">
     <object class="Event" id="{e01bcf85-5fe7-4409-931f-3eb39bf6baec}">
         <property name="name">
-            <value>Weapon Ranged 3 - Shoot</value>
+            <value>Weapon 3 - Shoot</value>
         </property>
         <property name="outputFormat">
             <value>2</value>
@@ -32,7 +32,7 @@
             <destination>{66a8fa4f-8dae-4598-aaad-7ad755daa0a5}</destination>
         </relationship>
         <relationship name="folder">
-            <destination>{fa31ed44-a03f-4ef9-9b58-e015d1e3883b}</destination>
+            <destination>{af69cd68-b13f-4388-8736-6e1e4f421965}</destination>
         </relationship>
     </object>
     <object class="EventMixer" id="{59ec135b-0198-4dd4-81c7-0842181035a0}">
