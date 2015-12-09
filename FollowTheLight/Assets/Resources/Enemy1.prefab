@@ -285,6 +285,7 @@ MonoBehaviour:
   forceFollowCharacter: 0
   targetCharacter: 0
   forceFollowFirstSeen: 0
+  movementTime: 1
 --- !u!114 &11485286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -481,6 +482,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_AnchoredPosition.y
       value: 1.60000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: movementTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -5,7 +5,6 @@ public class CharacterActionsSecond : MonoBehaviour {
 
 	public int slashDamage;
     public int maxActions;
-    int strikeDamage;
 
     bool enemyInAim;
 	
@@ -72,21 +71,6 @@ public class CharacterActionsSecond : MonoBehaviour {
 		iTween.RotateTo (weaponPivot, iTween.Hash (
 			"y", 89.99f,
 			"time", 0.5f,
-			"islocal", true,
-			"oncomplete", "PutWeaponAway",
-			"oncompletetarget", gameObject));
-	}
-	
-	void Strike() {
-		actions -= 1;
-		previousActionTime = Time.time;
-		weaponPivot.SetActive (true);
-		mwd.damageAmount = strikeDamage;
-
-		weaponPivot.transform.localRotation = Quaternion.Euler (-90f, 0f, 0f);
-		iTween.RotateTo (weaponPivot, iTween.Hash (
-			"x", 30f,
-			"time", 0.6f,
 			"islocal", true,
 			"oncomplete", "PutWeaponAway",
 			"oncompletetarget", gameObject));

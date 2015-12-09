@@ -61,7 +61,7 @@ public class MeleeRangeInformer : MonoBehaviour {
 	public void ActivateTheHitList() {
         if (hitList != null) {
             foreach (GameObject enemyObj in hitList) {
-                enemyObj.SendMessage("AimedAt");
+                enemyObj.SendMessage("AimedAt", transform.root);
             }
         }
 	}

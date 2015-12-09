@@ -7,6 +7,7 @@ public class EnemyMovement : MonoBehaviour {
 	public bool forceFollowCharacter;
 	public CharacterType targetCharacter;
 	public bool forceFollowFirstSeen;
+    public float movementTime;
 
 	bool firstLockChecked;
 	bool lockedToTarget;
@@ -17,12 +18,10 @@ public class EnemyMovement : MonoBehaviour {
 	EnemyManager em;
 	NavMeshAgent nva;
 	Animator animator;
-	float movementTime;
 	
 	bool playerSeen;
 	
 	void Start () {
-		movementTime = 1.0f;
 		firstLockChecked = false;
 		lockedToTarget = false;
 		em = GameObject.Find ("GameManager").GetComponent<EnemyManager>();
@@ -53,6 +52,7 @@ public class EnemyMovement : MonoBehaviour {
 	void DetermineTargeting() {
 		CheckFirstLock ();
 		CheckLockedStatus ();
+        RefocusIfNecessary();
 		if (lockedToTarget) {
 			MoveTowardsPosition(targetedCharacter.transform.position);
 			Invoke ("StopMovingAndAttack", movementTime);
@@ -126,8 +126,7 @@ public class EnemyMovement : MonoBehaviour {
 
 		Vector3 enemyView = transform.position + new Vector3(0, 2, 0);
 		Vector3 direction = (character.transform.position + new Vector3 (0, 1, 0)) - enemyView;
-		
-		Debug.DrawRay(enemyView, direction, Color.green, 2.0f);
+		//Debug.DrawRay(enemyView, direction, Color.green, 2.0f);
 		RaycastHit hit;
 		Physics.Raycast(enemyView, direction, out hit, (direction.magnitude + 1.0f), layerMask);
 		if (hit.collider.gameObject == character) {
@@ -136,6 +135,21 @@ public class EnemyMovement : MonoBehaviour {
 			return false;
 		}
 	}
+
+    void RefocusIfNecessary() {
+        GameObject target = targetedCharacter;
+        if (lockedToTarget) {
+            if (!CheckIfCharacterInSight(target)) {
+                lockedToTarget = false;
+                targetedCharacter = null;
+                CheckVisibleCharacters();
+                if (!lockedToTarget) {
+                    lockedToTarget = true;
+                    targetedCharacter = target;
+                }
+            }
+        }
+    }
 	
 	void MoveTowardsPosition(Vector3 position) {
 		animator.SetBool ("Walking", true);

@@ -10,7 +10,7 @@ GameObject:
   - 224: {fileID: 22416108}
   - 222: {fileID: 22258856}
   - 114: {fileID: 11419784}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HealthMeter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ GameObject:
   - 223: {fileID: 22313162}
   - 114: {fileID: 11440342}
   - 114: {fileID: 11402820}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyInfo
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -47,7 +47,8 @@ GameObject:
   - 195: {fileID: 19522532}
   - 114: {fileID: 11484730}
   - 114: {fileID: 11405622}
-  m_Layer: 0
+  - 114: {fileID: 11421018}
+  m_Layer: 9
   m_Name: Enemy2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -64,7 +65,7 @@ GameObject:
   - 4: {fileID: 403972}
   - 212: {fileID: 21244958}
   - 95: {fileID: 9521128}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sprite
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -81,7 +82,7 @@ GameObject:
   - 224: {fileID: 22489500}
   - 222: {fileID: 22247112}
   - 114: {fileID: 11404132}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HealthMeterBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +98,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 446754}
   - 136: {fileID: 13637418}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Collider
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -135,7 +136,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 403972}
@@ -214,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637fe36a225df4f9598267f9c0dcaab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionDamage: 5
 --- !u!114 &11419784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -241,6 +243,21 @@ MonoBehaviour:
   m_FillAmount: .5
   m_FillClockwise: 1
   m_FillOrigin: 1
+--- !u!114 &11421018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a49f6131f97c45b6bb9e8d6c246c442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceFollowCharacter: 0
+  targetCharacter: 0
+  forceFollowFirstSeen: 0
+  movementTime: 0
 --- !u!114 &11440342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -342,7 +359,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 85a1f2f209b9ff648a83f2acee3b4a6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!222 &22247112
@@ -433,7 +450,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: actionDamage
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 151502}

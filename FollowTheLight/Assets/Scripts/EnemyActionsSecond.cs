@@ -4,27 +4,26 @@ using System.Collections.Generic;
 
 public class EnemyActionsSecond : MonoBehaviour {
 
-    EnemyManager em;
+    public int actionDamage;
 
-    GameObject aoePrefab;
-    NavMeshAgent nva;
+    EnemyManager em;
+    EnemyMovement move;
     Animator animator;
 
-    int actionDamage;
-    float movementTime;
-    float aoeLifetime;
-
-    bool playerSeen;
+    float shotLifetime;
+    GameObject shotPrefab;
 
     void Start() {
-        aoePrefab = (GameObject)Resources.Load("AreaDamage");
-        nva = GetComponent<NavMeshAgent>();
+        move = GetComponent<EnemyMovement>();
         animator = gameObject.GetComponentInChildren<Animator>();
 
-        actionDamage = 5;
-        aoeLifetime = 1.7f;
+        shotLifetime = 0.5f;
+        shotPrefab = (GameObject)Resources.Load("EnemyShot");
 
-        movementTime = 1.0f;
+        if (actionDamage == 0) {
+            actionDamage = 5;
+        }
+
     }
 
     void Update() {
@@ -36,72 +35,29 @@ public class EnemyActionsSecond : MonoBehaviour {
     }
 
     public void TriggerActions() {
-        // Debug.Log (gameObject.name + " enemy used an ability");
-        playerSeen = false;
-        CheckVisibleCharacters();
-        Invoke("StopMovingAndCastIfSeenPlayer", movementTime);
+        move.Go();
     }
 
-    bool CheckIfCharacterInSight(GameObject character) {
-        Vector3 enemyView = transform.position + new Vector3(0, 2, 0);
-        Vector3 direction = (character.transform.position + new Vector3(0, 1, 0)) - enemyView;
-
-        Debug.DrawRay(enemyView, direction, Color.green, 2.0f);
-        RaycastHit hit;
-        Physics.Raycast(enemyView, direction, out hit, direction.magnitude);
-        if (hit.collider.gameObject == character) {
-            return true;
-        } else {
-            return false;
-        }
+    public void MovingCompleteStartAttack(GameObject target) {
+        StartCoroutine(ShootAtCharacter(target));
     }
 
-    void CheckVisibleCharacters() {
+    IEnumerator ShootAtCharacter(GameObject target) {
+        Vector3 start = transform.position + Quaternion.Inverse(transform.rotation) * new Vector3(0, 0.8f, 1f);
+        Vector3 end = target.transform.position + target.transform.rotation * new Vector3(0, 0.7f, 0);
+        Vector3 direction = (end - start).normalized;
 
-        List<GameObject> knownCharacters = new List<GameObject>();
-
-        foreach (GameObject character in GameState.characters) {
-            if (CheckIfCharacterInSight(character)) {
-                knownCharacters.Add(character);
-            }
-        }
-
-        if (knownCharacters.Count != 0) {
-            playerSeen = true;
-            if (knownCharacters.Contains(GameState.activeCharacter)) {
-                MoveTowardsPosition(GameState.activeCharacter.transform.position);
-            } else {
-                GameObject randomPick = knownCharacters[Random.Range(0, (knownCharacters.Count - 1))];
-                MoveTowardsPosition(randomPick.transform.position);
-            }
-        }
-    }
-
-    void MoveTowardsPosition(Vector3 position) {
-        nva.Resume();
-        nva.destination = position;
-    }
-
-    void CastAreaDamage() {
         animator.SetTrigger("Attack");
-        GameObject spawnedAreaDamage = (GameObject)Instantiate(aoePrefab, transform.position, Quaternion.identity);
-        spawnedAreaDamage.name = gameObject.name + "Aoe";
-        AreaDamageBehavior adb = spawnedAreaDamage.GetComponent<AreaDamageBehavior>();
-        float animationDelay = 1.1f;
-        adb.Init(actionDamage, animationDelay, aoeLifetime);
-        Invoke("ActionsCompletedInformManager", animationDelay + aoeLifetime);
+        Invoke("ActionsCompletedInformManager", shotLifetime);
+        yield return new WaitForSeconds(0.5f);
+        GameObject shot = (GameObject)Instantiate(shotPrefab, (start + direction), Quaternion.Inverse(transform.rotation));
+        shot.name = gameObject.name + "Shot";
+        shot.GetComponent<EnemyShotDamages>().Init(actionDamage, 0.0f, shotLifetime);
+        Rigidbody shotrb = shot.GetComponent<Rigidbody>();
+        shotrb.AddForce(direction * 300.0f);
     }
 
     void ActionsCompletedInformManager() {
         em.EnemyActionsCompleted();
-    }
-
-    void StopMovingAndCastIfSeenPlayer() {
-        if (playerSeen) {
-            nva.Stop();
-            CastAreaDamage();
-        } else {
-            ActionsCompletedInformManager();
-        }
     }
 }

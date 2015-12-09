@@ -68,7 +68,7 @@ public class CharacterActionsFirst : MonoBehaviour {
 		Vector3 start = cameraTf.position;
 		Vector3 direction = (cameraTf.rotation * new Vector3 (0, 0, 500f));
 		RaycastHit hit;
-        Debug.DrawRay(start, direction, Color.red, 0.1f);
+        //Debug.DrawRay(start, direction, Color.red, 0.1f);
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
 			if (hit.collider.tag == "Enemy") {
 				EnemyAimedAt();
