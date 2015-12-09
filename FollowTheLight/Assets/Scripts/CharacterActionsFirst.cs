@@ -70,7 +70,7 @@ public class CharacterActionsFirst : MonoBehaviour {
 		RaycastHit hit;
         //Debug.DrawRay(start, direction, Color.red, 0.1f);
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
-			if (hit.collider.tag == "Enemy") {
+			if (hit.collider.tag == "Enemy" ||hit.collider.tag == "Player") {
 				EnemyAimedAt();
 				CheckIfDifferentEnemy(hit);
 			} else {
@@ -82,11 +82,11 @@ public class CharacterActionsFirst : MonoBehaviour {
 	}
 
 	void CheckIfDifferentEnemy(RaycastHit hit) {
-		if (aimedEnemy != hit.transform.parent.gameObject) {
+		if (aimedEnemy != hit.transform.root.gameObject) {
 			if (aimedEnemy) {
 				aimedEnemy.SendMessage("NotAimedAt");
 			}
-			aimedEnemy = hit.transform.parent.gameObject;
+			aimedEnemy = hit.transform.root.gameObject;
 			aimedEnemy.SendMessage("AimedAt", gameObject);
 		}
 	}

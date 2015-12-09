@@ -19,6 +19,9 @@ public class MeleeRangeInformer : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
+        if (hitList.Contains(other.gameObject)) {
+            return;
+        }
         if (((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") || (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider)))) {
             GameObject otherObj = other.transform.root.gameObject;
             otherObj.SendMessage("AimedAt", transform.root.gameObject);
@@ -63,14 +66,14 @@ public class MeleeRangeInformer : MonoBehaviour {
     }
 
 	public void ActivateTheHitList() {
-        if (cldr == null) {
-            cldr = GetComponent<MeshCollider>();
-        }
-        cldr.enabled = true;
         if (hitList != null) {
             foreach (GameObject enemyObj in hitList) {
                 enemyObj.SendMessage("AimedAt", transform.root.gameObject);
             }
         }
-	}
+        if (cldr == null) {
+            cldr = GetComponent<MeshCollider>();
+        }
+        cldr.enabled = true;
+    }
 }
