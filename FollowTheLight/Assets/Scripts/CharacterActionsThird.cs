@@ -13,6 +13,7 @@ public class CharacterActionsThird : MonoBehaviour {
 	bool characterInAim;
 	bool enemyInAim;
 	GameObject aimedEnemy;
+    GameObject aimedCharacter;
 
 	float actionCooldown;
 	float previousActionTime;
@@ -44,7 +45,7 @@ public class CharacterActionsThird : MonoBehaviour {
 		if (GameState.playersTurn && inCharacter && !dead) {
 			CheckIfSomethingWithinAim ();
 			if (Time.time - previousActionTime >= actionCooldown && actions > 0) {
-				if (Input.GetButtonDown ("Fire1") && enemyInAim) {
+				if (Input.GetButtonDown ("Fire1") && (enemyInAim || characterInAim)) {
 					DamageAimedCharacter ();
 					UpdateActionsToUI ();
 				}
@@ -65,8 +66,9 @@ public class CharacterActionsThird : MonoBehaviour {
 		Vector3 direction = (cameraTf.rotation * new Vector3 (0, 0, 30f));
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
-			if (hit.collider.tag == "Player") {
+			if (hit.collider.tag == "Player" && (hit.collider.GetType() == typeof(CapsuleCollider))) {
 				CharacterAimedAt ();
+                CheckIfDifferentCharacter(hit);
 			} else if (hit.collider.tag == "Enemy") {
 				EnemyAimedAt();
 				CheckIfDifferentEnemy(hit);
@@ -87,8 +89,8 @@ public class CharacterActionsThird : MonoBehaviour {
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit)) {
 			actions -= 1;
-			if (hit.collider.tag == "Enemy") {
-				hit.collider.gameObject.SendMessageUpwards ("TakeDamage", damage);
+			if (hit.collider.tag == "Enemy" || (hit.collider.tag == "Player" && (hit.collider.GetType() == typeof(CapsuleCollider)))) {
+				hit.collider.transform.root.gameObject.SendMessageUpwards ("TakeDamage", damage);
 				lc.ShootLaser(hit.point);
 			}
 		}
@@ -109,14 +111,24 @@ public class CharacterActionsThird : MonoBehaviour {
 	}
 
 	void CheckIfDifferentEnemy(RaycastHit hit) {
-		if (aimedEnemy != hit.transform.parent.gameObject) {
+		if (aimedEnemy != hit.transform.root.gameObject) {
 			if (aimedEnemy) {
 				aimedEnemy.SendMessage("NotAimedAt");
 			}
-			aimedEnemy = hit.transform.parent.gameObject;
+			aimedEnemy = hit.transform.root.gameObject;
 			aimedEnemy.SendMessage("AimedAt", gameObject);
 		}
 	}
+
+    void CheckIfDifferentCharacter(RaycastHit hit) {
+        if (aimedCharacter != hit.transform.root.gameObject) {
+            if (aimedCharacter) {
+                aimedCharacter.SendMessage("NotAimedAt");
+            }
+            aimedCharacter = hit.transform.root.gameObject;
+            aimedCharacter.SendMessage("AimedAt", gameObject);
+        }
+    }
 	
 	void EnemyAimedAt() {
 		if (!enemyInAim) {
@@ -127,7 +139,9 @@ public class CharacterActionsThird : MonoBehaviour {
 	
 	void EnemyNotAimedAt() {
 		if (enemyInAim) {
-			crosshairs.transform.localScale = (new Vector3(1f, 1f, 1f));
+            if (!characterInAim) {
+                crosshairs.transform.localScale = (new Vector3(1f, 1f, 1f));
+            }
 			aimedEnemy.SendMessage("NotAimedAt");
 			aimedEnemy = null;
 			enemyInAim = false;
@@ -136,13 +150,18 @@ public class CharacterActionsThird : MonoBehaviour {
 
 	void CharacterAimedAt() {
 		if (!characterInAim) {
-			characterInAim = true;
+            crosshairs.transform.localScale = (new Vector3(1.2f, 1.2f, 1.2f));
+            characterInAim = true;
 		}
 	}
 	
 	void CharacterNotAimedAt() {
 		if (characterInAim) {
-			characterInAim = false;
+            if (!enemyInAim) {
+                crosshairs.transform.localScale = (new Vector3(1f, 1f, 1f));
+            }
+            aimedCharacter.SendMessage("NotAimedAt");
+            characterInAim = false;
 		}
 	}
 	
