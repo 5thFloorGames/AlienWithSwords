@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.07.00">
+    <object class="AudioFile" id="{0ba66fe5-2cad-4b5b-bbd3-229884ce9d67}">
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>0.46235827664399093</value>
+        </property>
+        <property name="audioFilePath">
+            <value>$(AUDIO_BIN_DIR)/Button, Plastic; click, naks 04 {c56c1d12-6f73-4537-9d4f-d10337add5a8}.wav</value>
+        </property>
+        <relationship name="container">
+            <destination>{0996b41c-1abb-45dd-96b7-148734af7d59}</destination>
+        </relationship>
+    </object>
+</objects>
