@@ -99,7 +99,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 426712}
   - 20: {fileID: 2084092}
-  - 81: {fileID: 8183136}
+  - 114: {fileID: 11428842}
+  - 81: {fileID: 8156656}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -267,13 +268,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!81 &8183136
+--- !u!81 &8156656
 AudioListener:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187122}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!82 &8219804
 AudioSource:
   m_ObjectHideFlags: 1
@@ -387,6 +388,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumMovement: 10
+--- !u!114 &11428842
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187122}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f8336b22d6d3af4da2712827e9ad333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pluginPaths: []
 --- !u!114 &11429044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -628,7 +641,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: damage
