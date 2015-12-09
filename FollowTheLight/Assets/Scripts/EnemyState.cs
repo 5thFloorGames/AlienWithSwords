@@ -5,24 +5,26 @@ using System.Collections;
 public class EnemyState : MonoBehaviour {
 
 	public bool dead;
-	public int currentHealth;
+    public int maximumHealth;
+    int currentHealth;
+
 	Image healthMeter;
 	GameObject em;
 	Animator animator;
     EnemyMovement move;
 
-	int maximumHealth;
-
-	public void Init(int amount, GameObject manager) {
+	public void Init(GameObject manager) {
 		dead = false;
-		maximumHealth = amount;
-		currentHealth = amount;
 		healthMeter = transform.FindChild("EnemyInfo").FindChild("HealthMeter").GetComponent<Image>();
 		em = manager;
 		UpdateHealthToHealthMeter ();
 	}
 	
 	void Start () {
+        if (maximumHealth == 0) {
+            maximumHealth = 30;
+        }
+        currentHealth = maximumHealth;
 		animator = gameObject.GetComponentInChildren<Animator>();
         move = gameObject.GetComponent<EnemyMovement>();
 	}

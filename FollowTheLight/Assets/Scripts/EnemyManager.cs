@@ -45,10 +45,10 @@ public class EnemyManager : MonoBehaviour {
 		}
 	}
 
-	void EnemyBasicAssignments(GameObject obj, int health) {
+	void EnemyBasicAssignments(GameObject obj) {
 
 		EnemyState es = obj.GetComponent<EnemyState> ();
-		es.Init (health, gameObject);
+		es.Init (gameObject);
 
 		obj.SendMessage ("InitActions", gameObject);
 
@@ -67,7 +67,7 @@ public class EnemyManager : MonoBehaviour {
 		GameObject[] additionalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
 		foreach (GameObject enemy in additionalEnemies) {
 			if (enemy.GetComponent<EnemyState>() != null) {
-				EnemyBasicAssignments(enemy, 30);
+				EnemyBasicAssignments(enemy);
 			}
 		}
 	}
