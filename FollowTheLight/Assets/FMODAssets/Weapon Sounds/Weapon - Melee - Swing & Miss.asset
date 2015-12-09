@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e06c992c0c162f94a880e74e722cb286, type: 3}
-  m_Name: Weapon 2 - Shoot
+  m_Name: Weapon - Melee - Swing & Miss
   m_EditorClassIdentifier: 
-  path: event:/Weapon 2 - Shoot
-  id: '{b9fb2df0-024f-4635-b952-a650bc22747b}'
+  path: event:/Weapon Sounds/Weapon - Melee - Swing & Miss
+  id: '{c407b756-41c5-4e7d-ba1d-1bb01a7840f9}'

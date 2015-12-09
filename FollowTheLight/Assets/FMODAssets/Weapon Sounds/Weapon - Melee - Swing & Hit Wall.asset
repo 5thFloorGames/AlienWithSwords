@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e06c992c0c162f94a880e74e722cb286, type: 3}
-  m_Name: Footstep
+  m_Name: Weapon - Melee - Swing & Hit Wall
   m_EditorClassIdentifier: 
-  path: event:/Footstep
-  id: '{ecdec325-4286-47a6-a033-bcb7154d78f2}'
+  path: event:/Weapon Sounds/Weapon - Melee - Swing & Hit Wall
+  id: '{27ca5c11-5d81-402d-99e3-e3916fb8488b}'

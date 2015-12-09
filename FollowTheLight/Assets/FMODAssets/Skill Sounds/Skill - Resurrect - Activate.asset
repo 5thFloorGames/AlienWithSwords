@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e06c992c0c162f94a880e74e722cb286, type: 3}
-  m_Name: UI - End Turn
+  m_Name: Skill - Resurrect - Activate
   m_EditorClassIdentifier: 
-  path: event:/UI - End Turn
-  id: '{3ba69d55-6b9e-4b37-bcfa-106ba8445aae}'
+  path: event:/Skill Sounds/Skill - Resurrect - Activate
+  id: '{b09713b4-bb87-49a8-a345-facef89ba6a5}'
