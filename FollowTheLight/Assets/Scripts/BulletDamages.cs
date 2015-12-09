@@ -9,10 +9,11 @@ public class BulletDamages : MonoBehaviour {
 		damage = amount;
 	}
 
-	void OnCollisionEnter (Collision coll) {
-		GameObject other = coll.gameObject;
-		if (other.tag == "Enemy" || (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider)))) {
-			other.SendMessageUpwards("TakeDamage", damage);
+    void OnTriggerEnter(Collider other) {
+        if (((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") || (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider)))) {
+            if (other.tag == "Enemy" || (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider)))) {
+                other.SendMessageUpwards("TakeDamage", damage);
+            }
 		}
 		CreateHitEffect ();
 		Destroy (gameObject);
