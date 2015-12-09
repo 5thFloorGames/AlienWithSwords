@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e06c992c0c162f94a880e74e722cb286, type: 3}
-  m_Name: Weapon - Ranged Hit
+  m_Name: Weapon 1 - Shoot
   m_EditorClassIdentifier: 
-  path: event:/Weapon Sounds/Weapon - Ranged Hit
-  id: '{23ebec41-c0b3-4a76-a0ce-801071caa3cc}'
+  path: event:/Weapon 1 - Shoot
+  id: '{7c1cac7f-b917-4f6c-a7ef-937928b8fe71}'
