@@ -163,7 +163,10 @@ public class UserInterfaceManager : MonoBehaviour {
             healthMeters[name].CrossFadeAlpha(alphaValue, 0.1f, true);
             Transform apParent = charinf.FindChild("ActionPoints");
             foreach (Transform ap in apParent) {
-                ap.GetComponent<Image>().CrossFadeAlpha(alphaValue, 0.1f, true);
+                Image img = ap.GetComponent<Image>();
+                Color clr = img.color;
+                clr.a = alphaValue;
+                img.color = clr;
             }
         }
     }
