@@ -18,6 +18,7 @@ public class MusicManager : MonoBehaviour {
 		}
 		if (level == 1 && !music.isPlaying) {
 			music.Play();
+            Debug.Log("trying");
 		}
 	}
 }
