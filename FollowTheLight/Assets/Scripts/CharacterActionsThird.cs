@@ -114,7 +114,7 @@ public class CharacterActionsThird : MonoBehaviour {
 				aimedEnemy.SendMessage("NotAimedAt");
 			}
 			aimedEnemy = hit.transform.parent.gameObject;
-			aimedEnemy.SendMessage("AimedAt");
+			aimedEnemy.SendMessage("AimedAt", gameObject);
 		}
 	}
 	

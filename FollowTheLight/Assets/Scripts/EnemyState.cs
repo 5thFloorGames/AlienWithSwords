@@ -9,6 +9,7 @@ public class EnemyState : MonoBehaviour {
 	Image healthMeter;
 	GameObject em;
 	Animator animator;
+    EnemyMovement move;
 
 	int maximumHealth;
 
@@ -23,6 +24,7 @@ public class EnemyState : MonoBehaviour {
 	
 	void Start () {
 		animator = gameObject.GetComponentInChildren<Animator>();
+        move = gameObject.GetComponent<EnemyMovement>();
 	}
 
 	void Update () {
@@ -44,8 +46,9 @@ public class EnemyState : MonoBehaviour {
 		}
 	}
 
-	void AimedAt() {
+	void AimedAt(GameObject character) {
 		animator.SetBool ("AimedAt", true);
+        move.CharacterAimedYou(character);
 	}
 
 	void NotAimedAt() {

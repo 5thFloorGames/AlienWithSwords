@@ -41,6 +41,15 @@ public class EnemyMovement : MonoBehaviour {
 		DetermineTargeting ();
 	}
 
+    public void CharacterAimedYou(GameObject character) {
+        CheckFirstLock();
+        CheckLockedStatus();
+        if (!lockedToTarget) {
+            targetedCharacter = character;
+            lockedToTarget = true;
+        }
+    }
+
 	void DetermineTargeting() {
 		CheckFirstLock ();
 		CheckLockedStatus ();

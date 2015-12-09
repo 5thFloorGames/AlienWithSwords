@@ -18,7 +18,7 @@ public class MeleeRangeInformer : MonoBehaviour {
 		if ((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") {
 			GameObject enemyObj = other.gameObject.transform.parent.gameObject;
 			hitList.Add(enemyObj);
-			enemyObj.SendMessage("AimedAt");
+			enemyObj.SendMessage("AimedAt", transform.root.gameObject);
 			CheckHitListSize();
 		}
 	}

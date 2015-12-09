@@ -3,9 +3,11 @@ using System.Collections;
 
 public class CharacterActionsSecond : MonoBehaviour {
 
-	public int strikeDamage;
 	public int slashDamage;
-	public int maxActions;
+    public int maxActions;
+    int strikeDamage;
+
+    bool enemyInAim;
 	
 	bool inCharacter;
 	bool dead;
@@ -34,6 +36,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 		weaponPivot.SetActive (false);
 		actionCooldown = 0.7f;
 		previousActionTime = Time.time;
+        enemyInAim = false;
 	}
 	
 	void Start () {
@@ -41,7 +44,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (GameState.playersTurn && inCharacter && actions > 0 && !dead) {
+		if (GameState.playersTurn && inCharacter && actions > 0 && !dead && enemyInAim) {
 			if (Time.time - previousActionTime >= actionCooldown) {
 				if (Input.GetButtonDown ("Fire1")){
 					Slash();
@@ -51,15 +54,23 @@ public class CharacterActionsSecond : MonoBehaviour {
 		}
 	}
 
+    public void EnemiesEnteredAimRange() {
+        enemyInAim = true;
+    }
+
+    public void NoEnemiesInAimRange() {
+        enemyInAim = false;
+    }
+
 	void Slash() {
 		actions -= 1;
 		previousActionTime = Time.time;
 		weaponPivot.SetActive (true);
 		mwd.damageAmount = slashDamage;
 		
-		weaponPivot.transform.localRotation = Quaternion.Euler (0f, -89f, 90f);
+		weaponPivot.transform.localRotation = Quaternion.Euler (0f, -89.99f, 90f);
 		iTween.RotateTo (weaponPivot, iTween.Hash (
-			"y", 89f,
+			"y", 89.99f,
 			"time", 0.5f,
 			"islocal", true,
 			"oncomplete", "PutWeaponAway",
