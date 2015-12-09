@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.07.00">
+    <object class="AudioFile" id="{015778d9-347a-4b9d-a5d8-7586a9186e1b}">
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>0.88675736961451246</value>
+        </property>
+        <property name="audioFilePath">
+            <value>$(AUDIO_BIN_DIR)/sfx_refit_small {3e6fe3d9-f7f8-4213-98f2-7a0edadbf8ab}.wav</value>
+        </property>
+        <relationship name="container">
+            <destination>{0996b41c-1abb-45dd-96b7-148734af7d59}</destination>
+        </relationship>
+    </object>
+</objects>
