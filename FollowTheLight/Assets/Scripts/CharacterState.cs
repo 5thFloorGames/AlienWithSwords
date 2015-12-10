@@ -95,6 +95,7 @@ public class CharacterState : MonoBehaviour {
 				health = 0;
 				Death ();
 			}
+			uim.DamageTakenUIUpdate(type.ToString());
 			UpdateHealthToUI ();
 		}
 	}
@@ -133,6 +134,9 @@ public class CharacterState : MonoBehaviour {
 	}
 	
 	void CharacterResurrected() {
+		if (!inCharacter) {
+			sprite.SetActive(true);
+		}
 		dead = false;
 		health = maximumHealth;
 		UpdateHealthToUI();

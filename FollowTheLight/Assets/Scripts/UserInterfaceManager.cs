@@ -91,6 +91,12 @@ public class UserInterfaceManager : MonoBehaviour {
 		levelCompletedUI.SetActive (false);
 	}
 
+	public void DamageTakenUIUpdate(string charName) {
+		FlashMovementColor (charName, 2 );
+		FlashActionPointsColor (charName, 2);
+		FlashHealthColor (charName, 2);
+	}
+
     public void UpdateHealthMeter(string characterName, float currentHealth, float maximum) {
         if (currentHealth == maximum) {
             FlashHealth(characterName, 1);
@@ -171,6 +177,52 @@ public class UserInterfaceManager : MonoBehaviour {
             }
         }
     }
+
+
+
+	public void FlashMovementColor (string characterName, int times) {
+		Image meter = distanceMeters[characterName];
+		Text txt = distanceTexts[characterName];
+		
+		StartCoroutine(FlashImageColor(meter, times));
+		StartCoroutine(FlashTextColor(txt, times));
+	}
+	
+	public void FlashActionPointsColor (string characterName, int times) {
+		foreach (Transform actionPoint in actionPoints[characterName]) {
+			StartCoroutine(FlashImageColor(actionPoint.GetComponent<Image>(), times));
+		}
+	}
+	
+	public void FlashHealthColor (string characterName, int times) {
+		Image meter = healthMeters[characterName];
+		Text txt = healthTexts[characterName];
+		
+		StartCoroutine(FlashImageColor(meter, times));
+		StartCoroutine(FlashTextColor(txt, times));
+	}
+	
+	IEnumerator FlashImageColor (Image img, int times) {
+		int i = 0;
+		while (i < times) {
+			img.CrossFadeColor(new Color(1.0f, 0.0f, 0.0f), 0.1f, false, false);
+			yield return new WaitForSeconds(0.1f);
+			img.CrossFadeColor(new Color(1.0f, 1.0f, 1.0f), 0.1f, false, false);
+			yield return new WaitForSeconds(0.05f);
+			i += 1;
+		}
+	}
+	
+	IEnumerator FlashTextColor (Text txt, int times) {
+		int i = 0;
+		while (i < times) {
+			txt.CrossFadeColor(new Color(1.0f, 0.0f, 0.0f), 0.1f, false, false);
+			yield return new WaitForSeconds(0.1f);
+			txt.CrossFadeColor(new Color(1.0f, 1.0f, 1.0f), 0.1f, false, false);
+			yield return new WaitForSeconds(0.05f);
+			i += 1;
+		}
+	}
 
 
 
