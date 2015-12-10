@@ -803,6 +803,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9494cb6b3c8964ddabe612b540cd1973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quoteSource: {fileID: 8200786}
+  effectSource: {fileID: 8212500}
+  selectCharacterQuotes: []
+  attackingQuotes: []
+  killsAnEnemyQuotes: []
+  dyingQuote: {fileID: 0}
+  killsACharacterQuote: {fileID: 0}
+  attackSoundEffects: []
 --- !u!136 &13658792
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1013,6 +1021,14 @@ Prefab:
       propertyPath: stepInterval
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: quoteSource
+      value: 
+      objectReference: {fileID: 8200786}
+    - target: {fileID: 0}
+      propertyPath: effectSource
+      value: 
+      objectReference: {fileID: 8212500}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 109698}

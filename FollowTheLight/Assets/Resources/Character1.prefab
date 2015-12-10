@@ -678,6 +678,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9494cb6b3c8964ddabe612b540cd1973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quoteSource: {fileID: 8236206}
+  effectSource: {fileID: 8263826}
+  selectCharacterQuotes:
+  - {fileID: 8300000, guid: 24f1c71b9938e224ebe18486cbe79e06, type: 3}
+  - {fileID: 8300000, guid: cfaa54dc2f66f464ca3dfb49797b74eb, type: 3}
+  - {fileID: 8300000, guid: a4a53364ff3414747a8c246787aa3b45, type: 3}
+  attackingQuotes:
+  - {fileID: 8300000, guid: acc483b9632ca2443962f9bf5e400f28, type: 3}
+  killsAnEnemyQuotes:
+  - {fileID: 8300000, guid: b05d0844e187eb447ae5a6647127136e, type: 3}
+  - {fileID: 8300000, guid: af72dbf1d51cc6e4fb6ff17fdb685a93, type: 3}
+  dyingQuote: {fileID: 8300000, guid: 7035d106d18506d46a7a8a1735aeb133, type: 3}
+  killsACharacterQuote: {fileID: 8300000, guid: fe49abd109bb8074bb483e5ff784f1b0,
+    type: 3}
+  attackSoundEffects: []
 --- !u!136 &13613214
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -809,6 +824,18 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: attackingQuotes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: killsAnEnemyQuotes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: selectCharacterQuotes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -900,6 +927,46 @@ Prefab:
       propertyPath: stepInterval
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: quoteSource
+      value: 
+      objectReference: {fileID: 8236206}
+    - target: {fileID: 0}
+      propertyPath: effectSource
+      value: 
+      objectReference: {fileID: 8263826}
+    - target: {fileID: 0}
+      propertyPath: selectCharacterQuotes.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 24f1c71b9938e224ebe18486cbe79e06, type: 3}
+    - target: {fileID: 0}
+      propertyPath: selectCharacterQuotes.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: cfaa54dc2f66f464ca3dfb49797b74eb, type: 3}
+    - target: {fileID: 0}
+      propertyPath: selectCharacterQuotes.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: a4a53364ff3414747a8c246787aa3b45, type: 3}
+    - target: {fileID: 0}
+      propertyPath: attackingQuotes.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: acc483b9632ca2443962f9bf5e400f28, type: 3}
+    - target: {fileID: 0}
+      propertyPath: dyingQuote
+      value: 
+      objectReference: {fileID: 8300000, guid: 7035d106d18506d46a7a8a1735aeb133, type: 3}
+    - target: {fileID: 0}
+      propertyPath: killsACharacterQuote
+      value: 
+      objectReference: {fileID: 8300000, guid: fe49abd109bb8074bb483e5ff784f1b0, type: 3}
+    - target: {fileID: 0}
+      propertyPath: killsAnEnemyQuotes.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: b05d0844e187eb447ae5a6647127136e, type: 3}
+    - target: {fileID: 0}
+      propertyPath: killsAnEnemyQuotes.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: af72dbf1d51cc6e4fb6ff17fdb685a93, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 149470}
