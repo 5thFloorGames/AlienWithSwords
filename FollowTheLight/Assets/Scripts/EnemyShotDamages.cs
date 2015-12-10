@@ -23,7 +23,6 @@ public class EnemyShotDamages : MonoBehaviour {
 	}
 
     void OnTriggerEnter(Collider other) {
-        Debug.Log(other.name);
         if (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider))) {
             other.gameObject.SendMessageUpwards("TakeDamage", damage);
         }
