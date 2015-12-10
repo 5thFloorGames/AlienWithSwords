@@ -426,8 +426,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healing: 5
-  damage: 5
-  maxActions: 2
+  damage: 2
+  maxActions: 1
 --- !u!114 &11452270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -534,7 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05e6876ff09cde4bb713839e0283255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumHealth: 30
+  maximumHealth: 10
   type: 2
   dead: 0
 --- !u!120 &12061240
@@ -706,11 +706,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: damage
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxActions
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled
@@ -730,7 +730,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maximumHealth
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: healing
