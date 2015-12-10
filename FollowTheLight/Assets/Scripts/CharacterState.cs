@@ -89,7 +89,6 @@ public class CharacterState : MonoBehaviour {
 	
 	void TakeDamage(int amount) {
 		if (!dead) {
-			Debug.Log(gameObject.name + " took " +  amount + " damage");
 			health -= amount;
 			if (health <= 0) {
 				health = 0;

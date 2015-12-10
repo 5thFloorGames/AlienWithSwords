@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class EnemyMovement : MonoBehaviour {
 
-	public bool forceFollowCharacter;
+    public bool fixateAfterSeeing;
+    public bool focusCharAtStart;
 	public CharacterType targetCharacter;
-	public bool forceFollowFirstSeen;
     public float movementTime;
 
 	bool firstLockChecked;
@@ -64,7 +64,7 @@ public class EnemyMovement : MonoBehaviour {
 
 	void CheckFirstLock() {
 		if (!firstLockChecked) {
-			if (forceFollowCharacter) {
+			if (focusCharAtStart) {
 				foreach (GameObject character in GameState.characters) {
 					if (character.GetComponent<CharacterState>().type == targetCharacter) {
 						targetedCharacter = character.gameObject;
@@ -86,7 +86,7 @@ public class EnemyMovement : MonoBehaviour {
 	void CheckLockedStatus() {
 		if (lockedToTarget) {
 			if (targetedCharacter.GetComponent<CharacterState>().dead) {
-				forceFollowCharacter = false;
+				focusCharAtStart = false;
 				lockedToTarget = false;
 				targetedCharacter = null;
 			}
@@ -108,14 +108,14 @@ public class EnemyMovement : MonoBehaviour {
 			if (knownCharacters.Contains(GameState.activeCharacter)) {
 				MoveTowardsPosition(GameState.activeCharacter.transform.position);
 				targetedCharacter = GameState.activeCharacter;
-				if (forceFollowFirstSeen) {
+				if (fixateAfterSeeing) {
 					lockedToTarget = true;
 				}
 			} else {
 				GameObject randomPick = knownCharacters[Random.Range(0, (knownCharacters.Count-1))];
 				MoveTowardsPosition(randomPick.transform.position);
 				targetedCharacter = randomPick;
-				if (forceFollowFirstSeen) {
+				if (fixateAfterSeeing) {
 					lockedToTarget = true;
 				}
 			}
@@ -141,7 +141,7 @@ public class EnemyMovement : MonoBehaviour {
 
     void RefocusIfNecessary() {
         GameObject target = targetedCharacter;
-        if (lockedToTarget) {
+        if (lockedToTarget && fixateAfterSeeing) {
             if (!CheckIfCharacterInSight(target)) {
                 lockedToTarget = false;
                 targetedCharacter = null;
