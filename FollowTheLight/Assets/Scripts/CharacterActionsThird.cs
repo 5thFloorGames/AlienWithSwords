@@ -162,6 +162,7 @@ public class CharacterActionsThird : MonoBehaviour {
             }
             aimedCharacter.SendMessage("NotAimedAt");
             characterInAim = false;
+			aimedCharacter = null;
 		}
 	}
 	
