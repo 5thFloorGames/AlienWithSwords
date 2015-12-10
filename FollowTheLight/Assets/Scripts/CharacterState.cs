@@ -15,11 +15,13 @@ public class CharacterState : MonoBehaviour {
 	AudioListener audioListener;
 	GameObject characterCamera;
 	GameObject sprite;
+	SpriteRenderer spriteRenderer;
 
 	void Awake() {
 		audioListener = GetComponentInChildren<AudioListener> ();
 		characterCamera = transform.FindChild("Camera").gameObject;
 		sprite = transform.FindChild ("Sprite").gameObject;
+		spriteRenderer = sprite.GetComponent<SpriteRenderer> ();
         dead = false;
     }
 
@@ -81,11 +83,11 @@ public class CharacterState : MonoBehaviour {
     }
 
     void AimedAt() {
-
+		spriteRenderer.color = new Vector4 (0.5f, 0.5f, 0.5f, 1);
     }
 
     void NotAimedAt() {
-
+		spriteRenderer.color = new Vector4 (1, 1, 1, 1);
     }
 
     void AnnounceDeathToManager() {
