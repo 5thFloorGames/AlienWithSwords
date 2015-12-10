@@ -4,13 +4,13 @@ using System.Collections;
 public class EnemyShotDamages : MonoBehaviour {
 
     int damage;
-    float delayFromEnemy;
-    float lifeTime;
+    //float delayFromEnemy;
+    //float lifeTime;
 
     public void Init(int damageAmount, float delay, float lifetimeFromEnemy) {
 
-        delayFromEnemy = delay;
-        lifeTime = lifetimeFromEnemy;
+        //delayFromEnemy = delay;
+        //lifeTime = lifetimeFromEnemy;
         damage = damageAmount;
     }
 
