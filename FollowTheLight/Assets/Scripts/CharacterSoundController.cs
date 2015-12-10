@@ -101,7 +101,7 @@ public class CharacterSoundController : MonoBehaviour {
 			return;
 		}
 		if (clips.Length > 1) {
-			int n = Random.Range (0, clips.Length);
+			int n = Random.Range (1, clips.Length);
 			quoteSource.clip = clips [n];
 			quoteSource.PlayOneShot (quoteSource.clip);
 			clips [n] = clips [0];
@@ -117,7 +117,7 @@ public class CharacterSoundController : MonoBehaviour {
 			return;
 		}
 		if (clips.Length > 1) {
-			int n = Random.Range (0, clips.Length);
+			int n = Random.Range (1, clips.Length);
 			effectSource.clip = clips [n];
 			effectSource.PlayOneShot (effectSource.clip);
 			clips [n] = clips [0];

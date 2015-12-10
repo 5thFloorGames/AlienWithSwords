@@ -112,6 +112,7 @@ public class UserInterfaceManager : MonoBehaviour {
 	}
 
     public void UpdateActionPoints(string characterName, int actions, int maximum) {
+
         if (GameState.GetLevel() == 1) {
             TutorialOoa(actions, maximum);
         }
