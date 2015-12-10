@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 public class EnemyActionsFirst : MonoBehaviour {
 
+	public int actionDamage;
+
 	EnemyManager em;
 	EnemyMovement move;
 	Animator animator;
 
     GameObject aoePrefab;
-	int actionDamage;
     float aoeLifetime;
 
 	void Start () {
@@ -17,7 +18,10 @@ public class EnemyActionsFirst : MonoBehaviour {
         aoePrefab = (GameObject)Resources.Load("AreaDamage");
 		animator = gameObject.GetComponentInChildren<Animator>();
 
-		actionDamage = 5;
+		if (actionDamage == 0) {
+			actionDamage = 5;
+		}
+		//actionDamage = 5;
         aoeLifetime = 1.7f;
         
     }
