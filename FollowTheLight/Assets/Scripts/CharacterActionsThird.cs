@@ -24,8 +24,10 @@ public class CharacterActionsThird : MonoBehaviour {
 	LaserController lc;
 	
 	UserInterfaceManager uim;
+	CharacterSoundController cas;
 	
 	void Awake() {
+		cas = GetComponentInChildren<CharacterSoundController>();
 		uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
         lc = GetComponentInChildren<LaserController>();
         cameraTf = transform.FindChild("Camera");
@@ -89,6 +91,8 @@ public class CharacterActionsThird : MonoBehaviour {
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit)) {
 			actions -= 1;
+			cas.PlayAttackingQuote();
+			cas.PlayAttackSFX();
 			if (hit.collider.tag == "Enemy" || (hit.collider.tag == "Player" && (hit.collider.GetType() == typeof(CapsuleCollider)))) {
 				hit.collider.transform.root.gameObject.SendMessageUpwards ("TakeDamage", damage);
 				lc.ShootLaser(hit.point);
@@ -103,6 +107,8 @@ public class CharacterActionsThird : MonoBehaviour {
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
 			actions -= 1;
+			cas.PlayHealingQuote();
+			cas.PlayHealSFX();
 			if (hit.collider.tag == "Player") {
 				hit.collider.gameObject.SendMessageUpwards ("Heal", healing);
 				lc.HealLaser (hit.point);

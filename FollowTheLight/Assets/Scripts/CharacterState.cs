@@ -61,6 +61,10 @@ public class CharacterState : MonoBehaviour {
 			sprite.SetActive(true);
 		}
 	}
+
+	public void OutOfActions() {
+		cas.PlayOutOfActionsQuote ();
+	}
 	
 	IEnumerator DelayedUnmute() {
 		yield return new WaitForSeconds (0.5f);

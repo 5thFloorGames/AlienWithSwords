@@ -10,6 +10,7 @@ public class CharacterSoundController : MonoBehaviour {
 	
 	AudioClip[] selectCharacterQuotes;
 	AudioClip[] attackingQuotes;
+	AudioClip[] healingQuotes;
 	AudioClip[] killEnemyQuotes;
 	AudioClip[] dyingQuotes;
 	AudioClip[] killCharQuotes;
@@ -22,6 +23,7 @@ public class CharacterSoundController : MonoBehaviour {
 	void Awake() {
 		selectCharacterQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Selected");
 		attackingQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Attack");
+		healingQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Heal");
 		killEnemyQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_KillEnemy");
 		killCharQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_KillChar");
 		dyingQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Die");
@@ -53,6 +55,12 @@ public class CharacterSoundController : MonoBehaviour {
 	public void PlayAttackingQuote() {
 		if (Random.Range (0,3) > 0) {
 			PlayRandomQuote (attackingQuotes);
+		}
+	}
+
+	public void PlayHealingQuote() {
+		if (Random.Range (0,3) > 0) {
+			PlayRandomQuote (healingQuotes);
 		}
 	}
 

@@ -15,6 +15,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 	float actionCooldown;
 	float previousActionTime;
 
+	CharacterSoundController cas;
     Transform cameraTf;
     GameObject overlay;
 
@@ -31,6 +32,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 		ps = transform.FindChild("Particles").GetComponent<ParticleSystem>();
 		dead = false;
 		uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
+		cas = GetComponentInChildren<CharacterSoundController>();
         cameraTf = transform.FindChild("Camera");
 		overlay = cameraTf.FindChild ("Overlay").gameObject;
 		weaponPivot = cameraTf.FindChild ("WeaponPivot").gameObject;
