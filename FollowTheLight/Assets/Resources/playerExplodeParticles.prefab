@@ -38,7 +38,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 145238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8356ece8c007459da05f6a1fc9479e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 91e869f60051246a18273f2a318b27ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!198 &19841630
@@ -47,7 +47,7 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 145238}
-  lengthInSec: 1
+  lengthInSec: 6
   startDelay: 0
   speed: 1
   randomSeed: 0
@@ -264,7 +264,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 99999
+      scalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -296,7 +296,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    cnt0: 30
+    cnt0: 150
     cnt1: 30
     cnt2: 30
     cnt3: 30
@@ -304,7 +304,7 @@ ParticleSystem:
     time1: 0
     time2: 0
     time3: 0
-    m_BurstCount: 0
+    m_BurstCount: 1
   SizeModule:
     enabled: 0
     curve:
@@ -1086,7 +1086,27 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: EmissionModule.m_BurstCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: EmissionModule.cnt0
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: EmissionModule.rate.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: lengthInSec
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 145238}

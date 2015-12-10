@@ -41,7 +41,9 @@ public class CharacterState : MonoBehaviour {
 	public void LeaveCharacter() {
 		audioListener.enabled = false;
         characterCamera.SetActive(false);
-        sprite.SetActive(true);
+		if (!dead) {
+        	sprite.SetActive(true);
+		}
 	}
 
 	void Start () {
@@ -64,8 +66,7 @@ public class CharacterState : MonoBehaviour {
 			health -= amount;
 			if (health <= 0) {
 				health = 0;
-				dead = true;
-                AnnounceDeathToManager();
+				Death ();
 			}
 			UpdateHealthToUI ();
 		}
@@ -90,7 +91,16 @@ public class CharacterState : MonoBehaviour {
 		spriteRenderer.color = new Vector4 (1, 1, 1, 1);
     }
 
-    void AnnounceDeathToManager() {
+	void Death() {
+		dead = true;
+		NotAimedAt ();
+		sprite.SetActive (false);
+		AnnounceDeathToManager();
+		GameObject prefab = (GameObject) Resources.Load("playerExplodeParticles");
+		Instantiate (prefab, transform.position, Quaternion.identity);
+	}
+	
+	void AnnounceDeathToManager() {
         cm.CharacterDied(gameObject, type);
     }
 
