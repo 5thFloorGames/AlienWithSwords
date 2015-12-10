@@ -115,6 +115,7 @@ public class CharacterState : MonoBehaviour {
 	}
 	
 	void Death() {
+		cas.PlayDyingQuote ();
 		dead = true;
 		NotAimedAt ();
 		sprite.SetActive (false);
