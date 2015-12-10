@@ -126,9 +126,12 @@ public class EnemyMovement : MonoBehaviour {
 
 		Vector3 enemyView = transform.position + new Vector3(0, 2, 0);
 		Vector3 direction = (character.transform.position + new Vector3 (0, 1, 0)) - enemyView;
-		//Debug.DrawRay(enemyView, direction, Color.green, 2.0f);
+		Debug.DrawRay(enemyView, direction, Color.green, 2.0f);
 		RaycastHit hit;
 		Physics.Raycast(enemyView, direction, out hit, (direction.magnitude + 1.0f), layerMask);
+        if (hit.collider == null) {
+            return false;
+        }
 		if (hit.collider.gameObject == character) {
 			return true;
 		} else {
