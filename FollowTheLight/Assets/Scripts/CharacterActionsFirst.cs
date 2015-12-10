@@ -63,7 +63,10 @@ public class CharacterActionsFirst : MonoBehaviour {
 		cas.PlayAttackSFX ();
 		GameObject firedBullet = (GameObject)Instantiate (bullet, cameraTf.position + cameraTf.rotation *
 		                                                  new Vector3(0, 0, 1), cameraTf.rotation);
-		firedBullet.GetComponent<BulletDamages> ().setDamage (damage);
+		BulletDamages bs = firedBullet.GetComponent<BulletDamages> ();
+		bs.setDamage (damage);
+		bs.SetHitSFX (cas.GetAttackHitClips());
+		
 		Rigidbody bulletrb = firedBullet.GetComponent<Rigidbody> ();
 		bulletrb.AddForce(cameraTf.rotation * bullet.transform.forward * 2000f);
 	}

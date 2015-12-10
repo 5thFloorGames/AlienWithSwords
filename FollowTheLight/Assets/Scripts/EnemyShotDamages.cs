@@ -32,7 +32,7 @@ public class EnemyShotDamages : MonoBehaviour {
     }
 
     void CreateHitEffect() {
-        GameObject prefab = (GameObject)Resources.Load("BulletHitEffect");
+        GameObject prefab = (GameObject)Resources.Load("EnemyShotHitEffect");
         Instantiate(prefab, transform.position + (transform.rotation * new Vector3(0, 0, -0.5f)), Quaternion.identity);
     }
 }

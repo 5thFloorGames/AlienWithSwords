@@ -70,6 +70,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 
 	void Slash() {
 		ps.Play ();
+		cas.PlayAttackingQuote ();
 		actions -= 1;
 		handAnimator.SetBool ("Casting", true);
 		previousActionTime = Time.time;
