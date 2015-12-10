@@ -11,6 +11,7 @@ public class CharacterActionsFirst : MonoBehaviour {
     bool dead;
     int actions;
 
+	CharacterSoundController cas;
 	GameObject bullet;
 	Transform cameraTf;
 	GameObject overlay;
@@ -29,6 +30,7 @@ public class CharacterActionsFirst : MonoBehaviour {
 
     void Awake() {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
+		cas = GetComponentInChildren<CharacterSoundController>();
         cameraTf = transform.FindChild("Camera");
 		overlay = cameraTf.FindChild("Overlay").gameObject;
 		crossHairs = overlay.transform.FindChild ("Crosshairs").gameObject;
@@ -57,6 +59,8 @@ public class CharacterActionsFirst : MonoBehaviour {
 	}
 
 	void Shoot() {
+		cas.PlayAttackingQuote ();
+		cas.PlayAttackSFX ();
 		GameObject firedBullet = (GameObject)Instantiate (bullet, cameraTf.position + cameraTf.rotation *
 		                                                  new Vector3(0, 0, 1), cameraTf.rotation);
 		firedBullet.GetComponent<BulletDamages> ().setDamage (damage);

@@ -2,23 +2,40 @@
 using System.Collections;
 
 public class CharacterSoundController : MonoBehaviour {
+
+	public CharacterType charType;
 	
 	[SerializeField] AudioSource quoteSource;
 	[SerializeField] AudioSource effectSource;
 	
-	[SerializeField] AudioClip[] selectCharacterQuotes;
-	[SerializeField] AudioClip[] attackingQuotes;
-	[SerializeField] AudioClip[] killsAnEnemyQuotes;
+	AudioClip[] selectCharacterQuotes;
+	AudioClip[] attackingQuotes;
+	AudioClip[] killEnemyQuotes;
+	AudioClip[] dyingQuotes;
+	AudioClip[] killCharQuotes;
+	AudioClip[] outOfActions;
 	
-	[SerializeField] AudioClip dyingQuote;
-	[SerializeField] AudioClip killsACharacterQuote;
-	
-	[SerializeField] AudioClip[] attackSoundEffects;
-	
+	AudioClip[] attackSFX;
+	AudioClip[] attackHitSFX;
+	AudioClip[] healSFX;
+
+	void Awake() {
+		selectCharacterQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Selected");
+		attackingQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Attack");
+		killEnemyQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_KillEnemy");
+		killCharQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_KillChar");
+		dyingQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Die");
+		outOfActions = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/Quote_OutOfActions");
+
+		attackSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_Attack");
+		attackHitSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_AttackHit");
+		healSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_Heal");
+	}
 	
 	void Start () {
 		if (quoteSource == effectSource) {
-			Debug.Log ("WARNING: You should have different audio sources for quotes and effects (" + transform.parent.name + ")");
+			Debug.Log ("WARNING: You should have different audio sources for quotes and effects (" + transform.parent.name + ")!");
+			Debug.Log ("The first component should be for quotes, the second for SFX.");
 		}
 	}
 	
@@ -30,46 +47,77 @@ public class CharacterSoundController : MonoBehaviour {
 	// Playing the Quotes
 	
 	public void PlaySelectionQuote() {
-		if (selectCharacterQuotes.Length == 0) {
-			return;
-		}
-		int n = Random.Range (1, selectCharacterQuotes.Length);
-		quoteSource.clip = selectCharacterQuotes[n];
-		quoteSource.PlayOneShot(quoteSource.clip);
-		if (selectCharacterQuotes.Length > 1) {
-			selectCharacterQuotes [n] = selectCharacterQuotes [0];
-			selectCharacterQuotes [0] = quoteSource.clip;
-		}
+		PlayRandomQuote (selectCharacterQuotes);
 	}
 
 	public void PlayAttackingQuote() {
-		if (attackingQuotes.Length == 0) {
-			return;
-		}
-		int n = Random.Range (1, attackingQuotes.Length);
-		quoteSource.clip = attackingQuotes[n];
-		quoteSource.PlayOneShot(quoteSource.clip);
-		if (attackingQuotes.Length > 1) {
-			attackingQuotes [n] = attackingQuotes [0];
-			attackingQuotes [0] = quoteSource.clip;
+		if (Random.Range (0,3) > 0) {
+			PlayRandomQuote (attackingQuotes);
 		}
 	}
 
 	public void PlayKillingAnEnemyQuote() {
-		if (killsAnEnemyQuotes.Length == 0) {
-			return;
-		}
-		int n = Random.Range (1, killsAnEnemyQuotes.Length);
-		quoteSource.clip = killsAnEnemyQuotes[n];
-		quoteSource.PlayOneShot(quoteSource.clip);
-		if (killsAnEnemyQuotes.Length > 1) {
-			killsAnEnemyQuotes [n] = killsAnEnemyQuotes [0];
-			killsAnEnemyQuotes [0] = quoteSource.clip;
-		}
+		PlayRandomQuote (killEnemyQuotes);
 	}
 
 	public void PlayDyingQuote() {
-		quoteSource.clip = dyingQuote;
-		quoteSource.PlayOneShot(quoteSource.clip);
+		PlayRandomQuote (dyingQuotes);
 	}
+
+	public void PlayKillingCharacterQuote() {
+		PlayRandomQuote (killCharQuotes);
+	}
+
+	public void PlayOutOfActionsQuote() {
+		PlayRandomQuote (outOfActions);
+	}
+
+
+
+	public void PlayAttackSFX() {
+		PlayRandomSFX (attackSFX);
+	}
+
+	public void PlayHealSFX() {
+		PlayRandomSFX (healSFX);
+	}
+
+	public AudioClip[] GetAttackHitClips() {
+		return attackHitSFX;
+	}
+
+
+
+	private void PlayRandomQuote(AudioClip[] clips){
+		if (clips.Length == 0) {
+			return;
+		}
+		if (clips.Length > 1) {
+			int n = Random.Range (0, clips.Length);
+			quoteSource.clip = clips [n];
+			quoteSource.PlayOneShot (quoteSource.clip);
+			clips [n] = clips [0];
+			clips [0] = quoteSource.clip;
+		} else {
+			quoteSource.clip = clips[0];
+			quoteSource.PlayOneShot(quoteSource.clip);
+		}
+	}
+
+	private void PlayRandomSFX(AudioClip[] clips){
+		if (clips.Length == 0) {
+			return;
+		}
+		if (clips.Length > 1) {
+			int n = Random.Range (0, clips.Length);
+			effectSource.clip = clips [n];
+			effectSource.PlayOneShot (effectSource.clip);
+			clips [n] = clips [0];
+			clips [0] = effectSource.clip;
+		} else {
+			effectSource.clip = clips[0];
+			effectSource.PlayOneShot(effectSource.clip);
+		}
+	}
+
 }
