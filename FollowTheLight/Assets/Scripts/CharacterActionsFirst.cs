@@ -77,7 +77,7 @@ public class CharacterActionsFirst : MonoBehaviour {
 		RaycastHit hit;
         //Debug.DrawRay(start, direction, Color.red, 0.1f);
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
-			if (hit.collider.tag == "Enemy" ||hit.collider.tag == "Player") {
+			if (hit.collider.tag == "Enemy" || hit.collider.tag == "Player") {
 				EnemyAimedAt();
 				CheckIfDifferentEnemy(hit);
 			} else {

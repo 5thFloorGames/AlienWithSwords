@@ -65,10 +65,11 @@ public class CharacterActionsThird : MonoBehaviour {
 
 	void CheckIfSomethingWithinAim () {
 		Vector3 start = cameraTf.position;
-		Vector3 direction = (cameraTf.rotation * new Vector3 (0, 0, 30f));
+		Vector3 direction = (cameraTf.rotation * new Vector3 (0, 0, 500f));
 		RaycastHit hit;
+        Debug.DrawRay(start, direction, Color.green, 0.01f);
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
-			if (hit.collider.tag == "Player" && (hit.collider.GetType() == typeof(CapsuleCollider))) {
+			if (hit.collider.tag == "Player") {
 				CharacterAimedAt ();
                 CheckIfDifferentCharacter(hit);
 			} else if (hit.collider.tag == "Enemy") {
@@ -93,7 +94,7 @@ public class CharacterActionsThird : MonoBehaviour {
 			actions -= 1;
 			cas.PlayAttackingQuote();
 			cas.PlayAttackSFX();
-			if (hit.collider.tag == "Enemy" || (hit.collider.tag == "Player" && (hit.collider.GetType() == typeof(CapsuleCollider)))) {
+			if (hit.collider.tag == "Enemy" || hit.collider.tag == "Player") {
 				hit.collider.transform.root.gameObject.SendMessageUpwards ("TakeDamage", damage);
 				lc.ShootLaser(hit.point);
 			}
