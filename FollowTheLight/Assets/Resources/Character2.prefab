@@ -85,8 +85,8 @@ GameObject:
   - 4: {fileID: 471338}
   - 198: {fileID: 19866092}
   - 199: {fileID: 19904806}
-  m_Layer: 0
-  m_Name: player_meleeParticles
+  m_Layer: 8
+  m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &150898
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +136,7 @@ GameObject:
   - 212: {fileID: 21250068}
   - 95: {fileID: 9548380}
   m_Layer: 10
-  m_Name: fps_spellHand_idle01
+  m_Name: Hands
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -674,7 +674,7 @@ Animator:
   m_GameObject: {fileID: 179270}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 74af7a7c89144fe46adc8ba42987a2c9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2ce3fd7ca469941e2861b50e7d953679, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1925,7 +1925,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_RenderMode: 0
   m_MaxParticleSize: .5
   m_CameraVelocityScale: 0
