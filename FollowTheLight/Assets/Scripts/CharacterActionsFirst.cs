@@ -64,11 +64,11 @@ public class CharacterActionsFirst : MonoBehaviour {
 		GameObject firedBullet = (GameObject)Instantiate (bullet, cameraTf.position + cameraTf.rotation *
 		                                                  new Vector3(0, 0, 1), cameraTf.rotation);
 		BulletDamages bs = firedBullet.GetComponent<BulletDamages> ();
-		bs.setDamage (damage);
 		bs.SetHitSFX (cas.GetAttackHitClips());
 		
 		Rigidbody bulletrb = firedBullet.GetComponent<Rigidbody> ();
 		bulletrb.AddForce(cameraTf.rotation * bullet.transform.forward * 2000f);
+        StartCoroutine(DealDamageWithRayCast());
 	}
 
 	void CheckIfEnemyWithinAim () {
@@ -87,6 +87,19 @@ public class CharacterActionsFirst : MonoBehaviour {
 			EnemyNotAimedAt();
 		}
 	}
+
+    IEnumerator DealDamageWithRayCast() {
+        yield return new WaitForSeconds(0.2f);
+        Vector3 start = cameraTf.position;
+        Vector3 direction = (cameraTf.rotation * new Vector3(0, 0, 500f));
+        RaycastHit hit;
+        //Debug.DrawRay(start, direction, Color.red, 0.1f);
+        if (Physics.Raycast(start, direction, out hit, (direction.magnitude + 1.0f))) {
+            if (hit.collider.tag == "Enemy" || hit.collider.tag == "Player") {
+                hit.collider.gameObject.SendMessageUpwards("TakeDamage", damage);
+            } 
+        } 
+    }
 
 	void CheckIfDifferentEnemy(RaycastHit hit) {
 		if (aimedEnemy != hit.transform.root.gameObject) {

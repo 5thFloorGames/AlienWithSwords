@@ -3,12 +3,8 @@ using System.Collections;
 
 public class BulletDamages : MonoBehaviour {
 
-	int damage;
 	AudioClip clip;
 
-	public void setDamage(int amount) {
-		damage = amount;
-	}
 
 	public void SetHitSFX(AudioClip[] clips) {
 		if (clips.Length > 0) {
@@ -18,11 +14,6 @@ public class BulletDamages : MonoBehaviour {
 	}
 
     void OnTriggerEnter(Collider other) {
-        if (((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") || (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider)))) {
-            if (other.tag == "Enemy" || (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider)))) {
-                other.SendMessageUpwards("TakeDamage", damage);
-            }
-		}
 		CreateHitEffect ();
 		Destroy (gameObject);
 	}

@@ -74,10 +74,14 @@ public class EnemyState : MonoBehaviour {
 	}
 
 	void Death() {
-		GetComponentInChildren<Collider> ().enabled = false;
+        Invoke("ColliderDeactivate", 1.0f);
 		GameObject prefab = (GameObject) Resources.Load("BloodPool");
 		transform.FindChild ("EnemyInfo").gameObject.SetActive (false);
 		Instantiate (prefab, transform.position, Quaternion.identity);
 	}
+
+    void ColliderDeactivate() {
+        GetComponentInChildren<Collider>().enabled = false;
+    }
 
 }
