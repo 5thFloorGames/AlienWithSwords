@@ -70,7 +70,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: .300000012
+      scalar: .5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -230,7 +230,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: .5
+      scalar: .100000001
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -287,7 +287,7 @@ ParticleSystem:
       minMaxState: 3
     gravityModifier: .25
     inheritVelocity: 0
-    maxNumParticles: 25
+    maxNumParticles: 30
   ShapeModule:
     serializedVersion: 2
     enabled: 1
@@ -1106,7 +1106,7 @@ ParticleSystemRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0b28edd60740b9342b5a580486c48785, type: 2}
+  - {fileID: 2100000, guid: 750b2a576dfd0ff48a141c34df0f80ce, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1

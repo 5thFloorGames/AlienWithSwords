@@ -17,7 +17,7 @@ public class EnemyActionsSecond : MonoBehaviour {
         move = GetComponent<EnemyMovement>();
         animator = gameObject.GetComponentInChildren<Animator>();
 
-        shotLifetime = 0.5f;
+        shotLifetime = 2.0f;
         shotPrefab = (GameObject)Resources.Load("EnemyShot");
 
         if (actionDamage == 0) {
@@ -54,7 +54,7 @@ public class EnemyActionsSecond : MonoBehaviour {
         shot.name = gameObject.name + "Shot";
         shot.GetComponent<EnemyShotDamages>().Init(actionDamage, 0.0f, shotLifetime);
         Rigidbody shotrb = shot.GetComponent<Rigidbody>();
-        shotrb.AddForce(direction * 300.0f);
+        shotrb.AddForce(direction * 500.0f);
     }
 
     void ActionsCompletedInformManager() {
