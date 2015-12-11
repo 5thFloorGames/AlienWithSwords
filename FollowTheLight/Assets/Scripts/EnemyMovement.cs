@@ -40,6 +40,20 @@ public class EnemyMovement : MonoBehaviour {
 		DetermineTargeting ();
 	}
 
+    public void DisableNva() {
+        if (nva == null) {
+            nva = GetComponent<NavMeshAgent>();
+        }
+        nva.enabled = false;
+    }
+
+    public void EnableNva() {
+        if (nva == null) {
+            nva = GetComponent<NavMeshAgent>();
+        }
+        nva.enabled = true;
+    }
+
     public void CharacterAimedYou(GameObject character) {
         CheckFirstLock();
         CheckLockedStatus();
@@ -156,6 +170,7 @@ public class EnemyMovement : MonoBehaviour {
 	
 	void MoveTowardsPosition(Vector3 position) {
 		animator.SetBool ("Walking", true);
+        nva.enabled = true;
 		nva.Resume();
 		nva.destination = position;
 	}
@@ -171,6 +186,7 @@ public class EnemyMovement : MonoBehaviour {
 	void StopMovingAndAttack() {
 		animator.SetBool ("Walking", false);
 		nva.Stop();
+        nva.enabled = false;
 		gameObject.SendMessage("MovingCompleteStartAttack", targetedCharacter);
 	}
 

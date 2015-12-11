@@ -9,7 +9,7 @@ public class LookAtActiveCharacterReverse : MonoBehaviour {
 
     void Update() {
         if (GameState.activeCharacter != null) {
-            transform.LookAt(GameState.activeCharacter.transform.position, Vector3.up);
+            transform.LookAt(GameState.activeCharacter.transform, Vector3.up);
         }
     }
 }

@@ -27,6 +27,7 @@ public class EnemyState : MonoBehaviour {
         currentHealth = maximumHealth;
 		animator = gameObject.GetComponentInChildren<Animator>();
         move = gameObject.GetComponent<EnemyMovement>();
+        move.DisableNva();
 	}
 
 	void Update () {
@@ -75,6 +76,7 @@ public class EnemyState : MonoBehaviour {
 
 	void Death() {
         Invoke("ColliderDeactivate", 1.0f);
+        move.EnableNva();
 		GameObject prefab = (GameObject) Resources.Load("BloodPool");
 		transform.FindChild ("EnemyInfo").gameObject.SetActive (false);
 		Instantiate (prefab, transform.position, Quaternion.identity);
