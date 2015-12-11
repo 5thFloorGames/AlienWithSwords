@@ -7,7 +7,7 @@ public class EnemySoundController : MonoBehaviour {
 	EnemySoundManager esm;
 
 
-	void Awake () {
+	void Start () {
 		source = GetComponent<AudioSource>();
 		esm = GameObject.FindGameObjectWithTag("GameController").GetComponent<EnemySoundManager>();
 	}

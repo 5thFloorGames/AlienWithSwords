@@ -22,7 +22,7 @@ public class EnemyShotDamages : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (lifeTime != null) {
+		if (lifeTime > 0.1f) {
 			if (lifeTime < Time.time - startTime) {
 				CreateHitEffect();
 				eas.ShotMissed(gameObject);
