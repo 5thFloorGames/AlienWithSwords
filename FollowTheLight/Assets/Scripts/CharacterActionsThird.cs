@@ -15,6 +15,8 @@ public class CharacterActionsThird : MonoBehaviour {
 	GameObject aimedEnemy;
     GameObject aimedCharacter;
 
+	GameObject target;
+
 	float actionCooldown;
 	float previousActionTime;
 
@@ -95,7 +97,8 @@ public class CharacterActionsThird : MonoBehaviour {
 			cas.PlayAttackingQuote();
 			cas.PlayAttackSFX();
 			if (hit.collider.tag == "Enemy" || hit.collider.tag == "Player") {
-				hit.collider.transform.root.gameObject.SendMessageUpwards ("TakeDamage", damage);
+				target = hit.collider.transform.root.gameObject;
+				Invoke ("SendDamageMessage", 0.5f);
 				lc.ShootLaser(hit.point);
 			}
 		}
@@ -111,10 +114,19 @@ public class CharacterActionsThird : MonoBehaviour {
 			cas.PlayHealingQuote();
 			cas.PlayHealSFX();
 			if (hit.collider.tag == "Player") {
-				hit.collider.gameObject.SendMessageUpwards ("Heal", healing);
+				target = hit.collider.gameObject;
+				Invoke ("SendHealMessage", 0.5f);
 				lc.HealLaser (hit.point);
 			}
 		}
+	}
+
+	void SendHealMessage() {
+		target.SendMessageUpwards ("Heal", healing);
+	}
+
+	void SendDamageMessage() {
+		target.SendMessageUpwards ("TakeDamage", damage);
 	}
 
 	void CheckIfDifferentEnemy(RaycastHit hit) {

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+	AnnouncementManager am;
 	CharacterManager cm;
 	EnemyManager em;
 	UserInterfaceManager uim;
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour {
         #if !UNITY_EDITOR
             Cursor.visible = false;
         #endif
+		am = gameObject.GetComponent<AnnouncementManager>();
         cm = gameObject.GetComponent<CharacterManager> ();
 		em = gameObject.GetComponent<EnemyManager> ();
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
@@ -150,6 +152,14 @@ public class GameManager : MonoBehaviour {
         cm.PlayersTurnActivated ();
 		em.PlayersTurnActivated ();
 		GameState.playersTurn = true;
+		StartCoroutine (HideCombatLog());
+	}
+
+	IEnumerator HideCombatLog() {
+		yield return new WaitForSeconds (1.0f);
+		if (GameState.playersTurn) {
+			am.ResetAnnouncements ();
+		}
 	}
 
 

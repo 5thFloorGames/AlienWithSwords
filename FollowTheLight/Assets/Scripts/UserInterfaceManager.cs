@@ -72,14 +72,11 @@ public class UserInterfaceManager : MonoBehaviour {
 		if (level == 0) {
 			Destroy (gameObject);
 		}
+		DisableAllDeadMarks ();
 	}
 
 	public void ShowEnemyUI() {
 		enemyTurnUI.SetActive (true);
-        if (GameState.GetLevel() == 1) {
-            TutorialMovementRestored();
-            TutorialActionsRestored();
-        }
 	}
 
 	public void HideEnemyUI() {
@@ -132,9 +129,6 @@ public class UserInterfaceManager : MonoBehaviour {
     }
 
     public void UpdateDistanceMeter(string characterName, float distance, float maximum) {
-        if (GameState.GetLevel() == 1) {
-            TutorialOom(distance, maximum);
-        }
         if (distance == 0) {
             FlashMovement(characterName, 1);
         }
@@ -144,9 +138,6 @@ public class UserInterfaceManager : MonoBehaviour {
 
     public void UpdateActionPoints(string characterName, int actions, int maximum) {
 
-        if (GameState.GetLevel() == 1) {
-            TutorialOoa(actions, maximum);
-        }
         if (actions == maximum) {
             FlashActionPoints(characterName, 1);
         }
@@ -306,32 +297,6 @@ public class UserInterfaceManager : MonoBehaviour {
             txt.CrossFadeAlpha(1.0f, 0.2f, false);
             yield return new WaitForSeconds(0.2f);
             i += 1;
-        }
-    }
-
-
-    void TutorialMovementRestored() {
-       TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
-       tth.MovementRestored();
-    }
-
-    void TutorialOom(float distance, float maximum) {
-        if (distance == maximum) {
-            TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
-            tth.OutOfMovementInform();
-        }
-    }
-
-    void TutorialActionsRestored() {
-        TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
-        tth.ActionsRestored();
-    }
-
-    void TutorialOoa(int actions, int maximum) {
-        TutorialTextHandler tth = FindObjectOfType<TutorialTextHandler>();
-        tth.ClearText();
-        if (actions == 0) {
-            tth.OutOfActionsInform();
         }
     }
 }

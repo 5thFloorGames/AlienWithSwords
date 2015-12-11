@@ -23,7 +23,7 @@ public class LaserController : MonoBehaviour {
 	public void ShootLaser(Vector3 targetPosition) {
 		laserOn = true;
 		SetLaserTarget (targetPosition);
-		StartCoroutine (ShowLaserFor(0.5f));
+		StartCoroutine (ShowLaserFor(1.0f));
 	}
 
 	public void HealLaser(Vector3 targetPosition) {

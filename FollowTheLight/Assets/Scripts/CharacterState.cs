@@ -15,6 +15,7 @@ public class CharacterState : MonoBehaviour {
 	
 	CharacterManager cm;
 	UserInterfaceManager uim;
+	AnnouncementManager am;
 	
 	CharacterSoundController cas;
 	AudioListener audioListener;
@@ -34,6 +35,7 @@ public class CharacterState : MonoBehaviour {
 	
 	public void Init(GameObject manager) {
 		cm = manager.GetComponent<CharacterManager>();
+		am = manager.GetComponent<AnnouncementManager>();
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
 		cas = GetComponentInChildren<CharacterSoundController>();
 		health = maximumHealth;
@@ -91,9 +93,11 @@ public class CharacterState : MonoBehaviour {
 	
 	void TakeDamage(int amount) {
 		if (!dead) {
+			am.CharacterTookDamage(type, amount);
 			if (health - amount <= 0) {
+				health = 0;
+				cas.PlayDyingQuote ();
 				Death ();
-				Invoke("HealthDownWithDelay", 0.6f);
 			} else {
 				health -= amount;
 			}
@@ -102,12 +106,6 @@ public class CharacterState : MonoBehaviour {
 		}
 	}
 
-	void HealthDownWithDelay() {
-		health = 0;
-		cas.PlayDyingQuote ();
-		UpdateHealthToUI ();
-	}
-	
 	void Heal(int amount) {
 		if (!dead) {
 			Debug.Log(gameObject.name + " got " + amount + " healing");
@@ -137,6 +135,7 @@ public class CharacterState : MonoBehaviour {
 	}
 	
 	void AnnounceDeathToManager() {
+		am.CharacterDied (type);
 		uim.CharacterDiedUIUpdate (type.ToString());
 		cm.CharacterDied(gameObject, type);
 	}
