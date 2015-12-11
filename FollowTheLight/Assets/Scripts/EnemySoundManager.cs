@@ -4,11 +4,11 @@ using System.Collections;
 public class EnemySoundManager : MonoBehaviour {
 
 	AudioClip[] attackingQuotes;
-	AudioClip[] aimedgQuotes;
+	AudioClip[] aimedQuotes;
 	
 	void Start () {
 		attackingQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Attack");
-		attackingQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Aimed");
+		aimedQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Aimed");
 	}
 
 	void Update () {
@@ -20,7 +20,7 @@ public class EnemySoundManager : MonoBehaviour {
 	}
 
 	public AudioClip GetAimedQuote() {
-		return GetAudioClipFromList (attackingQuotes);
+		return GetAudioClipFromList (aimedQuotes);
 	}
 
 	AudioClip GetAudioClipFromList(AudioClip[] clips){

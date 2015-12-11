@@ -18,6 +18,7 @@ public class EnemyState : MonoBehaviour {
 	Animator animator;
     EnemyMovement move;
 	EnemySoundController esc;
+	SpriteRenderer spriteRenderer;
 
 	public void Init(GameObject manager) {
 		dead = false;
@@ -29,6 +30,8 @@ public class EnemyState : MonoBehaviour {
 	}
 	
 	void Start () {
+		spriteRenderer = transform.FindChild ("Sprite").GetComponent<SpriteRenderer> ();
+
         HealthInit();
 		animator = gameObject.GetComponentInChildren<Animator>();
         move = gameObject.GetComponent<EnemyMovement>();
@@ -65,10 +68,12 @@ public class EnemyState : MonoBehaviour {
 		esc.PlayAimedQuote ();
 		animator.SetBool ("AimedAt", true);
         move.CharacterAimedYou(character);
+		spriteRenderer.color = new Vector4 (0.5f, 0.5f, 0.5f, 1);
 	}
 
 	void NotAimedAt() {
 		animator.SetBool ("AimedAt", false);
+		spriteRenderer.color = new Vector4 (1, 1, 1, 1);
 	}
 
 	void UpdateHealthToHealthMeter() {

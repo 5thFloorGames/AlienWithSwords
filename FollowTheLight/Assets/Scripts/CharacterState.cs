@@ -89,14 +89,21 @@ public class CharacterState : MonoBehaviour {
 	
 	void TakeDamage(int amount) {
 		if (!dead) {
-			health -= amount;
-			if (health <= 0) {
-				health = 0;
+			if (health - amount <= 0) {
 				Death ();
+				Invoke("HealthDownWithDelay", 0.6f);
+			} else {
+				health -= amount;
 			}
 			uim.DamageTakenUIUpdate(type.ToString());
 			UpdateHealthToUI ();
 		}
+	}
+
+	void HealthDownWithDelay() {
+		health = 0;
+		cas.PlayDyingQuote ();
+		UpdateHealthToUI ();
 	}
 	
 	void Heal(int amount) {
@@ -119,7 +126,6 @@ public class CharacterState : MonoBehaviour {
 	}
 	
 	void Death() {
-		cas.PlayDyingQuote ();
 		dead = true;
 		NotAimedAt ();
 		sprite.SetActive (false);

@@ -17,7 +17,12 @@ public class EnemySoundController : MonoBehaviour {
 	}
 
 	public void PlayAttackQuote() {
-		PlayASound (esm.GetAttackQuote());
+		StartCoroutine (PlayWithRandomDelay(esm.GetAttackQuote()));
+	}
+
+	IEnumerator PlayWithRandomDelay(AudioClip clip) {
+		yield return new WaitForSeconds (Random.Range(0.01f, 0.60f));
+		PlayASound (clip);
 	}
 
 	public void PlayAimedQuote() {
@@ -25,6 +30,7 @@ public class EnemySoundController : MonoBehaviour {
 	}
 
 	void PlayASound(AudioClip clip) {
+		Debug.Log (clip);
 		source.clip = clip;
 		source.PlayOneShot(source.clip);
 	}
