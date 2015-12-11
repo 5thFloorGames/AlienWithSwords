@@ -17,6 +17,10 @@ public class EnemyState : MonoBehaviour {
 		dead = false;
 		healthMeter = transform.FindChild("EnemyInfo").FindChild("HealthMeter").GetComponent<Image>();
 		em = manager;
+        if (maximumHealth == 0) {
+            maximumHealth = 30;
+        }
+        currentHealth = maximumHealth;
 		UpdateHealthToHealthMeter ();
 	}
 	
