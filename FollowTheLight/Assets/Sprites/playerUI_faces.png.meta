@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7454da8f46010214dae945f1241b080b
-timeCreated: 1449605723
+timeCreated: 1449831245
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -56,30 +56,30 @@ TextureImporter:
     - name: playerUI_medic_face
       rect:
         serializedVersion: 2
-        x: 36
-        y: 359
-        width: 128
-        height: 128
+        x: 30
+        y: 365
+        width: 141
+        height: 124
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playerUI_shooter_face
       rect:
         serializedVersion: 2
-        x: 205
-        y: 361
-        width: 128
-        height: 128
+        x: 200
+        y: 370
+        width: 141
+        height: 124
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: playerUI_melee_face
       rect:
         serializedVersion: 2
-        x: 44
-        y: 202
-        width: 128
-        height: 128
+        x: 33
+        y: 210
+        width: 141
+        height: 124
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
