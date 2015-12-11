@@ -22,7 +22,7 @@ public class CharacterActionsThird : MonoBehaviour {
 	GameObject overlay;
 	GameObject crosshairs;
 	LaserController lc;
-	
+
 	UserInterfaceManager uim;
 	CharacterSoundController cas;
 	
@@ -139,7 +139,7 @@ public class CharacterActionsThird : MonoBehaviour {
 	
 	void EnemyAimedAt() {
 		if (!enemyInAim) {
-			crosshairs.transform.localScale = (new Vector3 (1.2f, 1.2f, 1.2f));
+			crosshairs.SetActive(false);
 			enemyInAim = true;
 		}
 	}
@@ -147,7 +147,7 @@ public class CharacterActionsThird : MonoBehaviour {
 	void EnemyNotAimedAt() {
 		if (enemyInAim) {
             if (!characterInAim) {
-                crosshairs.transform.localScale = (new Vector3(1f, 1f, 1f));
+				crosshairs.SetActive(true);
             }
 			aimedEnemy.SendMessage("NotAimedAt");
 			aimedEnemy = null;
@@ -157,7 +157,7 @@ public class CharacterActionsThird : MonoBehaviour {
 
 	void CharacterAimedAt() {
 		if (!characterInAim) {
-            crosshairs.transform.localScale = (new Vector3(1.2f, 1.2f, 1.2f));
+			crosshairs.SetActive(false);
             characterInAim = true;
 		}
 	}
@@ -165,7 +165,7 @@ public class CharacterActionsThird : MonoBehaviour {
 	void CharacterNotAimedAt() {
 		if (characterInAim) {
             if (!enemyInAim) {
-                crosshairs.transform.localScale = (new Vector3(1f, 1f, 1f));
+				crosshairs.SetActive(true);
             }
             aimedCharacter.SendMessage("NotAimedAt");
             characterInAim = false;

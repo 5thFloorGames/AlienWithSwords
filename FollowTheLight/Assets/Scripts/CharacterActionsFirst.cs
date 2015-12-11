@@ -113,14 +113,14 @@ public class CharacterActionsFirst : MonoBehaviour {
 
 	void EnemyAimedAt() {
 		if (!enemyInAim) {
-			crossHairs.transform.localScale = (new Vector3 (1.2f, 1.2f, 1.2f));
+			crossHairs.SetActive(false);
 			enemyInAim = true;
 		}
 	}
 	
 	void EnemyNotAimedAt() {
 		if (enemyInAim) {
-			crossHairs.transform.localScale = (new Vector3(1f, 1f, 1f));
+			crossHairs.SetActive(true);
 			aimedEnemy.SendMessage("NotAimedAt");
 			aimedEnemy = null;
 			enemyInAim = false;

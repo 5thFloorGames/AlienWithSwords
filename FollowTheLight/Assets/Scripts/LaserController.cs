@@ -3,16 +3,17 @@ using System.Collections;
 
 public class LaserController : MonoBehaviour {
 
+	ParticleSystem ps;
 	LineRenderer lr;
 	bool laserOn;
-
-	// Use this for initialization
+	
 	void Start () {
 		lr = GetComponent <LineRenderer>();
 		laserOn = false;
+		ps = transform.parent.GetComponentInChildren<ParticleSystem>();
+		ps.Stop();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if (laserOn) {
 			lr.SetPosition(0, transform.position);
@@ -26,9 +27,10 @@ public class LaserController : MonoBehaviour {
 	}
 
 	public void HealLaser(Vector3 targetPosition) {
-		laserOn = true;
-		SetLaserTarget (targetPosition);
-		StartCoroutine (ShowLaserFor(0.5f));
+		ps.Play ();
+		StartCoroutine (ShowParticlesFor(0.5f));
+		//laserOn = true;
+		//SetLaserTarget (targetPosition);
 	}
 
 	void SetLaserTarget(Vector3 targetPosition) {
@@ -41,7 +43,13 @@ public class LaserController : MonoBehaviour {
 		ResetLaser ();
 	}
 
+	IEnumerator ShowParticlesFor(float seconds) {
+		yield return new WaitForSeconds (seconds);
+		ps.Stop ();
+	}
+
 	void ResetLaser() {
+
 		lr.enabled = false;
 		laserOn = false;
 	}
