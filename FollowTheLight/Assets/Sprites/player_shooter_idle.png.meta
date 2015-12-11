@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: 1121c29a67cbc3c4e89854dd15b21c23
-timeCreated: 1449603937
+timeCreated: 1449854093
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: player_shooter_idle_0
+    21300002: player_shooter_idle_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -59,7 +60,17 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_shooter_idle_1
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

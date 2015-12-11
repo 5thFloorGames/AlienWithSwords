@@ -118,6 +118,7 @@ GameObject:
   - 4: {fileID: 471646}
   - 212: {fileID: 21213948}
   - 114: {fileID: 11405282}
+  - 95: {fileID: 9541138}
   m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
@@ -665,6 +666,23 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!95 &9541138
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150898}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1dd538c865b45884081534758dfc4483, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!95 &9548380
 Animator:
   serializedVersion: 3

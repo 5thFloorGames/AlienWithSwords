@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: 40cca518918f37c46929a6347cc59a2f
-timeCreated: 1449603929
+timeCreated: 1449854081
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: player_melee_idle_0
+    21300002: player_melee_idle_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -59,7 +60,17 @@ TextureImporter:
         width: 1024
         height: 1024
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: player_melee_idle_1
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

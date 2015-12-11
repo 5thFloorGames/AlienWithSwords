@@ -28,6 +28,7 @@ GameObject:
   - 4: {fileID: 438976}
   - 212: {fileID: 21216786}
   - 114: {fileID: 11433780}
+  - 95: {fileID: 9599248}
   m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
@@ -195,7 +196,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149470}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.14139938, y: 1.55999994, z: -.820351601}
+  m_LocalPosition: {x: 20.467598, y: 1.28999996, z: -16.4248085}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 426712}
@@ -525,6 +526,23 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 020d68d1b14ea4748b38c90917957ad7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &9599248
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124038}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ef39cbb625cb50347b8607e2d19ab7cb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
