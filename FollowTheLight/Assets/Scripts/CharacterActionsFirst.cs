@@ -180,8 +180,10 @@ public class CharacterActionsFirst : MonoBehaviour {
     }
 
     void ResetActions() {
-        actions = maxActions;
-        updateActionsToUI();
+		if (!dead) {
+	        actions = maxActions;
+	        updateActionsToUI();
+		}
     }
 
     void EnterCharacter() {

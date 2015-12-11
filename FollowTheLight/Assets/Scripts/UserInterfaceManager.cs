@@ -15,6 +15,7 @@ public class UserInterfaceManager : MonoBehaviour {
 	Dictionary <string, Image> distanceMeters;
     Dictionary <string, Text> distanceTexts;
     Dictionary <string, Transform> actionPoints;
+	Dictionary <string, GameObject> deadMarks;
 	
 	void Awake () {
 
@@ -25,6 +26,7 @@ public class UserInterfaceManager : MonoBehaviour {
         distanceMeters = new Dictionary<string, Image>();
         distanceTexts = new Dictionary<string, Text>();
         actionPoints = new Dictionary<string, Transform> ();
+		deadMarks = new Dictionary<string, GameObject> ();
 
 		enemyTurnUI = (GameObject)transform.Find ("EnemyTurn").gameObject;
 		levelCompletedUI = (GameObject)transform.Find ("LevelCompleted").gameObject;
@@ -49,6 +51,10 @@ public class UserInterfaceManager : MonoBehaviour {
 
             obj = charinf.FindChild("ActionPoints").gameObject;
             actionPoints.Add(charinf.name, obj.transform);
+
+			obj = charinf.FindChild("CharacterDeadMarker").gameObject;
+			deadMarks.Add(charinf.name, obj);
+			DisableAllDeadMarks();
         }
 
 	}
@@ -92,9 +98,23 @@ public class UserInterfaceManager : MonoBehaviour {
 	}
 
 	public void DamageTakenUIUpdate(string charName) {
-		FlashMovementColor (charName, 2 );
-		FlashActionPointsColor (charName, 2);
+		//FlashMovementColor (charName, 2 );
+		//FlashActionPointsColor (charName, 2);
 		FlashHealthColor (charName, 2);
+	}
+
+	public void DisableAllDeadMarks() {
+		foreach (KeyValuePair <string, GameObject> mark in deadMarks) {
+			mark.Value.SetActive(false);
+		}
+	}
+
+	public void CharacterDiedUIUpdate(string name) {
+		deadMarks [name].SetActive (true);
+	}
+
+	public void CharacterAliveUIUpdate(string name) {
+		deadMarks [name].SetActive (false);
 	}
 
     public void UpdateHealthMeter(string characterName, float currentHealth, float maximum) {
@@ -184,13 +204,13 @@ public class UserInterfaceManager : MonoBehaviour {
 		Image meter = distanceMeters[characterName];
 		Text txt = distanceTexts[characterName];
 		
-		StartCoroutine(FlashImageColor(meter, times));
+		StartCoroutine(FlashImageColor(meter, new Color(1, 1, 1), times));
 		StartCoroutine(FlashTextColor(txt, times));
 	}
 	
 	public void FlashActionPointsColor (string characterName, int times) {
 		foreach (Transform actionPoint in actionPoints[characterName]) {
-			StartCoroutine(FlashImageColor(actionPoint.GetComponent<Image>(), times));
+			StartCoroutine(FlashImageColor(actionPoint.GetComponent<Image>(), new Color(1, 1, 1), times));
 		}
 	}
 	
@@ -198,17 +218,18 @@ public class UserInterfaceManager : MonoBehaviour {
 		Image meter = healthMeters[characterName];
 		Text txt = healthTexts[characterName];
 		
-		StartCoroutine(FlashImageColor(meter, times));
+		StartCoroutine(FlashImageColor(meter,new Color(0, 0, 0), times));
 		StartCoroutine(FlashTextColor(txt, times));
 	}
 	
-	IEnumerator FlashImageColor (Image img, int times) {
+	IEnumerator FlashImageColor (Image img, Color originalColor, int times) {
 		int i = 0;
 		while (i < times) {
-			img.CrossFadeColor(new Color(1.0f, 0.0f, 0.0f), 0.1f, false, false);
 			yield return new WaitForSeconds(0.1f);
-			img.CrossFadeColor(new Color(1.0f, 1.0f, 1.0f), 0.1f, false, false);
-			yield return new WaitForSeconds(0.05f);
+			img.color = new Color (1.0f, 0.0f, 0.0f);
+			yield return new WaitForSeconds(0.2f);
+			img.color = originalColor;
+			yield return new WaitForSeconds(0.1f);
 			i += 1;
 		}
 	}

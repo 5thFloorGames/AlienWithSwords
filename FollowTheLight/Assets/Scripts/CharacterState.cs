@@ -129,10 +129,12 @@ public class CharacterState : MonoBehaviour {
 	}
 	
 	void AnnounceDeathToManager() {
+		uim.CharacterDiedUIUpdate (type.ToString());
 		cm.CharacterDied(gameObject, type);
 	}
 	
 	void CharacterResurrected() {
+		uim.CharacterAliveUIUpdate (type.ToString());
 		if (!inCharacter) {
 			sprite.SetActive(true);
 		}

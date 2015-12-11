@@ -13,6 +13,8 @@ public class EnemyActionsFirst : MonoBehaviour {
     GameObject aoePrefab;
     float aoeLifetime;
 
+	EnemySoundController esc;
+
 	void Start () {
 		move = GetComponent<EnemyMovement> ();
         aoePrefab = (GameObject)Resources.Load("AreaDamage");
@@ -31,10 +33,12 @@ public class EnemyActionsFirst : MonoBehaviour {
 	}
 
 	public void InitActions(GameObject manager) {
+		esc = GetComponent<EnemySoundController> ();
 		em = manager.GetComponent<EnemyManager>();
 	}
 
 	public void TriggerActions () {
+		esc.PlayAttackQuote ();
 		move.Go();
 	}
 

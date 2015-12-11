@@ -17,11 +17,13 @@ public class EnemyState : MonoBehaviour {
 	GameObject em;
 	Animator animator;
     EnemyMovement move;
+	EnemySoundController esc;
 
 	public void Init(GameObject manager) {
 		dead = false;
 		healthMeter = transform.FindChild("EnemyInfo").FindChild("HealthMeter").GetComponent<Image>();
 		em = manager;
+		esc = GetComponent<EnemySoundController>();
         HealthInit();
 		UpdateHealthToHealthMeter ();
 	}
@@ -60,6 +62,7 @@ public class EnemyState : MonoBehaviour {
 	}
 
 	void AimedAt(GameObject character) {
+		esc.PlayAimedQuote ();
 		animator.SetBool ("AimedAt", true);
         move.CharacterAimedYou(character);
 	}

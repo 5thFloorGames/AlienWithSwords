@@ -22,8 +22,8 @@ public class CharacterActionsSecond : MonoBehaviour {
 	ParticleSystem ps;
 	Animator handAnimator;
 	GameObject weaponPivot;
-	MeleeWeaponDamages mwd;
 	MeleeRangeInformer slashRange;
+	//MeleeWeaponDamages mwd;
 
 	UserInterfaceManager uim;
 	
@@ -36,12 +36,12 @@ public class CharacterActionsSecond : MonoBehaviour {
         cameraTf = transform.FindChild("Camera");
 		overlay = cameraTf.FindChild ("Overlay").gameObject;
 		weaponPivot = cameraTf.FindChild ("WeaponPivot").gameObject;
-		mwd = weaponPivot.GetComponentInChildren<MeleeWeaponDamages> ();
 		slashRange = GetComponentInChildren<MeleeRangeInformer> ();
 		weaponPivot.SetActive (false);
 		actionCooldown = 0.7f;
 		previousActionTime = Time.time;
         enemyInAim = false;
+		//mwd = weaponPivot.GetComponentInChildren<MeleeWeaponDamages> ();
 	}
 	
 	void Start () {
@@ -118,8 +118,10 @@ public class CharacterActionsSecond : MonoBehaviour {
 	}
 	
 	void ResetActions() {
-		actions = maxActions;
-		updateActionsToUI();
+		if (!dead) {
+			actions = maxActions;
+			updateActionsToUI();
+		}
 	}
 
     public void PlayerTurnEnded() {

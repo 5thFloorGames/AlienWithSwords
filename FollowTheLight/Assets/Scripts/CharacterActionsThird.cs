@@ -186,8 +186,10 @@ public class CharacterActionsThird : MonoBehaviour {
 	}
 	
 	void ResetActions() {
-		actions = maxActions;
-		UpdateActionsToUI();
+		if (!dead) {
+			actions = maxActions;
+			UpdateActionsToUI();
+		}
 	}
 	
 	void EnterCharacter() {
