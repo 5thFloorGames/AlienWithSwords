@@ -76,4 +76,12 @@ public class MeleeRangeInformer : MonoBehaviour {
         }
         cldr.enabled = true;
     }
+
+    public void PlayerTurnEnded() {
+        cldr.enabled = false;
+    }
+
+    public void PlayerTurnStarted() {
+        cldr.enabled = true;
+    }
 }

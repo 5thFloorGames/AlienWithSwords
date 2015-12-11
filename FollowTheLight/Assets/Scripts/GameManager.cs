@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour {
 	void StartEnemyTurn() {
 		GameState.playersTurn = false;
 		uim.ShowEnemyUI ();
+        cm.PlayerTurnEnded();
 		em.TriggerEnemyActions ();
 	}
 

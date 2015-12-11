@@ -76,6 +76,15 @@ public class CharacterManager : MonoBehaviour {
         ResetCharacterActions();
     }
 
+    public void PlayerTurnEnded() {
+        foreach (GameObject character in characters) {
+            CharacterActionsSecond cas = character.GetComponentInChildren<CharacterActionsSecond>();
+            if (cas != null) {
+                cas.PlayerTurnEnded();
+            }
+        }
+    }
+
     void ResetCharacterMovement() {
         foreach (GameObject character in characters) {
             character.SendMessage("ResetMovement");

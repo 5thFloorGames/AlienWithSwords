@@ -107,12 +107,23 @@ public class CharacterActionsSecond : MonoBehaviour {
 	void CharacterResurrected() {
 		dead = false;
 		ResetActions();
+        if (inCharacter) {
+            EnterCharacter();
+        }
 	}
 	
 	void ResetActions() {
 		actions = maxActions;
 		updateActionsToUI();
 	}
+
+    public void PlayerTurnEnded() {
+        slashRange.PlayerTurnEnded();
+    }
+
+    public void PlayerTurnStarted() {
+        slashRange.PlayerTurnStarted();
+    }
 	
 	void EnterCharacter() {
 		slashRange.ActivateTheHitList ();
