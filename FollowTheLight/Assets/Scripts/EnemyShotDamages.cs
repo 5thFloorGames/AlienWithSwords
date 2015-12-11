@@ -2,16 +2,19 @@
 using System.Collections;
 
 public class EnemyShotDamages : MonoBehaviour {
-
-    int damage;
+	
+	EnemyActionsSecond eas;
+	float lifeTime;
+	float startTime;
+	//int damage;
     //float delayFromEnemy;
-    //float lifeTime;
 
-    public void Init(int damageAmount, float delay, float lifetimeFromEnemy) {
-
-        //delayFromEnemy = delay;
-        //lifeTime = lifetimeFromEnemy;
-        damage = damageAmount;
+    public void Init(int damageAmount, float delay, float lifetimeFromEnemy, EnemyActionsSecond caller) {
+		startTime = Time.time;
+        lifeTime = lifetimeFromEnemy;
+		eas = caller;
+        //damage = damageAmount;
+		//delayFromEnemy = delay;
     }
 
     void Start () {
@@ -19,15 +22,21 @@ public class EnemyShotDamages : MonoBehaviour {
 	}
 	
 	void Update () {
-	
+		if (lifeTime != null) {
+			if (lifeTime < Time.time - startTime) {
+				CreateHitEffect();
+				eas.ShotMissed(gameObject);
+				Destroy(gameObject);
+			}
+		}
 	}
 
     void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
-            other.gameObject.SendMessageUpwards("TakeDamage", damage);
-        }
-        CreateHitEffect();
-        Destroy(gameObject);
+		if (other.tag == "Player") {
+			eas.ShotCollided (gameObject);
+	        CreateHitEffect();
+	        Destroy(gameObject);
+		}
     }
 
     void CreateHitEffect() {

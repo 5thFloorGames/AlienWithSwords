@@ -55,8 +55,13 @@ public class EnemyActionsFirst : MonoBehaviour {
 		AreaDamageBehavior adb = spawnedAreaDamage.GetComponent<AreaDamageBehavior> ();
 
 		adb.Init (actionDamage, animationDelay, aoeLifetime);
+		Invoke ("PlayExplosionSound", animationDelay);
 		Invoke ("ActionsCompletedInformManager", animationDelay + aoeLifetime);
     }
+
+	void PlayExplosionSound() {
+		esc.PlayExplosionSFX ();
+	}
 
 	void ActionsCompletedInformManager() {
 		em.EnemyActionsCompleted();

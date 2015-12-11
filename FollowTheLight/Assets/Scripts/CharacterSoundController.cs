@@ -49,7 +49,9 @@ public class CharacterSoundController : MonoBehaviour {
 	// Playing the Quotes
 	
 	public void PlaySelectionQuote() {
-		PlayRandomQuote (selectCharacterQuotes);
+		if (Random.Range (0, 2) == 0) {
+			PlayRandomQuote (selectCharacterQuotes);
+		}
 	}
 
 	public void PlayAttackingQuote() {
@@ -82,6 +84,8 @@ public class CharacterSoundController : MonoBehaviour {
 
 
 
+	// Playing the SFX
+
 	public void PlayAttackSFX() {
 		PlayRandomSFX (attackSFX);
 	}
@@ -95,6 +99,8 @@ public class CharacterSoundController : MonoBehaviour {
 	}
 
 
+
+	// The helper functions
 
 	private void PlayRandomQuote(AudioClip[] clips){
 		if (clips.Length == 0) {

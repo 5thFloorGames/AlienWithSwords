@@ -11,7 +11,7 @@ public class EnemyMovement : MonoBehaviour {
 
 	bool firstLockChecked;
 	bool lockedToTarget;
-	GameObject targetedCharacter;
+	[HideInInspector] public GameObject targetedCharacter;
 
 	LayerMask layerMask;
 
@@ -57,7 +57,7 @@ public class EnemyMovement : MonoBehaviour {
     public void CharacterAimedYou(GameObject character) {
         CheckFirstLock();
         CheckLockedStatus();
-        if (!lockedToTarget) {
+        if (!lockedToTarget && fixateAfterSeeing) {
             targetedCharacter = character;
             lockedToTarget = true;
         }
@@ -136,11 +136,10 @@ public class EnemyMovement : MonoBehaviour {
 		}
 	}
 
-	bool CheckIfCharacterInSight (GameObject character) {
+	public bool CheckIfCharacterInSight (GameObject character) {
 
-		Vector3 enemyView = transform.position + new Vector3(0, 2, 0);
-		Vector3 direction = (character.transform.position + new Vector3 (0, 1, 0)) - enemyView;
-		Debug.DrawRay(enemyView, direction, Color.green, 2.0f);
+		Vector3 enemyView = transform.position + new Vector3(0, 0.8f, 0);
+		Vector3 direction = (character.transform.position + new Vector3 (0, 0.7f, 0)) - enemyView;
 		RaycastHit hit;
 		Physics.Raycast(enemyView, direction, out hit, (direction.magnitude + 1.0f), layerMask);
         if (hit.collider == null) {

@@ -5,10 +5,18 @@ public class EnemySoundManager : MonoBehaviour {
 
 	AudioClip[] attackingQuotes;
 	AudioClip[] aimedQuotes;
+
+	AudioClip[] explosionSFX;
+	AudioClip[] shotSFX;
+	AudioClip[] shotHitSFX;
 	
 	void Start () {
 		attackingQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Attack");
 		aimedQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Aimed");
+
+		explosionSFX = Resources.LoadAll<AudioClip>("Audio/Enemy/SFX_Explosion");
+		shotSFX = Resources.LoadAll<AudioClip>("Audio/Enemy/SFX_Shot");
+		shotHitSFX = Resources.LoadAll<AudioClip>("Audio/Enemy/SFX_ShotHit");
 	}
 
 	void Update () {
@@ -22,6 +30,22 @@ public class EnemySoundManager : MonoBehaviour {
 	public AudioClip GetAimedQuote() {
 		return GetAudioClipFromList (aimedQuotes);
 	}
+
+
+
+	public AudioClip GetExplosionSFX() {
+		return GetAudioClipFromList (explosionSFX);
+	}
+
+	public AudioClip GetShotSFX() {
+		return GetAudioClipFromList (shotSFX);
+	}
+
+	public AudioClip GetShotHitSFX() {
+		return GetAudioClipFromList (shotHitSFX);
+	}
+
+
 
 	AudioClip GetAudioClipFromList(AudioClip[] clips){
 		if (clips.Length == 0) {

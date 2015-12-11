@@ -12,7 +12,7 @@ GameObject:
   - 199: {fileID: 19929840}
   - 114: {fileID: 11473320}
   - 114: {fileID: 11485558}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyShotHitEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1166,6 +1166,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: EmissionModule.time0
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
