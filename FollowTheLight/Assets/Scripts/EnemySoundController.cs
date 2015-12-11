@@ -3,12 +3,13 @@ using System.Collections;
 
 public class EnemySoundController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	AudioSource source;
+
+
+	void Awake () {
+
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 	
 	}
