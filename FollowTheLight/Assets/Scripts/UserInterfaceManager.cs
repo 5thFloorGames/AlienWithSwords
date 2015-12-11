@@ -13,6 +13,7 @@ public class UserInterfaceManager : MonoBehaviour {
     Dictionary <string, Image> healthMeters;
     Dictionary <string, Text> healthTexts;
 	Dictionary <string, Image> distanceMeters;
+	Dictionary <string, Image> panelBackgrounds;
     Dictionary <string, Text> distanceTexts;
     Dictionary <string, Transform> actionPoints;
 	Dictionary <string, GameObject> deadMarks;
@@ -27,6 +28,7 @@ public class UserInterfaceManager : MonoBehaviour {
         distanceTexts = new Dictionary<string, Text>();
         actionPoints = new Dictionary<string, Transform> ();
 		deadMarks = new Dictionary<string, GameObject> ();
+		panelBackgrounds = new Dictionary<string, Image>();
 
 		enemyTurnUI = (GameObject)transform.Find ("EnemyTurn").gameObject;
 		levelCompletedUI = (GameObject)transform.Find ("LevelCompleted").gameObject;
@@ -55,6 +57,9 @@ public class UserInterfaceManager : MonoBehaviour {
 			obj = charinf.FindChild("CharacterDeadMarker").gameObject;
 			deadMarks.Add(charinf.name, obj);
 			DisableAllDeadMarks();
+
+			obj = charinf.FindChild("PanelBackground").gameObject;
+			panelBackgrounds.Add(charinf.name, obj.GetComponent<Image>());
         }
 
 	}
@@ -188,6 +193,7 @@ public class UserInterfaceManager : MonoBehaviour {
             charinf.FindChild("CharacterName").GetComponent<Text>().CrossFadeAlpha(alphaValue, 0.1f, true);
             distanceMeters[name].CrossFadeAlpha(alphaValue, 0.1f, true);
             healthMeters[name].CrossFadeAlpha(alphaValue, 0.1f, true);
+			panelBackgrounds[name].CrossFadeAlpha(alphaValue, 0.1f, true);
             Transform apParent = charinf.FindChild("ActionPoints");
             foreach (Transform ap in apParent) {
                 Image img = ap.GetComponent<Image>();
