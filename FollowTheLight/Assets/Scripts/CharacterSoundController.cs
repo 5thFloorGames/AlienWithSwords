@@ -4,6 +4,8 @@ using System.Collections;
 public class CharacterSoundController : MonoBehaviour {
 
 	public CharacterType charType;
+	public bool outOfActions;
+	public bool outOfMovement;
 	
 	[SerializeField] AudioSource quoteSource;
 	[SerializeField] AudioSource effectSource;
@@ -14,7 +16,7 @@ public class CharacterSoundController : MonoBehaviour {
 	AudioClip[] killEnemyQuotes;
 	AudioClip[] dyingQuotes;
 	AudioClip[] killCharQuotes;
-	AudioClip[] outOfActions;
+	AudioClip[] outOfActionsQuotes;
 	
 	AudioClip[] attackSFX;
 	AudioClip[] attackHitSFX;
@@ -27,7 +29,7 @@ public class CharacterSoundController : MonoBehaviour {
 		killEnemyQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_KillEnemy");
 		killCharQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_KillChar");
 		dyingQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Die");
-		outOfActions = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/Quote_OutOfActions");
+		outOfActionsQuotes = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/Quote_OutOfActions");
 
 		attackSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_Attack");
 		attackHitSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_AttackHit");
@@ -79,7 +81,9 @@ public class CharacterSoundController : MonoBehaviour {
 	}
 
 	public void PlayOutOfActionsQuote() {
-		PlayRandomQuote (outOfActions);
+		if (outOfActions && outOfMovement) {
+			PlayRandomQuote (outOfActionsQuotes);
+		}
 	}
 
 

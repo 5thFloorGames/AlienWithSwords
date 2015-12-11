@@ -13,11 +13,13 @@ public class CharacterMovement : MonoBehaviour {
 	float updatedDistance;
 	Vector3 lastPosition;
 
+	CharacterSoundController csc;
 	UserInterfaceManager uim;
 	FPSController fpsc;
 
 	public void ResetMovement() {
         if (!dead) {
+			csc.outOfMovement = false;
             distanceTravelled = 0;
             lastPosition = transform.position;
             lastPosition.y = 1;
@@ -31,6 +33,7 @@ public class CharacterMovement : MonoBehaviour {
         dead = false;
 		uim = GameObject.Find ("UserInterface").GetComponent<UserInterfaceManager>();
 		fpsc = gameObject.GetComponent<FPSController> ();
+		csc = GetComponentInChildren<CharacterSoundController>();
 	}
 	
 	
@@ -48,8 +51,7 @@ public class CharacterMovement : MonoBehaviour {
 		if (distanceTravelled > maximumMovement) {
 			distanceTravelled = maximumMovement;
 			UpdateDistanceToUI ();
-			movementAvailable = false;
-			fpsc.movementAvailable = false;
+			OutOfMovement();
 		} else {
 			lastPosition = currentPosition;
 			if (updatedDistance - distanceTravelled <= -0.01f) {
@@ -73,6 +75,13 @@ public class CharacterMovement : MonoBehaviour {
         dead = false;
         ResetMovement();
     }
+
+	void OutOfMovement() {
+		movementAvailable = false;
+		fpsc.movementAvailable = false;
+		csc.outOfMovement = true;
+		csc.PlayOutOfActionsQuote ();
+	}
 
 
     // CharacterType managers calls these with a broadcast message

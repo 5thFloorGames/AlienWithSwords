@@ -35,13 +35,16 @@ public class CharacterManager : MonoBehaviour {
     }
 
     void Update () {
-		if (Input.GetKeyDown (KeyCode.Alpha1) && firstActive) {
+		if (Input.GetKeyDown (KeyCode.Alpha1) && firstActive
+		    && GetCharacterObject("Character1") != GameState.activeCharacter) {
             SwitchCharacter(GetCharacterObject("Character1"));
 		}
-		if (Input.GetKeyDown (KeyCode.Alpha2) && secondActive) {
+		if (Input.GetKeyDown (KeyCode.Alpha2) && secondActive
+		    && GetCharacterObject("Character2") != GameState.activeCharacter) {
             SwitchCharacter(GetCharacterObject("Character2"));
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha3) && thirdActive) {
+		if (Input.GetKeyDown(KeyCode.Alpha3) && thirdActive
+		    && GetCharacterObject("Character3") != GameState.activeCharacter) {
             SwitchCharacter(GetCharacterObject("Character3"));
         }
 

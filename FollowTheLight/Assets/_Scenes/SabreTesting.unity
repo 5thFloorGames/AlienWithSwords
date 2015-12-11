@@ -660,7 +660,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 477852, guid: 9b7742e38227b4b8e9d58751ba5f0d9e, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 149470, guid: 9b7742e38227b4b8e9d58751ba5f0d9e, type: 2}
       propertyPath: m_IsActive

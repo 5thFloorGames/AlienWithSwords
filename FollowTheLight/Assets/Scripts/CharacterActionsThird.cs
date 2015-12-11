@@ -26,10 +26,10 @@ public class CharacterActionsThird : MonoBehaviour {
 	LaserController lc;
 
 	UserInterfaceManager uim;
-	CharacterSoundController cas;
+	CharacterSoundController csc;
 	
 	void Awake() {
-		cas = GetComponentInChildren<CharacterSoundController>();
+		csc = GetComponentInChildren<CharacterSoundController>();
 		uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
         lc = GetComponentInChildren<LaserController>();
         cameraTf = transform.FindChild("Camera");
@@ -62,6 +62,12 @@ public class CharacterActionsThird : MonoBehaviour {
 	}
 	
 	void UpdateActionsToUI() {
+		if (actions == 0) {
+			csc.outOfActions = true;
+			csc.PlayOutOfActionsQuote();
+		} else {
+			csc.outOfActions = false;
+		}
 		uim.UpdateActionPoints(gameObject.name, actions, maxActions);
 	}
 
@@ -94,8 +100,8 @@ public class CharacterActionsThird : MonoBehaviour {
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit)) {
 			actions -= 1;
-			cas.PlayAttackingQuote();
-			cas.PlayAttackSFX();
+			csc.PlayAttackingQuote();
+			csc.PlayAttackSFX();
 			if (hit.collider.tag == "Enemy" || hit.collider.tag == "Player") {
 				target = hit.collider.transform.root.gameObject;
 				Invoke ("SendDamageMessage", 0.5f);
@@ -111,8 +117,8 @@ public class CharacterActionsThird : MonoBehaviour {
 		RaycastHit hit;
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
 			actions -= 1;
-			cas.PlayHealingQuote();
-			cas.PlayHealSFX();
+			csc.PlayHealingQuote();
+			csc.PlayHealSFX();
 			if (hit.collider.tag == "Player") {
 				target = hit.collider.gameObject;
 				Invoke ("SendHealMessage", 0.5f);

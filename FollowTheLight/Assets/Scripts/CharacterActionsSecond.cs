@@ -98,6 +98,12 @@ public class CharacterActionsSecond : MonoBehaviour {
 	}
 	
 	void updateActionsToUI() {
+		if (actions == 0) {
+			cas.outOfActions = true;
+			cas.PlayOutOfActionsQuote();
+		} else {
+			cas.outOfActions = false;
+		}
 		uim.UpdateActionPoints(gameObject.name, actions, maxActions);
 	}
 

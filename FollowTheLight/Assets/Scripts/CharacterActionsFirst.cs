@@ -164,6 +164,12 @@ public class CharacterActionsFirst : MonoBehaviour {
 	}
 
     void updateActionsToUI() {
+		if (actions == 0) {
+			cas.outOfActions = true;
+			cas.PlayOutOfActionsQuote();
+		} else {
+			cas.outOfActions = false;
+		}
         uim.UpdateActionPoints(transform.name, actions, maxActions);
     }
 

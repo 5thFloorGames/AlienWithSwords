@@ -416,7 +416,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: .800000012
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -727,6 +727,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charType: 0
+  outOfActions: 0
+  outOfMovement: 0
   quoteSource: {fileID: 8236206}
   effectSource: {fileID: 8263826}
 --- !u!136 &13613214
@@ -983,7 +985,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Volume
-      value: .100000001
+      value: .800000012
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: stepInterval
