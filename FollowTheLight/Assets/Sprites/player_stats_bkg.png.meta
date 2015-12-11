@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: e6c70ab8e9a3ff049bbc5b5012289cfe
-timeCreated: 1447873955
+timeCreated: 1449831127
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: player_stats_bkg_0
+    21300002: actionPointIcon
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -58,6 +59,16 @@ TextureImporter:
         y: 105
         width: 512
         height: 166
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: actionPointIcon
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 472
+        width: 27
+        height: 28
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
