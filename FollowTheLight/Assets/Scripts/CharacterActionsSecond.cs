@@ -29,12 +29,12 @@ public class CharacterActionsSecond : MonoBehaviour {
 	
 	void Awake() {
 		handAnimator = transform.FindChild("Camera").FindChild("Overlay").FindChild("Hands").GetComponent<Animator>();
-		ps = transform.FindChild("Particles").GetComponent<ParticleSystem>();
 		dead = false;
 		uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 		cas = GetComponentInChildren<CharacterSoundController>();
         cameraTf = transform.FindChild("Camera");
 		overlay = cameraTf.FindChild ("Overlay").gameObject;
+		ps = overlay.transform.FindChild("Particles").GetComponent<ParticleSystem>();
 		weaponPivot = cameraTf.FindChild ("WeaponPivot").gameObject;
 		slashRange = GetComponentInChildren<MeleeRangeInformer> ();
 		weaponPivot.SetActive (false);
