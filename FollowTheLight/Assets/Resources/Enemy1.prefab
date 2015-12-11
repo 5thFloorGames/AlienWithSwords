@@ -100,6 +100,7 @@ GameObject:
   - 4: {fileID: 418100}
   - 212: {fileID: 21210042}
   - 95: {fileID: 9554030}
+  - 114: {fileID: 11454290}
   m_Layer: 9
   m_Name: Sprite
   m_TagString: Enemy
@@ -138,7 +139,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 116702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.64499998, y: .190000057, z: -9.54711723}
+  m_LocalPosition: {x: 2.74000001, y: .579999983, z: 7.32000017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 418100}
@@ -279,7 +280,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 116702}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b79eca549a9b417ea412d2cac1874b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 40cab0d645794c549abf00f67e7bcf1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11437514
@@ -342,6 +343,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionDamage: 5
+--- !u!114 &11454290
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 180270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b79eca549a9b417ea412d2cac1874b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11457290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -366,9 +378,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a49f6131f97c45b6bb9e8d6c246c442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceFollowCharacter: 0
+  fixateAfterSeeing: 0
+  focusCharAtStart: 0
   targetCharacter: 0
-  forceFollowFirstSeen: 1
   movementTime: 1
 --- !u!114 &11485286
 MonoBehaviour:
