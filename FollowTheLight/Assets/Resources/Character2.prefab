@@ -762,6 +762,7 @@ MonoBehaviour:
   maximumHealth: 10
   type: 1
   dead: 0
+  deathParticleAdjustment: {x: 0, y: .5, z: 0}
 --- !u!114 &11448514
 MonoBehaviour:
   m_ObjectHideFlags: 1
