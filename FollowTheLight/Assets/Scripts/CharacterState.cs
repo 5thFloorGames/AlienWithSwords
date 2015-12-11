@@ -6,6 +6,8 @@ public class CharacterState : MonoBehaviour {
 	public int maximumHealth;
 	public CharacterType type;
 	public bool dead;
+
+	[SerializeField] float deathParticleAdjustment;
 	
 	int health;
 	bool inCharacter;
@@ -131,7 +133,7 @@ public class CharacterState : MonoBehaviour {
 		sprite.SetActive (false);
 		AnnounceDeathToManager();
 		GameObject prefab = (GameObject) Resources.Load("playerExplodeParticles");
-		Instantiate (prefab, transform.position, Quaternion.identity);
+		Instantiate (prefab, transform.position + deathParticleAdjustment, Quaternion.identity);
 	}
 	
 	void AnnounceDeathToManager() {

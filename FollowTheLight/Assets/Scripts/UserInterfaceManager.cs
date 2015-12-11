@@ -205,7 +205,7 @@ public class UserInterfaceManager : MonoBehaviour {
 		Text txt = distanceTexts[characterName];
 		
 		StartCoroutine(FlashImageColor(meter, new Color(1, 1, 1), times));
-		StartCoroutine(FlashTextColor(txt, times));
+		StartCoroutine(FlashTextColor(txt, new Color(1, 1, 1), times));
 	}
 	
 	public void FlashActionPointsColor (string characterName, int times) {
@@ -219,7 +219,7 @@ public class UserInterfaceManager : MonoBehaviour {
 		Text txt = healthTexts[characterName];
 		
 		StartCoroutine(FlashImageColor(meter,new Color(0, 0, 0), times));
-		StartCoroutine(FlashTextColor(txt, times));
+		StartCoroutine(FlashTextColor(txt, new Color (0, 0, 0), times));
 	}
 	
 	IEnumerator FlashImageColor (Image img, Color originalColor, int times) {
@@ -234,13 +234,14 @@ public class UserInterfaceManager : MonoBehaviour {
 		}
 	}
 	
-	IEnumerator FlashTextColor (Text txt, int times) {
+	IEnumerator FlashTextColor (Text txt, Color originalColor, int times) {
 		int i = 0;
 		while (i < times) {
-			txt.CrossFadeColor(new Color(1.0f, 0.0f, 0.0f), 0.1f, false, false);
 			yield return new WaitForSeconds(0.1f);
-			txt.CrossFadeColor(new Color(1.0f, 1.0f, 1.0f), 0.1f, false, false);
-			yield return new WaitForSeconds(0.05f);
+			txt.color = new Color (1.0f, 0.0f, 0.0f);
+			yield return new WaitForSeconds(0.2f);
+			txt.color = originalColor;
+			yield return new WaitForSeconds(0.1f);
 			i += 1;
 		}
 	}
