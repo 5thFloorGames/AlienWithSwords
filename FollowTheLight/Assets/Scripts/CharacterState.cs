@@ -7,7 +7,7 @@ public class CharacterState : MonoBehaviour {
 	public CharacterType type;
 	public bool dead;
 
-	[SerializeField] float deathParticleAdjustment;
+	[SerializeField] Vector3 deathParticleAdjustment;
 	
 	int health;
 	bool inCharacter;
