@@ -49,7 +49,7 @@ public class AnnouncementManager : MonoBehaviour {
 
 	public void CharacterTookDamage(CharacterType type, int damageAmount) {
 		string name = GetCharacterName (type);
-		combatTextInc += "\n" + name + " took " + damageAmount + " damage.     ";
+		combatTextInc += "\n" + name + " took " + damageAmount + " damage.";
 			
 		StartCoroutine(GenerateCombatLog());
 	}
