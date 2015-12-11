@@ -74,17 +74,22 @@ public class CharacterActionsSecond : MonoBehaviour {
 		actions -= 1;
 		handAnimator.SetBool ("Casting", true);
 		previousActionTime = Time.time;
-		weaponPivot.SetActive (true);
-		mwd.damageAmount = slashDamage;
-		
-		weaponPivot.transform.localRotation = Quaternion.Euler (0f, -89.99f, 90f);
-		iTween.RotateTo (weaponPivot, iTween.Hash (
-			"y", 89.99f,
-			"time", 0.5f,
-			"islocal", true,
-			"oncomplete", "PutWeaponAway",
-			"oncompletetarget", gameObject));
-	}
+        Invoke("DealDamage", 0.2f);
+        Invoke("PutWeaponAway", 0.5f);
+        //weaponPivot.SetActive (true);
+        //mwd.damageAmount = slashDamage;
+        //weaponPivot.transform.localRotation = Quaternion.Euler (0f, -89.99f, 90f);
+        //iTween.RotateTo (weaponPivot, iTween.Hash (
+        //	"y", 89.99f,
+        //	"time", 0.5f,
+        //	"islocal", true,
+        //	"oncomplete", "PutWeaponAway",
+        //	"oncompletetarget", gameObject));
+    }
+
+    void DealDamage() {
+        slashRange.DealDamageToHitList(slashDamage);
+    }
 
 	void PutWeaponAway() {
 		ps.Stop ();

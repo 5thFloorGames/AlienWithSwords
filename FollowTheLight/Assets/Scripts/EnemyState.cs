@@ -4,8 +4,13 @@ using System.Collections;
 
 public class EnemyState : MonoBehaviour {
 
-	public bool dead;
+    public EnemyType type;
     public int maximumHealth;
+    public bool dead;
+
+    public bool willSpawnLater;
+    public int spawnNumber;
+
     int currentHealth;
 
 	Image healthMeter;
@@ -17,18 +22,12 @@ public class EnemyState : MonoBehaviour {
 		dead = false;
 		healthMeter = transform.FindChild("EnemyInfo").FindChild("HealthMeter").GetComponent<Image>();
 		em = manager;
-        if (maximumHealth == 0) {
-            maximumHealth = 30;
-        }
-        currentHealth = maximumHealth;
+        HealthInit();
 		UpdateHealthToHealthMeter ();
 	}
 	
 	void Start () {
-        if (maximumHealth == 0) {
-            maximumHealth = 30;
-        }
-        currentHealth = maximumHealth;
+        HealthInit();
 		animator = gameObject.GetComponentInChildren<Animator>();
         move = gameObject.GetComponent<EnemyMovement>();
         move.DisableNva();
@@ -37,6 +36,13 @@ public class EnemyState : MonoBehaviour {
 	void Update () {
 
 	}
+
+    void HealthInit() {
+        if (maximumHealth == 0) {
+            maximumHealth = 30;
+        }
+        currentHealth = maximumHealth;
+    }
 
 	void TakeDamage(int amount) {
 		if (!dead) {;

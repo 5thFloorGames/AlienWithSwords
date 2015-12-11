@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public enum EnemyType { Enemy1, Enemy2 };
+public enum EnemyType { Exploder, Shooter, Boss };
 
 public class EnemyManager : MonoBehaviour {
 
