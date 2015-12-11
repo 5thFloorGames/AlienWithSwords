@@ -5,10 +5,8 @@ using System.Collections.Generic;
 
 public class UserInterfaceManager : MonoBehaviour {
 
-	GameObject enemyTurnUI;
-    GameObject levelCompletedUI;
-    GameObject levelFailedUI;
 	GameObject characterPanel;
+	AnnouncementManager am;
 
     Dictionary <string, Image> healthMeters;
     Dictionary <string, Text> healthTexts;
@@ -17,7 +15,7 @@ public class UserInterfaceManager : MonoBehaviour {
     Dictionary <string, Text> distanceTexts;
     Dictionary <string, Transform> actionPoints;
 	Dictionary <string, GameObject> deadMarks;
-	
+
 	void Awake () {
 
 		DontDestroyOnLoad (gameObject);
@@ -29,10 +27,6 @@ public class UserInterfaceManager : MonoBehaviour {
         actionPoints = new Dictionary<string, Transform> ();
 		deadMarks = new Dictionary<string, GameObject> ();
 		panelBackgrounds = new Dictionary<string, Image>();
-
-		enemyTurnUI = (GameObject)transform.Find ("EnemyTurn").gameObject;
-		levelCompletedUI = (GameObject)transform.Find ("LevelCompleted").gameObject;
-        levelFailedUI = (GameObject)transform.Find("LevelFailed").gameObject;
 
 		characterPanel = (GameObject)transform.Find ("CharacterPanel").gameObject;
 
@@ -64,6 +58,10 @@ public class UserInterfaceManager : MonoBehaviour {
 
 	}
 
+	void Start() {
+		am = GameObject.FindGameObjectWithTag("GameController").GetComponent<AnnouncementManager>();
+	}
+
 	void Update () {
 		
 	}
@@ -76,27 +74,25 @@ public class UserInterfaceManager : MonoBehaviour {
 	}
 
 	public void ShowEnemyUI() {
-		enemyTurnUI.SetActive (true);
+		am.EnemyTurnStarted();
 	}
 
 	public void HideEnemyUI() {
-		enemyTurnUI.SetActive (false);
+		am.PlayerTurnStart ();
 	}
 
     public void ShowLevelFailedUI() {
-        levelFailedUI.SetActive(true);
+		am.LevelFailed ();
     }
 
     public void HideLevelFailedUI() {
-        levelFailedUI.SetActive(false);
     }
 
 	public void ShowLevelCompletedUI() {
-		levelCompletedUI.SetActive (true);
+		am.LevelCompleted ();
 	}
 
 	public void HideLevelCompletedUI() {
-		levelCompletedUI.SetActive (false);
 	}
 
 	public void DamageTakenUIUpdate(string charName) {

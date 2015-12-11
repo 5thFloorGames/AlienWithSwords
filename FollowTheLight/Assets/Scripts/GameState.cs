@@ -41,7 +41,7 @@ public class GameState : MonoBehaviour {
 
     IEnumerator DebugMessages() {
         yield return new WaitForSeconds(0.2f);
-        Debug.Log("Level: " + level);
-        Debug.Log("Amount of characters: " + amountOfCharacters);
+        //Debug.Log("Level: " + level);
+        //Debug.Log("Amount of characters: " + amountOfCharacters);
     }
 }

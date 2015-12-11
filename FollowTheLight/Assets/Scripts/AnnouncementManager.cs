@@ -4,46 +4,108 @@ using System.Collections;
 
 public class AnnouncementManager : MonoBehaviour {
 
-	Text text;
-	string str;
-	string toWrite;
+	public float announcementDisplayTime;
+
+	Text combatLog;
+	string combatTextNow;
+	string combatTextInc;
+
+	float mostRecentAnnouncement;
+	Text announcement;
+	string announcementNow;
+	string announcementInc;
+	bool preventAdditionalAnnouncements;
 
 	void Start () {
-		text = transform.FindChild ("Announcements").FindChild("Text").GetComponent<Text>();
-		str = "";
-		toWrite = "";
+		combatLog = transform.FindChild ("Announcements").FindChild("CombatLog").GetComponent<Text>();
+		announcement = transform.FindChild ("Announcements").FindChild("Announcement").GetComponent<Text>();
+		combatTextNow = "";
+		combatTextInc = "";
+		ResetCombatLog ();
 		ResetAnnouncements ();
 	}
 
 	void Update () {
-		
+		if (announcementNow.Length > 0) {
+			CheckAnnouncementTimers();
+		}
+	}
+
+	void OnLevelWasLoaded() {
+		preventAdditionalAnnouncements = false;
+	}
+
+	public void ResetCombatLog() {
+		combatTextInc = "";
+		combatTextNow = "";
+		combatLog.text = "";
 	}
 
 	public void ResetAnnouncements() {
-		toWrite = "";
-		str = "";
-		text.text = "";
+		announcementInc = "";
+		announcementNow = "";
+		announcement.text = "";
 	}
 
 	public void CharacterTookDamage(CharacterType type, int damageAmount) {
 		string name = GetCharacterName (type);
-		toWrite += name + " took " + damageAmount + " damage.     \n";
+		combatTextInc += "\n" + name + " took " + damageAmount + " damage.     ";
 			
-		StartCoroutine(GenerateText());
+		StartCoroutine(GenerateCombatLog());
 	}
 
 	public void CharacterDied(CharacterType type) {
 		string name = GetCharacterName (type);
-		toWrite += name + " DIED...\n";
+		combatTextInc += "\n" + name + " DIED...";
 		
-		StartCoroutine(GenerateText());
+		StartCoroutine(GenerateCombatLog());
 	}
 
-	IEnumerator GenerateText() {
-		while (str.Length != toWrite.Length) {
-			str += toWrite[str.Length];
-			text.text = str;
+
+	public void EnemyTurnStarted() {
+		announcementInc += "\nEnemies will attack now.";
+		StartCoroutine (GenerateAnnouncement());
+	}
+
+	public void PlayerTurnStart() {
+		if (preventAdditionalAnnouncements) {
+			return;
+		}
+		announcementInc += "\nGo.";
+		StartCoroutine (GenerateAnnouncement());
+	}
+
+	public void LevelCompleted() {
+		announcementInc += "\nLevel completed.";
+		StartCoroutine (GenerateAnnouncement());
+	}
+
+	public void LevelFailed() {
+		announcementInc += "\nYou failed, try again.";
+		StartCoroutine (GenerateAnnouncement());
+		preventAdditionalAnnouncements = true;
+	}
+
+	IEnumerator GenerateCombatLog() {
+		while (combatTextNow.Length != combatTextInc.Length) {
+			combatTextNow += combatTextInc[combatTextNow.Length];
+			combatLog.text = combatTextNow;
 			yield return new WaitForSeconds(0.01f);
+		}
+	}
+
+	IEnumerator GenerateAnnouncement() {
+		mostRecentAnnouncement = Time.time;
+		while (announcementNow.Length != announcementInc.Length) {
+			announcementNow += announcementInc[announcementNow.Length];
+			announcement.text = announcementNow;
+			yield return new WaitForSeconds(0.01f);
+		}
+	}
+
+	void CheckAnnouncementTimers() {
+		if (Time.time - mostRecentAnnouncement > announcementDisplayTime) {
+			ResetAnnouncements();
 		}
 	}
 

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour {
 	IEnumerator HideCombatLog() {
 		yield return new WaitForSeconds (1.0f);
 		if (GameState.playersTurn) {
-			am.ResetAnnouncements ();
+			am.ResetCombatLog ();
 		}
 	}
 
@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour {
 
     public void SetLevelObjective(LevelObjective obj) {
         objective = obj;
-        Debug.Log("Objective: " + objective.ToString());
+        //Debug.Log("Objective: " + objective.ToString());
     }
 
     void LoadNextLevel() {

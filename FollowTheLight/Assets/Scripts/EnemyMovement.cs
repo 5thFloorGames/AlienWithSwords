@@ -184,8 +184,10 @@ public class EnemyMovement : MonoBehaviour {
 	
 	void StopMovingAndAttack() {
 		animator.SetBool ("Walking", false);
-		nva.Stop();
-        nva.enabled = false;
+		if (nva != null && nva.enabled) {
+			nva.Stop();
+	        nva.enabled = false;
+		}
 		gameObject.SendMessage("MovingCompleteStartAttack", targetedCharacter);
 	}
 
