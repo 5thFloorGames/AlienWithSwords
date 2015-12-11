@@ -112,6 +112,9 @@ public class CharacterManager : MonoBehaviour {
         }
         character.BroadcastMessage("CharacterDied");
         CheckIfAllCharactersDead();
+		if (GameState.activeCharacter.GetComponent<CharacterState>().dead) {
+			AutoSwitchToCharacter ();
+		}
     }
 
     void CheckIfAllCharactersDead() {
@@ -177,18 +180,21 @@ public class CharacterManager : MonoBehaviour {
 
         GameState.amountOfCharacters = spawnCount;
 
-        if (GetCharacterObject("Character1") != null) {
-            SwitchCharacter(GetCharacterObject("Character1"));
-            return;
-        } else if (GetCharacterObject("Character2") != null) {
-            SwitchCharacter(GetCharacterObject("Character2"));
-            return;
-        } else if (GetCharacterObject("Character3") != null) {
-            SwitchCharacter(GetCharacterObject("Character3"));
-            return;
-        }
+		AutoSwitchToCharacter ();
 
     }
+
+	public void AutoSwitchToCharacter() {
+		if (GetCharacterObject("Character1") != null && firstActive) {
+			SwitchCharacter(GetCharacterObject("Character1"));
+			return;
+		} else if (GetCharacterObject("Character2") != null && secondActive) {
+			SwitchCharacter(GetCharacterObject("Character2"));
+			return;
+		} else if (GetCharacterObject("Character3") != null && thirdActive) {
+			SwitchCharacter(GetCharacterObject("Character3"));
+		}
+	}
 
 	void LoadCharacterToScene(string name, Vector3 position, Quaternion rotation) {
 		GameObject prefab = (GameObject) Resources.Load(name);
