@@ -4,6 +4,10 @@ using System.Collections;
 
 public class AnnouncementManager : MonoBehaviour {
 
+    Image levelFade;
+    Image dyingFade;
+    Image damageFade;
+
 	public float announcementDisplayTime;
 
 	Text combatLog;
@@ -17,9 +21,13 @@ public class AnnouncementManager : MonoBehaviour {
 	bool preventAdditionalAnnouncements;
 
 	void Start () {
-		combatLog = transform.FindChild ("Announcements").FindChild("CombatLog").GetComponent<Text>();
-		announcement = transform.FindChild ("Announcements").FindChild("Announcement").GetComponent<Text>();
-		combatTextNow = "";
+        Transform tf = transform.FindChild("Announcements");
+		combatLog = tf.FindChild("CombatLog").GetComponent<Text>();
+		announcement = tf.FindChild("Announcement").GetComponent<Text>();
+        levelFade = tf.FindChild("LevelFade").GetComponent<Image>();
+        dyingFade = tf.FindChild("DyingFade").GetComponent<Image>();
+        damageFade = tf.FindChild("DamageFade").GetComponent<Image>();
+        combatTextNow = "";
 		combatTextInc = "";
 		ResetCombatLog ();
 		ResetAnnouncements ();
