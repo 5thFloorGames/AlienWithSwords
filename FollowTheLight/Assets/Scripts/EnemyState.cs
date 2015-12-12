@@ -5,6 +5,7 @@ using System.Collections;
 public class EnemyState : MonoBehaviour {
 
     public EnemyType type;
+    public SecondaryEnemyType secondaryType;
     public int maximumHealth;
     public bool dead;
 

@@ -350,6 +350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  secondaryType: 1
   maximumHealth: 2
   dead: 0
   willSpawnLater: 0
@@ -552,6 +553,10 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: fixateAfterSeeing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: secondaryType
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
