@@ -814,7 +814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c38bf644a0be48de859486d10a9f7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumMovement: 20
+  maximumMovement: 15
 --- !u!114 &11445630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -937,7 +937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximumHealth: 10
   type: 2
-  name: 2
+  charName: 0
   dead: 0
   deathParticleAdjustment: {x: 0, y: .5, z: 0}
 --- !u!114 &11483308

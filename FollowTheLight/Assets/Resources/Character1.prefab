@@ -693,7 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00c60cb709684c0e8aa1f964de71105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 6
   coneDamage: 5
   maxActions: 1
 --- !u!114 &11428832
@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c38bf644a0be48de859486d10a9f7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumMovement: 10
+  maximumMovement: 15
 --- !u!114 &11429044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -816,6 +816,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximumHealth: 10
   type: 0
+  charName: 0
   dead: 0
   deathParticleAdjustment: {x: 0, y: .5, z: 0}
 --- !u!114 &11465012
@@ -1008,7 +1009,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: damage
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxActions

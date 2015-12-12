@@ -52,7 +52,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 6.5
+  m_Radius: 7.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &19836870
 ParticleSystem:
@@ -1126,6 +1126,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: CollisionModule.dampen
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Radius
+      value: 7.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
