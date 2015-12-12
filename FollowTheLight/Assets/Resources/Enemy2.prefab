@@ -338,10 +338,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a49f6131f97c45b6bb9e8d6c246c442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fixateAfterSeeing: 0
+  fixateAfterSeeing: 1
   focusCharAtStart: 0
   targetCharacter: 0
   movementTime: 0
+  targetedCharacter: {fileID: 0}
 --- !u!114 &11440342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -375,8 +376,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  dead: 0
   maximumHealth: 10
+  dead: 0
+  willSpawnLater: 0
+  spawnNumber: 0
 --- !u!114 &11465342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -565,6 +568,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: fixateAfterSeeing
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
