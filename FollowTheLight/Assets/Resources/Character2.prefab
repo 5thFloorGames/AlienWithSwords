@@ -240,7 +240,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 109698}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.25, z: 1}
+  m_LocalPosition: {x: -.00300000003, y: 2.25, z: -.605000019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 419828}
@@ -305,8 +305,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122984}
-  m_LocalRotation: {x: -.196252391, y: -.170071632, z: .615965605, w: .743738592}
-  m_LocalPosition: {x: .154000282, y: -.104999959, z: .380999744}
+  m_LocalRotation: {x: -.0176622346, y: -.0161744654, z: .722446322, w: .691012204}
+  m_LocalPosition: {x: .203999996, y: -.104999959, z: .380999744}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 449298}
@@ -331,8 +331,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117518}
   m_LocalRotation: {x: .5, y: -.5, z: .500000119, w: .49999994}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
-  m_LocalScale: {x: 4, y: 4, z: -3.13000011}
+  m_LocalPosition: {x: 0, y: 0, z: .839999974}
+  m_LocalScale: {x: 2, y: 2, z: 3}
   m_Children: []
   m_Father: {fileID: 419828}
   m_RootOrder: 1
@@ -780,7 +780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67349001919f647f5b0d71b280efff75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slashDamage: 5
+  slashDamage: 4
   maxActions: 1
 --- !u!114 &11445854
 MonoBehaviour:
@@ -793,7 +793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c38bf644a0be48de859486d10a9f7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumMovement: 40
+  maximumMovement: 30
 --- !u!114 &11445970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -807,7 +807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximumHealth: 10
   type: 1
-  name: 1
+  charName: 0
   dead: 0
   deathParticleAdjustment: {x: 0, y: .5, z: 0}
 --- !u!114 &11448514
@@ -969,7 +969,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 1.5
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1196,13 +1196,13 @@ ParticleSystem:
       minMaxState: 0
     gravityModifier: 0
     inheritVelocity: 0
-    maxNumParticles: 200
+    maxNumParticles: 300
   ShapeModule:
     serializedVersion: 2
     enabled: 1
     type: 4
     radius: .00999999978
-    angle: 30
+    angle: 60
     length: 5
     boxX: .25
     boxY: .5
@@ -1215,7 +1215,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 100
+      scalar: 150
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1255,7 +1255,7 @@ ParticleSystem:
     time1: 0
     time2: 0
     time3: 0
-    m_BurstCount: 1
+    m_BurstCount: 0
   SizeModule:
     enabled: 1
     curve:
