@@ -163,7 +163,9 @@ public class CharacterState : MonoBehaviour {
             }
 
             health += amount;
-
+            if (sourceIsCharacter) {
+                am.CharacterHealedACharacter(type, sourceCs.type);
+            }
 
 			if (health >= maximumHealth) {
 				health = maximumHealth;

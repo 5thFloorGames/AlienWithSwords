@@ -10,12 +10,14 @@ public class MeleeRangeInformer : MonoBehaviour {
 	List<GameObject> hitList;
     CharacterActionsSecond cas;
     Collider cldr;
+    GameObject caster;
 
 	void Start () {
         cas = transform.root.GetComponent<CharacterActionsSecond>();
         cldr = GetComponent<MeshCollider>();
 		wouldHitEnemy = false;
 		hitList = new List<GameObject> ();
+        caster = transform.root.gameObject;
 	}
 
 	void OnTriggerEnter (Collider other) {
@@ -59,7 +61,7 @@ public class MeleeRangeInformer : MonoBehaviour {
                 List<object> info = new List<object>();
                 object dmgObject = damage;
                 info.Add(dmgObject);
-                info.Add(gameObject);
+                info.Add(caster);
                 enemyObj.SendMessage("TakeDamage", info);
             }
         }

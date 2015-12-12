@@ -58,15 +58,14 @@ public class AnnouncementManager : MonoBehaviour {
     }
 
     public void CharacterTookDamageFromEnemy(CharacterType type, int damageAmount, EnemyType sourceType) {
-        //string name = GetCharacterName (type);
-        //combatTextInc += "\n" + name + " took " + damageAmount + " damage.";
 
-        //StartCoroutine(GenerateCombatLog());
-        Debug.Log(sourceType + " dmged " + type);
+        combatTextInc += "\n" + sourceType + " dealt " + damageAmount + " damage to " + GetCharacterName(type) + ".";
+        StartCoroutine(GenerateCombatLog());
     }
 
     public void CharacterTookDamageFromCharacter(CharacterType type, int damageAmount, CharacterType sourceType) {
-        Debug.Log(sourceType + " dmged " + type);
+        combatTextInc += "\n" + GetCharacterName(sourceType) + " dealt " + damageAmount + " damage to " + GetCharacterName(type) + ".";
+        StartCoroutine(GenerateCombatLog());
     }
 
     public void EnemyTookDamageFromCharacter(EnemyType type, int damageAmount, CharacterType sourceType) {
