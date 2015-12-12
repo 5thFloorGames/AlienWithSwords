@@ -132,6 +132,7 @@ public class CharacterState : MonoBehaviour {
 		AnnounceDeathToManager();
 		GameObject prefab = (GameObject) Resources.Load("playerExplodeParticles");
 		Instantiate (prefab, transform.position + deathParticleAdjustment, Quaternion.identity);
+        DisableColliders();
 	}
 	
 	void AnnounceDeathToManager() {
@@ -141,6 +142,7 @@ public class CharacterState : MonoBehaviour {
 	}
 	
 	void CharacterResurrected() {
+        EnableColliders();
 		uim.CharacterAliveUIUpdate (type.ToString());
 		if (!inCharacter) {
 			sprite.SetActive(true);
@@ -149,6 +151,16 @@ public class CharacterState : MonoBehaviour {
 		health = maximumHealth;
 		UpdateHealthToUI();
 	}
+
+    void EnableColliders() {
+        GetComponent<CharacterController>().enabled = true;
+        GetComponent<CapsuleCollider>().enabled = true;
+    }
+
+    void DisableColliders() {
+        GetComponent<CharacterController>().enabled = false;
+        GetComponent<CapsuleCollider>().enabled = false;
+    }
 	
 	void UpdateHealthToUI() {
 		uim.UpdateHealthMeter (gameObject.name, health, maximumHealth);
