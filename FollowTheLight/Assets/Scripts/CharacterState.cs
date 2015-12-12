@@ -6,7 +6,7 @@ public class CharacterState : MonoBehaviour {
 	
 	public int maximumHealth;
 	public CharacterType type;
-    public CharacterName name;
+    public CharacterName charName;
 	public bool dead;
 
 	[SerializeField] Vector3 deathParticleAdjustment;
@@ -73,11 +73,11 @@ public class CharacterState : MonoBehaviour {
 	}
 
     public void YouKilledACharacter() {
-
+        cas.PlayKillingCharacterQuote();
     }
 
     public void YouKilledAnEnemy() {
-
+        cas.PlayKillingAnEnemyQuote();
     }
 	
 	IEnumerator DelayedUnmute() {
@@ -156,7 +156,6 @@ public class CharacterState : MonoBehaviour {
             GameObject source = (GameObject)info[1];
             bool sourceIsCharacter = false;
             CharacterState sourceCs = source.GetComponent<CharacterState>();
-            EnemyState sourceEs = source.GetComponent<EnemyState>();
 
             if (sourceCs != null) {
                 sourceIsCharacter = true;

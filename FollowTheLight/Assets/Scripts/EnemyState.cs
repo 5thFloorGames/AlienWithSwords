@@ -67,7 +67,6 @@ public class EnemyState : MonoBehaviour {
             GameObject source = (GameObject)info[1];
             bool sourceIsCharacter = false;
             CharacterState sourceCs = source.GetComponent<CharacterState>();
-            EnemyState sourceEs = source.GetComponent<EnemyState>();
 
             if (sourceCs != null) {
                 sourceIsCharacter = true;
