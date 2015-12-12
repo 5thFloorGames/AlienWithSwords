@@ -28,8 +28,6 @@ public class AnnouncementManager : MonoBehaviour {
         dyingFade = tf.FindChild("DyingFade").GetComponent<Image>();
         damageFade = tf.FindChild("DamageFade").GetComponent<Image>();
         ActivateDyingAndDamage();
-        combatTextNow = "";
-		combatTextInc = "";
 		ResetCombatLog ();
 		ResetAnnouncements ();
 	}
