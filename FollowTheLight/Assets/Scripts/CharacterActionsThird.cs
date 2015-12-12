@@ -47,9 +47,9 @@ public class CharacterActionsThird : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (GameState.playersTurn && inCharacter && !dead) {
+		if (inCharacter && !dead) {
 			CheckIfSomethingWithinAim ();
-			if (Time.time - previousActionTime >= actionCooldown && actions > 0) {
+			if (GameState.playersTurn && Time.time - previousActionTime >= actionCooldown && actions > 0) {
 				if (Input.GetButtonDown ("Fire1") && (enemyInAim || characterInAim)) {
 					DamageAimedCharacter ();
 					UpdateActionsToUI ();
