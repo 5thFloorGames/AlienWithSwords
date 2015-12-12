@@ -137,9 +137,15 @@ public class CharacterState : MonoBehaviour {
                 } else {
                     am.CharacterDiedFromEnemy(type, sourceEs.type);
                 }
+                if (gameObject == GameState.activeCharacter) {
+                    am.DyingFader();
+                }
+            }
 
-			}
-			uim.DamageTakenUIUpdate(type.ToString());
+            if (gameObject == GameState.activeCharacter) {
+                am.ActiveCharacterDamagedFader();
+            }
+            uim.DamageTakenUIUpdate(type.ToString());
 			UpdateHealthToUI ();
 		}
 	}
@@ -182,6 +188,7 @@ public class CharacterState : MonoBehaviour {
 			if (health >= maximumHealth) {
 				health = maximumHealth;
 			}
+
 			UpdateHealthToUI();
 		}
 	}

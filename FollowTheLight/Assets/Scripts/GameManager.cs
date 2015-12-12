@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour {
         if (!initialized && level != 0) {
             initialized = true;
             levelCompleted = false;
+            am.LevelLoadedFader();
             Invoke("LateStart", 0.1f);
         }
     }

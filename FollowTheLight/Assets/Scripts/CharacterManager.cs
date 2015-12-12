@@ -74,6 +74,7 @@ public class CharacterManager : MonoBehaviour {
         character.BroadcastMessage("EnterCharacter");
         GameState.activeCharacter = character;
         uim.ActiveCharacterUI(character.name);
+        am.RemoveDyingFader();
     }
 
     public void PlayersTurnActivated() {
@@ -194,7 +195,8 @@ public class CharacterManager : MonoBehaviour {
     }
 
 	public void AutoSwitchToCharacter() {
-		if (GetCharacterObject("Character1") != null && firstActive) {
+        am.RemoveDyingFader();
+        if (GetCharacterObject("Character1") != null && firstActive) {
 			SwitchCharacter(GetCharacterObject("Character1"));
 			return;
 		} else if (GetCharacterObject("Character2") != null && secondActive) {
@@ -203,7 +205,7 @@ public class CharacterManager : MonoBehaviour {
 		} else if (GetCharacterObject("Character3") != null && thirdActive) {
 			SwitchCharacter(GetCharacterObject("Character3"));
 		}
-	}
+    }
 
 	void LoadCharacterToScene(string name, Vector3 position, Quaternion rotation) {
 		GameObject prefab = (GameObject) Resources.Load(name);

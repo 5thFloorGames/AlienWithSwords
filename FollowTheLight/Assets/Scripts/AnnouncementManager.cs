@@ -27,6 +27,7 @@ public class AnnouncementManager : MonoBehaviour {
         levelFade = tf.FindChild("LevelFade").GetComponent<Image>();
         dyingFade = tf.FindChild("DyingFade").GetComponent<Image>();
         damageFade = tf.FindChild("DamageFade").GetComponent<Image>();
+        ActivateDyingAndDamage();
         combatTextNow = "";
 		combatTextInc = "";
 		ResetCombatLog ();
@@ -56,6 +57,55 @@ public class AnnouncementManager : MonoBehaviour {
 	}
 
 
+
+    // Fading effects
+
+    public void LevelLoadedFader() {
+        if (levelFade == null) {
+            levelFade = transform.FindChild("Announcements").FindChild("LevelFade").GetComponent<Image>();
+        }
+        levelFade.gameObject.SetActive(true);
+        levelFade.canvasRenderer.SetAlpha(1.0f);
+        levelFade.CrossFadeAlpha(0.0f, 1.0f, false);
+    }
+
+    public void DyingFader() {
+        StartCoroutine(DyingFading());
+    }
+
+    public void RemoveDyingFader() {
+        if (dyingFade != null) {
+            dyingFade.canvasRenderer.SetAlpha(0.0f);
+        }
+    }
+
+    public void ActiveCharacterDamagedFader() {
+        StartCoroutine(DamageFading());
+    }
+
+    void ActivateDyingAndDamage() {
+        damageFade.gameObject.SetActive(true);
+        damageFade.canvasRenderer.SetAlpha(0.0f);
+        dyingFade.gameObject.SetActive(true);
+        dyingFade.canvasRenderer.SetAlpha(0.0f);
+    }
+
+    IEnumerator DyingFading() {
+        dyingFade.CrossFadeAlpha(0.8f, 2.0f, false);
+        yield return new WaitForSeconds(2.0f);
+    }
+
+    IEnumerator DamageFading() {
+        damageFade.CrossFadeAlpha(0.6f, 0.2f, false);
+        yield return new WaitForSeconds(0.2f);
+        damageFade.CrossFadeAlpha(0.0f, 0.2f, false);
+    }
+
+
+
+
+
+    // Combat log information
 
     public void CharacterHealedACharacter(CharacterType type, int amount, CharacterType sourceType) {
         combatTextInc += "\n" + GetCharacterName(sourceType) + " restored " + amount + " health to " + GetCharacterName(type) + ".";
@@ -100,6 +150,8 @@ public class AnnouncementManager : MonoBehaviour {
 
 
 
+    // Announcements
+
     public void EnemyTurnStarted() {
 		announcementInc += "\nEnemies will attack now.";
 		StartCoroutine (GenerateAnnouncement());
@@ -123,6 +175,10 @@ public class AnnouncementManager : MonoBehaviour {
 		StartCoroutine (GenerateAnnouncement());
 		preventAdditionalAnnouncements = true;
 	}
+
+
+
+    // Functionalities
 
 	IEnumerator GenerateCombatLog() {
 		while (combatTextNow.Length != combatTextInc.Length) {
