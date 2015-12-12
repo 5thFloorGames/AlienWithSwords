@@ -181,6 +181,8 @@ public class UserInterfaceManager : MonoBehaviour {
             distanceMeters[name].CrossFadeAlpha(alphaValue, 0.1f, true);
             healthMeters[name].CrossFadeAlpha(alphaValue, 0.1f, true);
 			panelBackgrounds[name].CrossFadeAlpha(alphaValue, 0.1f, true);
+            deadMarks[name].GetComponent<Image>().CrossFadeAlpha(alphaValue, 0.1f, true);
+            distanceTexts[name].CrossFadeAlpha(alphaValue, 0.1f, true);
             Transform apParent = charinf.FindChild("ActionPoints");
             foreach (Transform ap in apParent) {
                 Image img = ap.GetComponent<Image>();
