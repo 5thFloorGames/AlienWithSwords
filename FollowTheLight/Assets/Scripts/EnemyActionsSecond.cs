@@ -16,6 +16,7 @@ public class EnemyActionsSecond : MonoBehaviour {
 
 	GameObject bulletShotTarget;
 	GameObject bulletShot;
+    bool bulletFlying;
 
 	EnemyActionsSecond thisScript;
 
@@ -42,6 +43,7 @@ public class EnemyActionsSecond : MonoBehaviour {
     }
 
     public void InitActions(GameObject manager) {
+        bulletFlying = false;
         em = manager.GetComponent<EnemyManager>();
     }
 
@@ -54,8 +56,11 @@ public class EnemyActionsSecond : MonoBehaviour {
 	}
 
 	public void ShotCollided(GameObject go) {
-		move.targetedCharacter.SendMessageUpwards("TakeDamage", actionDamage);
-		ActionsCompletedInformManager ();
+        if (bulletFlying) {
+            move.targetedCharacter.SendMessageUpwards("TakeDamage", actionDamage);
+            ActionsCompletedInformManager();
+            bulletFlying = false;
+        }
 	}
 
 	public void ShotMissed(GameObject bullet) {
@@ -81,6 +86,8 @@ public class EnemyActionsSecond : MonoBehaviour {
 			shot.GetComponent<EnemyShotDamages> ().Init (actionDamage, 0.0f, shotLifetime, thisScript);
 			Rigidbody shotrb = shot.GetComponent<Rigidbody> ();
 			shotrb.AddForce (direction * 500.0f);
+
+            bulletFlying = true;
 		} else {
 			ActionsCompletedInformManager();
 		}
