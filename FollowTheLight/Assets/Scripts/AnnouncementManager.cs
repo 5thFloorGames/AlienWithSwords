@@ -4,6 +4,8 @@ using System.Collections;
 
 public class AnnouncementManager : MonoBehaviour {
 
+    GameObject guide;
+
     Image levelFade;
     Image dyingFade;
     Image damageFade;
@@ -21,12 +23,14 @@ public class AnnouncementManager : MonoBehaviour {
 	bool preventAdditionalAnnouncements;
 
 	void Start () {
+        guide = transform.FindChild("Guide").gameObject;
         Transform tf = transform.FindChild("Announcements");
 		combatLog = tf.FindChild("CombatLog").GetComponent<Text>();
 		announcement = tf.FindChild("Announcement").GetComponent<Text>();
         levelFade = tf.FindChild("LevelFade").GetComponent<Image>();
         dyingFade = tf.FindChild("DyingFade").GetComponent<Image>();
         damageFade = tf.FindChild("DamageFade").GetComponent<Image>();
+
         ActivateDyingAndDamage();
 		ResetCombatLog ();
 		ResetAnnouncements ();
@@ -36,6 +40,9 @@ public class AnnouncementManager : MonoBehaviour {
 		if (announcementNow.Length > 0) {
 			CheckAnnouncementTimers();
 		}
+        if (Input.GetButtonDown("Submit")) {
+            ToggleGuide();
+        }
 	}
 
 	void OnLevelWasLoaded() {
@@ -53,6 +60,18 @@ public class AnnouncementManager : MonoBehaviour {
 		announcementNow = "";
 		announcement.text = "";
 	}
+
+
+
+    // Guide
+
+    void ToggleGuide() {
+        if (guide.activeSelf) {
+            guide.SetActive(false);
+        } else {
+            guide.SetActive(true);
+        }
+    }
 
 
 

@@ -68,7 +68,11 @@ public class GameManager : MonoBehaviour {
         if (Input.GetButton ("Cancel")) {
 			QuitGame();
 		}
-		if (GameState.playersTurn) {
+
+        if (Input.GetKeyDown(KeyCode.X)) {
+            LoadNextLevel();
+        }
+        if (GameState.playersTurn) {
 			if (Input.GetKeyDown (KeyCode.Tab)) {
 				StartEnemyTurn();
 			}
