@@ -13,7 +13,7 @@ public class CharacterActionsFirst : MonoBehaviour {
 
 	CharacterSoundController cas;
 	GameObject bullet;
-	Transform cameraTf;
+	Transform bulletSpawnPoint;
 	GameObject overlay;
 	GameObject crossHairs;
 
@@ -31,8 +31,9 @@ public class CharacterActionsFirst : MonoBehaviour {
     void Awake() {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 		cas = GetComponentInChildren<CharacterSoundController>();
-        cameraTf = transform.FindChild("Camera");
-		overlay = cameraTf.FindChild("Overlay").gameObject;
+        bulletSpawnPoint = transform.FindChild("Camera");
+        overlay = bulletSpawnPoint.FindChild("Overlay").gameObject;
+        bulletSpawnPoint = bulletSpawnPoint.FindChild("BulletSpawnPoint");
 		crossHairs = overlay.transform.FindChild ("Crosshairs").gameObject;
         dead = false;
     }
@@ -61,19 +62,18 @@ public class CharacterActionsFirst : MonoBehaviour {
 	void Shoot() {
 		cas.PlayAttackingQuote ();
 		cas.PlayAttackSFX ();
-		GameObject firedBullet = (GameObject)Instantiate (bullet, cameraTf.position + cameraTf.rotation *
-		                                                  new Vector3(0, 0, 1), cameraTf.rotation);
+		GameObject firedBullet = (GameObject)Instantiate (bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
 		BulletDamages bs = firedBullet.GetComponent<BulletDamages> ();
 		bs.SetHitSFX (cas.GetAttackHitClips());
 		
 		Rigidbody bulletrb = firedBullet.GetComponent<Rigidbody> ();
-		bulletrb.AddForce(cameraTf.rotation * bullet.transform.forward * 2000f);
+		bulletrb.AddForce(bulletSpawnPoint.rotation * bullet.transform.forward * 2000f);
         StartCoroutine(DealDamageWithRayCast());
 	}
 
 	void CheckIfEnemyWithinAim () {
-		Vector3 start = cameraTf.position;
-		Vector3 direction = (cameraTf.rotation * new Vector3 (0, 0, 500f));
+		Vector3 start = bulletSpawnPoint.position;
+		Vector3 direction = (bulletSpawnPoint.rotation * new Vector3 (0, 0, 500f));
 		RaycastHit hit;
         //Debug.DrawRay(start, direction, Color.red, 0.1f);
 		if (Physics.Raycast (start, direction, out hit, (direction.magnitude + 1.0f))) {
@@ -90,8 +90,8 @@ public class CharacterActionsFirst : MonoBehaviour {
 
     IEnumerator DealDamageWithRayCast() {
         yield return new WaitForSeconds(0.2f);
-        Vector3 start = cameraTf.position;
-        Vector3 direction = (cameraTf.rotation * new Vector3(0, 0, 500f));
+        Vector3 start = bulletSpawnPoint.position;
+        Vector3 direction = (bulletSpawnPoint.rotation * new Vector3(0, 0, 500f));
         RaycastHit hit;
         //Debug.DrawRay(start, direction, Color.red, 0.1f);
         if (Physics.Raycast(start, direction, out hit, (direction.magnitude + 1.0f))) {
@@ -148,9 +148,9 @@ public class CharacterActionsFirst : MonoBehaviour {
 
 	void DetectThings() {
 		RaycastHit hit;
-		var angle = cameraTf.rotation * startingAngle;
+		var angle = bulletSpawnPoint.rotation * startingAngle;
 		var direction = angle * Vector3.forward;
-		var pos = cameraTf.position;
+		var pos = bulletSpawnPoint.position;
 		for (var i = 0; i < 24; i++) {
 			Debug.DrawRay(pos, (direction * 30f), Color.blue, 3.0f);
 			if(Physics.Raycast(pos, direction, out hit, 30f)) {
