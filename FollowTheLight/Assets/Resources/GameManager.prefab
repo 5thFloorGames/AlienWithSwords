@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 6, y: 6}
+  m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!114 &11447426
 MonoBehaviour:
@@ -316,7 +316,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7ae1eb2e55e614563833fb5d3be86e9e, type: 3}
+    m_Font: {fileID: 12800000, guid: 3ada1714ea87a42aea533866471302aa, type: 3}
     m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
@@ -326,7 +326,7 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
-    m_LineSpacing: 1.60000002
+    m_LineSpacing: 1
   m_Text: "\nBosco took 5 damage.     \nBosco took 5 damage.     \nPol took 5 damage.
     \    \nBosco took 5 damage.     \nBosco died..."
 --- !u!222 &22239162
