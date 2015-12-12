@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c38bf644a0be48de859486d10a9f7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumMovement: 15
+  maximumMovement: 20
 --- !u!114 &11429044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1049,7 +1049,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maximumMovement
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maximumHealth
