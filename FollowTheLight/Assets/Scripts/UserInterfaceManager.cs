@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class UserInterfaceManager : MonoBehaviour {
 
+    Text enemyCounter;
 	GameObject characterPanel;
 	AnnouncementManager am;
 
@@ -18,22 +19,32 @@ public class UserInterfaceManager : MonoBehaviour {
 
 	void Awake () {
 
-		DontDestroyOnLoad (gameObject);
+        Basics();
+
+        GetTheObjects();
+
+	}
+
+    void Basics() {
+        DontDestroyOnLoad(gameObject);
 
         healthMeters = new Dictionary<string, Image>();
         healthTexts = new Dictionary<string, Text>();
         distanceMeters = new Dictionary<string, Image>();
         distanceTexts = new Dictionary<string, Text>();
-        actionPoints = new Dictionary<string, Transform> ();
-		deadMarks = new Dictionary<string, GameObject> ();
-		panelBackgrounds = new Dictionary<string, Image>();
+        actionPoints = new Dictionary<string, Transform>();
+        deadMarks = new Dictionary<string, GameObject>();
+        panelBackgrounds = new Dictionary<string, Image>();
+    }
 
-		characterPanel = (GameObject)transform.Find ("CharacterPanel").gameObject;
+    void GetTheObjects() {
+        characterPanel = transform.Find("CharacterPanel").gameObject;
+        enemyCounter = transform.Find("EnemyCounter").gameObject.GetComponent<Text>();
 
-		foreach (Transform charinf in characterPanel.transform) {
-			GameObject obj = charinf.FindChild("HealthMeter").gameObject;
+        foreach (Transform charinf in characterPanel.transform) {
+            GameObject obj = charinf.FindChild("HealthMeter").gameObject;
             Image img = obj.GetComponent<Image>();
-			healthMeters.Add(charinf.name, img);
+            healthMeters.Add(charinf.name, img);
 
             Text text = charinf.FindChild("HealthText").gameObject.GetComponent<Text>();
             healthTexts.Add(charinf.name, text);
@@ -48,15 +59,14 @@ public class UserInterfaceManager : MonoBehaviour {
             obj = charinf.FindChild("ActionPoints").gameObject;
             actionPoints.Add(charinf.name, obj.transform);
 
-			obj = charinf.FindChild("CharacterDeadMarker").gameObject;
-			deadMarks.Add(charinf.name, obj);
-			DisableAllDeadMarks();
+            obj = charinf.FindChild("CharacterDeadMarker").gameObject;
+            deadMarks.Add(charinf.name, obj);
+            DisableAllDeadMarks();
 
-			obj = charinf.FindChild("PanelBackground").gameObject;
-			panelBackgrounds.Add(charinf.name, obj.GetComponent<Image>());
+            obj = charinf.FindChild("PanelBackground").gameObject;
+            panelBackgrounds.Add(charinf.name, obj.GetComponent<Image>());
         }
-
-	}
+    }
 
 	void Start() {
 		am = GameObject.FindGameObjectWithTag("GameController").GetComponent<AnnouncementManager>();
@@ -73,27 +83,18 @@ public class UserInterfaceManager : MonoBehaviour {
 		DisableAllDeadMarks ();
 	}
 
-	public void ShowEnemyUI() {
-		am.EnemyTurnStarted();
-	}
 
-	public void HideEnemyUI() {
-		am.PlayerTurnStart ();
-	}
 
-    public void ShowLevelFailedUI() {
-		am.LevelFailed ();
+
+    // Enemy Counter
+
+    public void UpdateEnemyCount(int count) {
+        enemyCounter.text = count.ToString();
     }
 
-    public void HideLevelFailedUI() {
-    }
 
-	public void ShowLevelCompletedUI() {
-		am.LevelCompleted ();
-	}
 
-	public void HideLevelCompletedUI() {
-	}
+    // UI Management
 
 	public void DamageTakenUIUpdate(string charName) {
 		//FlashMovementColor (charName, 2 );
@@ -149,8 +150,7 @@ public class UserInterfaceManager : MonoBehaviour {
                 actionPoint.gameObject.SetActive(true);
             }
         }
-        
-        
+
     }
 
 	public void HideCharacterInfos() {
@@ -194,6 +194,8 @@ public class UserInterfaceManager : MonoBehaviour {
     }
 
 
+
+    // Color Flashing Helpers
 
 	public void FlashMovementColor (string characterName, int times) {
 		Image meter = distanceMeters[characterName];
@@ -242,6 +244,8 @@ public class UserInterfaceManager : MonoBehaviour {
 	}
 
 
+
+    // Alpha flashing helpers
 
     public void FlashMovement (string characterName, int times) {
         if (GameState.activeCharacter == null || characterName != GameState.activeCharacter.name) {
@@ -296,5 +300,31 @@ public class UserInterfaceManager : MonoBehaviour {
             yield return new WaitForSeconds(0.2f);
             i += 1;
         }
+    }
+
+
+
+    // Passing info to Announcement Manager
+
+    public void EnemyTurnStartInfo() {
+        am.EnemyTurnStarted();
+    }
+
+    public void PlayerTurnStartInfo() {
+        am.PlayerTurnStart();
+    }
+
+    public void LevelFailedInfo() {
+        am.LevelFailed();
+    }
+
+    public void HideLevelFailedUI() {
+    }
+
+    public void ShowLevelCompletedUI() {
+        am.LevelCompleted();
+    }
+
+    public void HideLevelCompletedUI() {
     }
 }

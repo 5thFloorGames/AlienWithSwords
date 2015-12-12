@@ -7,6 +7,7 @@ public enum SecondaryEnemyType { Normal, Little, Big };
 
 public class EnemyManager : MonoBehaviour {
 
+    UserInterfaceManager uim;
 	GameManager gm;
 	List<GameObject> enemies;
 
@@ -14,6 +15,7 @@ public class EnemyManager : MonoBehaviour {
 	
 	void Start () {
 		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 		OnLevelWasLoaded (GameState.GetLevel());
 	}
 
@@ -23,7 +25,8 @@ public class EnemyManager : MonoBehaviour {
 
 	void OnLevelWasLoaded(int level) {
         GetEnemiesInScene();
-	}
+        GiveEnemyCountToUI();
+    }
 
 	public void PlayersTurnActivated() {
 
@@ -61,7 +64,8 @@ public class EnemyManager : MonoBehaviour {
         if (enemies.Count == 0) {
             gm.AllEnemiesDestroyed();
         }
-	}
+        GiveEnemyCountToUI();
+    }
 
 	void GetEnemiesInScene() {
         enemies = new List<GameObject>();
@@ -76,5 +80,9 @@ public class EnemyManager : MonoBehaviour {
 	void AllEnemyActionsCompleted() {
 		gm.EnemyTurnOver ();
 	}
+
+    void GiveEnemyCountToUI() {
+        uim.UpdateEnemyCount(enemies.Count);
+    }
 
 }

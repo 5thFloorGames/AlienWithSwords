@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+public enum LevelObjective { DestroyEnemies, GetAllCharactersToLevelEnd, GetOneCharacterToLevelEnd, KillYourCharacters };
+
 public class GameManager : MonoBehaviour {
 
 	AnnouncementManager am;
@@ -98,8 +100,8 @@ public class GameManager : MonoBehaviour {
         if (!levelCompleted) {
             levelCompleted = true;
 
-            uim.HideEnemyUI();
-            uim.ShowLevelFailedUI();
+            uim.PlayerTurnStartInfo();
+            uim.LevelFailedInfo();
             GameState.playersTurn = false;
             StartCoroutine(LevelFailedLoadSameIn(3.0f));
         }
@@ -118,7 +120,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void AllCharactersInLevelEnd() {
-        if (objective == LevelObjective.GetToLevelEnd) {
+        if (objective == LevelObjective.GetAllCharactersToLevelEnd) {
             LevelComplete();
         }
     }
@@ -133,7 +135,7 @@ public class GameManager : MonoBehaviour {
 
 	void StartEnemyTurn() {
 		GameState.playersTurn = false;
-		uim.ShowEnemyUI ();
+		uim.EnemyTurnStartInfo ();
         cm.PlayerTurnEnded();
 		em.TriggerEnemyActions ();
 	}
@@ -148,7 +150,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void StartPlayerTurn() {
-		uim.HideEnemyUI ();
+		uim.PlayerTurnStartInfo ();
         cm.PlayersTurnActivated ();
 		em.PlayersTurnActivated ();
 		GameState.playersTurn = true;
