@@ -5,6 +5,7 @@ public class CharacterState : MonoBehaviour {
 	
 	public int maximumHealth;
 	public CharacterType type;
+    public CharacterName name;
 	public bool dead;
 
 	[SerializeField] Vector3 deathParticleAdjustment;

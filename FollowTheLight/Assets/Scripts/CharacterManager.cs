@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public enum CharacterType { Character1, Character2, Character3 };
+public enum CharacterName { Pol, Bosco, Joseph };
 
 public class CharacterManager : MonoBehaviour {
 
