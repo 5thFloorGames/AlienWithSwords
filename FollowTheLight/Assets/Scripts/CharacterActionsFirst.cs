@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CharacterActionsFirst : MonoBehaviour {
 
@@ -96,7 +97,11 @@ public class CharacterActionsFirst : MonoBehaviour {
         //Debug.DrawRay(start, direction, Color.red, 0.1f);
         if (Physics.Raycast(start, direction, out hit, (direction.magnitude + 1.0f))) {
             if (hit.collider.tag == "Enemy" || hit.collider.tag == "Player") {
-                hit.collider.gameObject.SendMessageUpwards("TakeDamage", damage);
+                List<object> info = new List<object>();
+                object dmgObject = damage;
+                info.Add(dmgObject);
+                info.Add(gameObject);
+                hit.collider.gameObject.SendMessageUpwards("TakeDamage", info);
             } 
         } 
     }

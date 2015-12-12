@@ -56,7 +56,11 @@ public class MeleeRangeInformer : MonoBehaviour {
     public void DealDamageToHitList(int damage) {
         if (hitList != null) {
             foreach (GameObject enemyObj in hitList) {
-                enemyObj.SendMessage("TakeDamage", damage);
+                List<object> info = new List<object>();
+                object dmgObject = damage;
+                info.Add(dmgObject);
+                info.Add(gameObject);
+                enemyObj.SendMessage("TakeDamage", info);
             }
         }
     }

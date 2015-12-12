@@ -56,7 +56,7 @@ public class EnemyManager : MonoBehaviour {
 		enemies.Add (obj);
 	}
 
-	void DeleteEnemyFromList(GameObject enemyobj) {
+	public void DeleteEnemyFromList(GameObject enemyobj) {
 		enemies.Remove (enemyobj);
         if (enemies.Count == 0) {
             gm.AllEnemiesDestroyed();

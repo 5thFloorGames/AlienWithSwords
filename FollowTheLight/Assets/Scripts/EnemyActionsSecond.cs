@@ -57,9 +57,14 @@ public class EnemyActionsSecond : MonoBehaviour {
 
 	public void ShotCollided(GameObject go) {
         if (bulletFlying) {
-            move.targetedCharacter.SendMessageUpwards("TakeDamage", actionDamage);
-            ActionsCompletedInformManager();
             bulletFlying = false;
+            List<object> info = new List<object>();
+            object dmgObject = actionDamage;
+            info.Add(dmgObject);
+            info.Add(gameObject);
+            move.targetedCharacter.SendMessageUpwards("TakeDamage", info);
+            ActionsCompletedInformManager();
+            
         }
 	}
 

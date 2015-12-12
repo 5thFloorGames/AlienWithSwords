@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CharacterState : MonoBehaviour {
 	
@@ -70,6 +71,14 @@ public class CharacterState : MonoBehaviour {
 	public void OutOfActions() {
 		cas.PlayOutOfActionsQuote ();
 	}
+
+    public void YouKilledACharacter() {
+
+    }
+
+    public void YouKilledAnEnemy() {
+
+    }
 	
 	IEnumerator DelayedUnmute() {
 		yield return new WaitForSeconds (0.5f);
@@ -92,27 +101,75 @@ public class CharacterState : MonoBehaviour {
 		}
 	}
 	
-	void TakeDamage(int amount) {
+	void TakeDamage(List<object> info) {
+
+        if (info[0] == null || info[1] == null) {
+            Debug.Log("WARNING: correct info not given for dealing damage!");
+        }
+
 		if (!dead) {
-			am.CharacterTookDamage(type, amount);
-			if (health - amount <= 0) {
-				health = 0;
-				cas.PlayDyingQuote ();
-				Death ();
-			} else {
-				health -= amount;
+
+            // Handling the info
+            int amount = int.Parse(info[0].ToString());
+            GameObject source = (GameObject)info[1];
+            bool sourceIsCharacter = false;
+            CharacterState sourceCs = source.GetComponent<CharacterState>();
+            EnemyState sourceEs = source.GetComponent<EnemyState>();
+
+            if (sourceCs != null) {
+                sourceIsCharacter = true;
+            }
+
+            health -= amount;
+
+            if (sourceIsCharacter) {
+                am.CharacterTookDamageFromCharacter(type, amount, sourceCs.type);
+            } else {
+                am.CharacterTookDamageFromEnemy(type, amount, sourceEs.type);
+            }
+
+            if (health <= 0) {
+                Death();
+
+                if (sourceIsCharacter) {
+                    sourceCs.YouKilledACharacter();
+                    am.CharacterDiedFromCharacter(type, sourceCs.type);
+                } else {
+                    am.CharacterDiedFromEnemy(type, sourceEs.type);
+                }
+
 			}
 			uim.DamageTakenUIUpdate(type.ToString());
 			UpdateHealthToUI ();
 		}
 	}
 
-	void Heal(int amount) {
-		if (!dead) {
-			Debug.Log(gameObject.name + " got " + amount + " healing");
-			health += amount;
+	void Heal(List<object> info) {
+        if (info[0] == null || info[1] == null) {
+            Debug.Log("WARNING: correct info not given for healing!");
+        }
+
+        if (!dead) {
+
+            // Handling the info
+            int amount = int.Parse(info[0].ToString());
+            GameObject source = (GameObject)info[1];
+            bool sourceIsCharacter = false;
+            CharacterState sourceCs = source.GetComponent<CharacterState>();
+            EnemyState sourceEs = source.GetComponent<EnemyState>();
+
+            if (sourceCs != null) {
+                sourceIsCharacter = true;
+            }
+
+            health += amount;
+
+
 			if (health >= maximumHealth) {
 				health = maximumHealth;
+                if (sourceIsCharacter) {
+                    am.CharacterTriedToHealFullHealth(type, sourceCs.type);
+                }
 			}
 			UpdateHealthToUI();
 		}
@@ -128,7 +185,9 @@ public class CharacterState : MonoBehaviour {
 	
 	void Death() {
 		dead = true;
-		NotAimedAt ();
+        health = 0;
+        cas.PlayDyingQuote();
+        NotAimedAt ();
 		sprite.SetActive (false);
 		AnnounceDeathToManager();
 		GameObject prefab = (GameObject) Resources.Load("playerExplodeParticles");
@@ -137,7 +196,6 @@ public class CharacterState : MonoBehaviour {
 	}
 	
 	void AnnounceDeathToManager() {
-		am.CharacterDied (type);
 		uim.CharacterDiedUIUpdate (type.ToString());
 		cm.CharacterDied(gameObject, type);
 	}

@@ -47,22 +47,51 @@ public class AnnouncementManager : MonoBehaviour {
 		announcement.text = "";
 	}
 
-	public void CharacterTookDamage(CharacterType type, int damageAmount) {
-		string name = GetCharacterName (type);
-		combatTextInc += "\n" + name + " took " + damageAmount + " damage.";
-			
-		StartCoroutine(GenerateCombatLog());
-	}
 
-	public void CharacterDied(CharacterType type) {
-		string name = GetCharacterName (type);
-		combatTextInc += "\n" + name + " DIED...";
+
+    public void CharacterHealedACharacter(CharacterType type, CharacterType sourceType) {
+
+    }
+
+    public void CharacterTriedToHealFullHealth(CharacterType type, CharacterType sourceType) {
+
+    }
+
+    public void CharacterTookDamageFromEnemy(CharacterType type, int damageAmount, EnemyType sourceType) {
+        //string name = GetCharacterName (type);
+        //combatTextInc += "\n" + name + " took " + damageAmount + " damage.";
+
+        //StartCoroutine(GenerateCombatLog());
+        Debug.Log(sourceType + " dmged " + type);
+    }
+
+    public void CharacterTookDamageFromCharacter(CharacterType type, int damageAmount, CharacterType sourceType) {
+        Debug.Log(sourceType + " dmged " + type);
+    }
+
+    public void EnemyTookDamageFromCharacter(EnemyType type, int damageAmount, CharacterType sourceType) {
+        Debug.Log(sourceType + " dmged " + type);
+    }
+
+	public void CharacterDiedFromEnemy(CharacterType type, EnemyType sourceType) {
+
+		//string name = GetCharacterName (type);
+		//combatTextInc += "\n" + name + " DIED...";
 		
-		StartCoroutine(GenerateCombatLog());
+		//StartCoroutine(GenerateCombatLog());
 	}
 
+    public void CharacterDiedFromCharacter(CharacterType type, CharacterType sourceType) {
 
-	public void EnemyTurnStarted() {
+    }
+
+    public void EnemyDiedFromCharacter(EnemyType type, CharacterType sourceType) {
+
+    }
+
+
+
+    public void EnemyTurnStarted() {
 		announcementInc += "\nEnemies will attack now.";
 		StartCoroutine (GenerateAnnouncement());
 	}

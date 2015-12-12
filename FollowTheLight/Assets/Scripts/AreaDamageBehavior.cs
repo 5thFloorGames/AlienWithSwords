@@ -5,13 +5,14 @@ using System.Collections.Generic;
 public class AreaDamageBehavior : MonoBehaviour {
 
     ParticleSystem explosion;
+    GameObject caster;
 
 	int damage;
     float delayFromEnemy;
     float lifeTime;
 
-	public void Init (int damageAmount, float delay, float timeFromEnemy) {
-
+	public void Init (int damageAmount, float delay, float timeFromEnemy, GameObject goInfo) {
+        caster = goInfo;
         explosion = GetComponent<ParticleSystem>();
         delayFromEnemy = delay;
         lifeTime = timeFromEnemy;
@@ -22,7 +23,11 @@ public class AreaDamageBehavior : MonoBehaviour {
 	void OnTriggerEnter (Collider other) {
 		if (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider))) {
             if (CheckIfCharacterInSight(other.gameObject)) {
-                other.gameObject.SendMessageUpwards("TakeDamage", damage);
+                List <object> info = new List<object>();
+                object dmgObject = damage;
+                info.Add(dmgObject);
+                info.Add(caster);
+                other.gameObject.SendMessageUpwards("TakeDamage", info);
             }
 		}
 	}

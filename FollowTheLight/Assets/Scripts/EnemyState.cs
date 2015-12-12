@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyState : MonoBehaviour {
 
@@ -15,7 +16,8 @@ public class EnemyState : MonoBehaviour {
     int currentHealth;
 
 	Image healthMeter;
-	GameObject em;
+	EnemyManager em;
+    AnnouncementManager am;
 	Animator animator;
     EnemyMovement move;
 	EnemySoundController esc;
@@ -24,8 +26,9 @@ public class EnemyState : MonoBehaviour {
 	public void Init(GameObject manager) {
 		dead = false;
 		healthMeter = transform.FindChild("EnemyInfo").FindChild("HealthMeter").GetComponent<Image>();
-		em = manager;
-		esc = GetComponent<EnemySoundController>();
+        em = manager.GetComponent<EnemyManager>();
+        am = manager.GetComponent<AnnouncementManager>();
+        esc = GetComponent<EnemySoundController>();
         HealthInit();
 		UpdateHealthToHealthMeter ();
 	}
@@ -44,36 +47,62 @@ public class EnemyState : MonoBehaviour {
 	}
 
     void HealthInit() {
+
         if (maximumHealth == 0) {
             maximumHealth = 30;
         }
         currentHealth = maximumHealth;
     }
 
-	void TakeDamage(int amount) {
-		if (!dead) {;
-			currentHealth -= amount;
+	void TakeDamage (List<object> info) {
+
+        if (info[0] == null || info[1] == null) {
+            Debug.Log("WARNING: correct info not given for dealing damage!");
+        }
+
+        if (!dead) {
+
+            // Handling the info
+            int amount = int.Parse(info[0].ToString());
+            GameObject source = (GameObject)info[1];
+            bool sourceIsCharacter = false;
+            CharacterState sourceCs = source.GetComponent<CharacterState>();
+            EnemyState sourceEs = source.GetComponent<EnemyState>();
+
+            if (sourceCs != null) {
+                sourceIsCharacter = true;
+            }
+
+            currentHealth -= amount;
+
+            am.EnemyTookDamageFromCharacter(type, amount, sourceCs.type);
+
 			if (currentHealth <= 0) {
-				currentHealth = 0;
-				dead = true;
 				StartDying();
-			}
+
+                if (sourceIsCharacter) {
+                    sourceCs.YouKilledAnEnemy();
+                    am.EnemyDiedFromCharacter(type, sourceCs.type);
+                } else {
+                    
+                }
+            }
 			if (!dead) {
-				//animator.SetTrigger("GetHit");
+				animator.SetTrigger("IsHit");
 			}
-			UpdateHealthToHealthMeter ();
+            UpdateHealthToHealthMeter ();
 		}
 	}
 
 	void AimedAt(GameObject character) {
 		esc.PlayAimedQuote ();
-		animator.SetBool ("AimedAt", true);
+		//animator.SetBool ("AimedAt", true);
         move.CharacterAimedYou(character);
 		spriteRenderer.color = new Vector4 (0.5f, 0.5f, 0.5f, 1);
 	}
 
 	void NotAimedAt() {
-		animator.SetBool ("AimedAt", false);
+		//animator.SetBool ("AimedAt", false);
 		spriteRenderer.color = new Vector4 (1, 1, 1, 1);
 	}
 
@@ -82,9 +111,11 @@ public class EnemyState : MonoBehaviour {
 	}
 
 	void StartDying() {
-		gameObject.GetComponentInChildren<Collider> ().enabled = false;
+        currentHealth = 0;
+        dead = true;
+        gameObject.GetComponentInChildren<Collider> ().enabled = false;
 		animator.SetBool ("Dying", true);
-		em.SendMessage ("DeleteEnemyFromList", gameObject);
+		em.DeleteEnemyFromList(gameObject);
 		Invoke ("AdjustSpriteForDying", 0.1f);
 		Invoke ("Death", 0.5f);
 	}

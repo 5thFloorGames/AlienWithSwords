@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CharacterActionsThird : MonoBehaviour {
 	
@@ -131,11 +132,19 @@ public class CharacterActionsThird : MonoBehaviour {
 	}
 
 	void SendHealMessage() {
-		target.SendMessageUpwards ("Heal", healing);
+        List<object> info = new List<object>();
+        object dmgObject = healing;
+        info.Add(dmgObject);
+        info.Add(gameObject);
+        target.SendMessageUpwards ("Heal", info);
 	}
 
 	void SendDamageMessage() {
-		target.SendMessageUpwards ("TakeDamage", damage);
+        List<object> info = new List<object>();
+        object dmgObject = damage;
+        info.Add(dmgObject);
+        info.Add(gameObject);
+        target.SendMessageUpwards ("TakeDamage", info);
 	}
 
 	void CheckIfDifferentEnemy(RaycastHit hit) {
