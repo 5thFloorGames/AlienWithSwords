@@ -7,8 +7,8 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: cloudChunk
-  m_Shader: {fileID: 4800000, guid: 9ce107479d11178d11005b9844295342, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: d84268709d11078d11005b9844295342, type: 3}
+  m_ShaderKeywords: _COLOR_ON _TEX_ON
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000
   stringTagMap: {}
@@ -19,9 +19,9 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: f28b78a1aaa4dd942ba052c8784d91af, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 2, y: 2}
+          m_Offset: {x: 1, y: 1}
       data:
         first:
           name: _BumpMap
@@ -90,8 +90,8 @@ Material:
           name: _ToonShade
         second:
           m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
+          m_Scale: {x: 2, y: 2}
+          m_Offset: {x: 5, y: 2}
     m_Floats:
       data:
         first:
@@ -144,7 +144,31 @@ Material:
       data:
         first:
           name: _Outline
-        second: .00300000003
+        second: 1
+      data:
+        first:
+          name: _TintColor
+        second: 1
+      data:
+        first:
+          name: _DetailTex
+        second: 1
+      data:
+        first:
+          name: _VertexColor
+        second: 0
+      data:
+        first:
+          name: _Brightness
+        second: 1
+      data:
+        first:
+          name: _Outl
+        second: 0
+      data:
+        first:
+          name: _Asym
+        second: 0
     m_Colors:
       data:
         first:
@@ -158,3 +182,7 @@ Material:
         first:
           name: _OutlineColor
         second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _Asymmetry
+        second: {r: 0, g: .25, b: .25, a: 0}
