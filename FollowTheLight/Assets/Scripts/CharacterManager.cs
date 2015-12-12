@@ -78,6 +78,12 @@ public class CharacterManager : MonoBehaviour {
     public void PlayersTurnActivated() {
         ResetCharacterMovement();
         ResetCharacterActions();
+        foreach (GameObject character in characters) {
+            CharacterActionsSecond cas = character.GetComponentInChildren<CharacterActionsSecond>();
+            if (cas != null) {
+                cas.PlayerTurnStarted();
+            }
+        }
     }
 
     public void PlayerTurnEnded() {
