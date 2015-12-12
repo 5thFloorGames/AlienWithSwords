@@ -104,11 +104,14 @@ public class CharacterActionsThird : MonoBehaviour {
 			csc.PlayAttackSFX();
 			if (hit.collider.tag == "Enemy" || hit.collider.tag == "Player") {
 				target = hit.collider.transform.root.gameObject;
-				Invoke ("SendDamageMessage", 0.5f);
 				lc.ShootLaser(hit.point);
 			}
 		}
 	}
+
+    public void AttackParticlesCollided() {
+        SendDamageMessage();
+    }
 
 	void HealAimedCharacter() {
 		previousActionTime = Time.time;
