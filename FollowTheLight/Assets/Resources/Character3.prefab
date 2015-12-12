@@ -443,7 +443,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 77e423075c88442a781c7062d0a19dda, type: 3}
+  - {fileID: 2100000, guid: 83f5c212ae37dba48929bdadf891813a, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -754,7 +754,7 @@ TextMesh:
   m_Anchor: 1
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 60
+  m_FontSize: 52
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 77e423075c88442a781c7062d0a19dda, type: 3}
