@@ -8,6 +8,7 @@ public class CharacterManager : MonoBehaviour {
 
 	List<GameObject> characters;
     UserInterfaceManager uim;
+    AnnouncementManager am;
 	bool firstActive;
 	bool secondActive;
 	bool thirdActive;
@@ -113,7 +114,7 @@ public class CharacterManager : MonoBehaviour {
         character.BroadcastMessage("CharacterDied");
         CheckIfAllCharactersDead();
 		if (GameState.activeCharacter.GetComponent<CharacterState>().dead) {
-			AutoSwitchToCharacter ();
+			Invoke("AutoSwitchToCharacter", 3.0f);
 		}
     }
 
@@ -137,6 +138,7 @@ public class CharacterManager : MonoBehaviour {
 
     void HandleSpawning() {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
+        am = GameObject.Find("GameManager").GetComponent<AnnouncementManager>();
 
         firstActive = false;
         secondActive = false;
