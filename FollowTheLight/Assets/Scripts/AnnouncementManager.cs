@@ -49,12 +49,14 @@ public class AnnouncementManager : MonoBehaviour {
 
 
 
-    public void CharacterHealedACharacter(CharacterType type, CharacterType sourceType) {
-
+    public void CharacterHealedACharacter(CharacterType type, int amount, CharacterType sourceType) {
+        combatTextInc += "\n" + GetCharacterName(sourceType) + " restored " + amount + " health to " + GetCharacterName(type) + ".";
+        StartCoroutine(GenerateCombatLog());
     }
 
     public void CharacterTriedToHealFullHealth(CharacterType type, CharacterType sourceType) {
-
+        combatTextInc += "\n" + GetCharacterName(sourceType) + " tried to heal " + GetCharacterName(type) + " but he was already at full health.";
+        StartCoroutine(GenerateCombatLog());
     }
 
     public void CharacterTookDamageFromEnemy(CharacterType type, int damageAmount, EnemyType sourceType) {
@@ -69,23 +71,23 @@ public class AnnouncementManager : MonoBehaviour {
     }
 
     public void EnemyTookDamageFromCharacter(EnemyType type, int damageAmount, CharacterType sourceType) {
-        Debug.Log(sourceType + " dmged " + type);
+        combatTextInc += "\n" + GetCharacterName(sourceType) + " dealt " + damageAmount + " damage to " + type + ".";
+        StartCoroutine(GenerateCombatLog());
     }
 
 	public void CharacterDiedFromEnemy(CharacterType type, EnemyType sourceType) {
-
-		//string name = GetCharacterName (type);
-		//combatTextInc += "\n" + name + " DIED...";
-		
-		//StartCoroutine(GenerateCombatLog());
-	}
+        combatTextInc += "\n" + sourceType + " KILLED " + GetCharacterName(type) + "!";
+        StartCoroutine(GenerateCombatLog());
+    }
 
     public void CharacterDiedFromCharacter(CharacterType type, CharacterType sourceType) {
-
+        combatTextInc += "\n" + GetCharacterName(sourceType) + " KILLED " + GetCharacterName(type) + "!";
+        StartCoroutine(GenerateCombatLog());
     }
 
     public void EnemyDiedFromCharacter(EnemyType type, CharacterType sourceType) {
-
+        combatTextInc += "\n" + GetCharacterName(sourceType) + " destroyed an " + type + "!";
+        StartCoroutine(GenerateCombatLog());
     }
 
 

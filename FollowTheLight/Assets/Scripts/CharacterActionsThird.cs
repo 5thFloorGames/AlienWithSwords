@@ -133,8 +133,8 @@ public class CharacterActionsThird : MonoBehaviour {
 
 	void SendHealMessage() {
         List<object> info = new List<object>();
-        object dmgObject = healing;
-        info.Add(dmgObject);
+        object healObject = healing;
+        info.Add(healObject);
         info.Add(gameObject);
         target.SendMessageUpwards ("Heal", info);
 	}

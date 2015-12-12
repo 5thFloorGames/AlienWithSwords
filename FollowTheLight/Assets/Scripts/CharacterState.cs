@@ -162,16 +162,26 @@ public class CharacterState : MonoBehaviour {
                 sourceIsCharacter = true;
             }
 
+            if (health == maximumHealth) {
+                if (sourceIsCharacter) {
+                    am.CharacterTriedToHealFullHealth(type, sourceCs.type);
+                }
+            }
+
             health += amount;
+
             if (sourceIsCharacter) {
-                am.CharacterHealedACharacter(type, sourceCs.type);
+                int adjustment = 0;
+                if (maximumHealth < health) {
+                    adjustment = health - maximumHealth;
+                }
+                if ((health - amount) != maximumHealth) {
+                    am.CharacterHealedACharacter(type, (amount - adjustment), sourceCs.type);
+                }
             }
 
 			if (health >= maximumHealth) {
 				health = maximumHealth;
-                if (sourceIsCharacter) {
-                    am.CharacterTriedToHealFullHealth(type, sourceCs.type);
-                }
 			}
 			UpdateHealthToUI();
 		}
