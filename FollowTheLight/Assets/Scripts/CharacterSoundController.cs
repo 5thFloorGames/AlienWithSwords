@@ -35,7 +35,7 @@ public class CharacterSoundController : MonoBehaviour {
 
         attackSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_Attack");
 		attackHitSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_AttackHit");
-		healSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_Heal");
+		healSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_Healing");
 	}
 	
 	void Start () {
