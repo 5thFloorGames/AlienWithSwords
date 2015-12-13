@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour {
 		}
 
         if (Input.GetKeyDown(KeyCode.X)) {
-            LoadNextLevel();
+            LoadSceneOfGameStateNumber();
         }
         if (GameState.playersTurn) {
 			if (Input.GetKeyDown (KeyCode.Tab)) {
@@ -90,7 +90,6 @@ public class GameManager : MonoBehaviour {
     public void LevelComplete() {
 		if (!levelCompleted) {
 			levelCompleted = true;
-
 			uim.ShowLevelCompletedUI();
 			GameState.playersTurn = false;
             StartCoroutine(LevelCompletedLoadNextIn(3.0f));
@@ -104,7 +103,7 @@ public class GameManager : MonoBehaviour {
             QuitGame();
         } else {
             GameState.LevelComplete();
-            LoadNextLevel();
+            LoadSceneOfGameStateNumber();
         }
     }
 
@@ -122,7 +121,7 @@ public class GameManager : MonoBehaviour {
     IEnumerator LevelFailedLoadSameIn(float seconds) {
         yield return new WaitForSeconds(seconds);
         uim.HideLevelFailedUI();
-        LoadNextLevel();
+        LoadSceneOfGameStateNumber();
     }
 
 
@@ -158,7 +157,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void GameEnding() {
-        QuitGame();
+        LevelComplete();
     }
 
 
@@ -204,7 +203,7 @@ public class GameManager : MonoBehaviour {
         return objective;
     }
 
-    void LoadNextLevel() {
+    void LoadSceneOfGameStateNumber() {
         Application.LoadLevel(GameState.GetLevel());
     }
 
