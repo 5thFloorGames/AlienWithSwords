@@ -183,6 +183,10 @@ public class UserInterfaceManager : MonoBehaviour {
 			panelBackgrounds[name].CrossFadeAlpha(alphaValue, 0.1f, true);
             deadMarks[name].GetComponent<Image>().CrossFadeAlpha(alphaValue, 0.1f, true);
             distanceTexts[name].CrossFadeAlpha(alphaValue, 0.1f, true);
+            healthTexts[name].CrossFadeAlpha(alphaValue, 0.1f, true);
+            healthTexts[name].canvasRenderer.SetColor(new Color(alphaValue, alphaValue, alphaValue));
+            healthTexts[name].gameObject.GetComponent<Outline>().effectColor = new Color(alphaValue, alphaValue, alphaValue);
+
             Transform apParent = charinf.FindChild("ActionPoints");
             foreach (Transform ap in apParent) {
                 Image img = ap.GetComponent<Image>();
