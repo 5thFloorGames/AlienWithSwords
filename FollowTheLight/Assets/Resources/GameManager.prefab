@@ -883,6 +883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb77d083ab74f4ff39705abecfa567e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  howManyLevels: 4
 --- !u!114 &11459142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1951,6 +1952,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: announcementDisplayTime
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: howManyLevels
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

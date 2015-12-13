@@ -5,6 +5,8 @@ public enum LevelObjective { DestroyEnemies, GetAllCharactersToLevelEnd, GetOneC
 
 public class GameManager : MonoBehaviour {
 
+    public int howManyLevels;
+
 	AnnouncementManager am;
 	CharacterManager cm;
 	EnemyManager em;
@@ -35,6 +37,8 @@ public class GameManager : MonoBehaviour {
         if (level == 0) {
             Destroy(gameObject);
         }
+
+        GameState.SetLastLevel(howManyLevels);
 
         #if !UNITY_EDITOR
             Cursor.visible = false;
