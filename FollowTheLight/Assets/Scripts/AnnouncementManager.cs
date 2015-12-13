@@ -73,6 +73,25 @@ public class AnnouncementManager : MonoBehaviour {
 	}
 
 
+
+    // Story and how to play game start functions
+
+    public void GameStartTriggered() {
+
+    }
+
+    public void GameStartNextPage(int currentPage) {
+        if (currentPage == 3) {
+            LeaveGameStart();
+        }
+    }
+
+    void LeaveGameStart() {
+
+    }
+
+
+
     // Agreement form functions
 
     public void UserAgreementFormTriggered() {
