@@ -28,8 +28,8 @@ public class AnnouncementManager : MonoBehaviour {
         guide = transform.FindChild("Guide").gameObject;
         agreementForm = transform.FindChild("UserAgreementForm").gameObject;
         Transform tf = transform.FindChild("Announcements");
-		combatLog = tf.FindChild("CombatLog").GetComponent<Text>();
-		announcement = tf.FindChild("Announcement").GetComponent<Text>();
+		combatLog = tf.FindChild("MaskForCombatLog").GetComponentInChildren<Text>();
+		announcement = tf.FindChild("MaskForAnnouncement").GetComponentInChildren<Text>();
         levelFade = tf.FindChild("LevelFade").GetComponent<Image>();
         dyingFade = tf.FindChild("DyingFade").GetComponent<Image>();
         damageFade = tf.FindChild("DamageFade").GetComponent<Image>();
