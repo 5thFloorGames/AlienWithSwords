@@ -13,8 +13,8 @@ public class TriggerUserAgreementForm : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
         if (!triggered) {
-            
             triggered = true;
+            am.UserAgreementFormTriggered();
         }
     }
 }

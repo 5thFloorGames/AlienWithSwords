@@ -42,7 +42,7 @@ public class AnnouncementManager : MonoBehaviour {
 		if (announcementNow.Length > 0) {
 			CheckAnnouncementTimers();
 		}
-        if (Input.GetButtonDown("Submit")) {
+        if (Input.GetButtonDown("Submit") && GameState.playersTurn) {
             ToggleGuide();
         }
 	}
@@ -68,6 +68,16 @@ public class AnnouncementManager : MonoBehaviour {
 
     public void UserAgreementFormTriggered() {
         agreementForm.SetActive(true);
+        GameState.playersTurn = false;
+    }
+
+    public void UserAgreementFormAgreed() {
+        agreementForm.SetActive(false);
+        Invoke("ActivatePlayerTurnAgain", 0.5f);
+    }
+
+    void ActivatePlayerTurnAgain() {
+        GameState.playersTurn = true;
     }
 
 
