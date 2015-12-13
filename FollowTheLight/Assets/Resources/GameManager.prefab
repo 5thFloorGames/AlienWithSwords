@@ -4927,6 +4927,14 @@ Prefab:
       propertyPath: howManyLevels
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cursorTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 74c03fd9041064743aae44cf51076c81, type: 3}
+    - target: {fileID: 0}
+      propertyPath: cursorSize
+      value: 128
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 187232}

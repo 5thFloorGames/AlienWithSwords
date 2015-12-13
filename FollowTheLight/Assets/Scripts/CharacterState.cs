@@ -144,6 +144,7 @@ public class CharacterState : MonoBehaviour {
                     am.CharacterDiedFromCharacter(type, sourceCs.type);
                 } else {
                     am.CharacterDiedFromEnemy(type, sourceEs.type);
+                    cas.PlayDyingQuote();
                 }
                 if (gameObject == GameState.activeCharacter) {
                     am.DyingFader();
@@ -212,7 +213,6 @@ public class CharacterState : MonoBehaviour {
 	void Death() {
 		dead = true;
         health = 0;
-        cas.PlayDyingQuote();
         NotAimedAt ();
 		sprite.SetActive (false);
 		AnnounceDeathToManager();
