@@ -71,6 +71,7 @@ public class CharacterActionsSecond : MonoBehaviour {
 	void Slash() {
 		ps.Play ();
 		cas.PlayAttackingQuote ();
+        cas.PlayAttackSFX();
 		actions -= 1;
 		handAnimator.SetBool ("Casting", true);
 		previousActionTime = Time.time;
