@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour {
             uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 
             objective = GameObject.Find("LevelLoader").GetComponent<LevelLoader>().levelObjective;
+            am.InformLevelObjective(objective);
 
             initialized = true;
             levelCompleted = false;

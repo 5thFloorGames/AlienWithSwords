@@ -34,12 +34,6 @@ public class AnnouncementManager : MonoBehaviour {
         dyingFade = tf.FindChild("DyingFade").GetComponent<Image>();
         damageFade = tf.FindChild("DamageFade").GetComponent<Image>();
 
-        if (gameObject.GetComponent<GameManager>().GetLevelObjective() == LevelObjective.KillYourCharacters) {
-            charactersAreEnemies = true;
-        } else {
-            charactersAreEnemies = false;
-        }
-
         ActivateDyingAndDamage();
 		ResetCombatLog ();
 		ResetAnnouncements ();
@@ -57,6 +51,14 @@ public class AnnouncementManager : MonoBehaviour {
 	void OnLevelWasLoaded() {
 		preventAdditionalAnnouncements = false;
 	}
+
+    public void InformLevelObjective(LevelObjective obj) {
+        if (obj == LevelObjective.KillYourCharacters) {
+            charactersAreEnemies = true;
+        } else {
+            charactersAreEnemies = false;
+        }
+    }
 
 	public void ResetCombatLog() {
 		combatTextInc = "";
