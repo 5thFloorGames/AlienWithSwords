@@ -5,6 +5,7 @@ using System.Collections;
 public class AnnouncementManager : MonoBehaviour {
 
     GameObject guide;
+    GameObject agreementForm;
 
     Image levelFade;
     Image dyingFade;
@@ -24,6 +25,7 @@ public class AnnouncementManager : MonoBehaviour {
 
 	void Start () {
         guide = transform.FindChild("Guide").gameObject;
+        agreementForm = transform.FindChild("UserAgreementForm").gameObject;
         Transform tf = transform.FindChild("Announcements");
 		combatLog = tf.FindChild("CombatLog").GetComponent<Text>();
 		announcement = tf.FindChild("Announcement").GetComponent<Text>();
@@ -60,6 +62,13 @@ public class AnnouncementManager : MonoBehaviour {
 		announcementNow = "";
 		announcement.text = "";
 	}
+
+
+    // Agreement form functions
+
+    public void UserAgreementFormTriggered() {
+        agreementForm.SetActive(true);
+    }
 
 
 
