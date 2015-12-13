@@ -7,6 +7,7 @@ public class LevelLoader : MonoBehaviour {
 
     GameObject gameManager;
 	GameObject userInterface;
+    GameObject eventSystem;
 	
 	void Awake () {
 
@@ -22,6 +23,11 @@ public class LevelLoader : MonoBehaviour {
 			gameManager.name = "GameManager";
 		}
 
+        eventSystem = GameObject.Find("EventSystem");
+        if (eventSystem == null) {
+            eventSystem = Instantiate((GameObject)Resources.Load("EventSystem"));
+            eventSystem.name = "EventSystem";
+        }
 	}
 
     void Start() {
