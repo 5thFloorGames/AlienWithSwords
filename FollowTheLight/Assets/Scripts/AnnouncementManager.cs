@@ -25,6 +25,8 @@ public class AnnouncementManager : MonoBehaviour {
     bool charactersAreEnemies;
 
     int startTutorialPageNumber;
+    bool agreementTriggered;
+    bool startTutorialTriggered;
 
 	void Start () {
         guide = transform.FindChild("Guide").gameObject;
@@ -81,7 +83,10 @@ public class AnnouncementManager : MonoBehaviour {
     // Story and how to play game start functions
 
     public void GameStartTriggered() {
-        transform.FindChild("Story").gameObject.SetActive(true);
+        if (!startTutorialTriggered) {
+            startTutorialTriggered = true;
+            transform.FindChild("Story").gameObject.SetActive(true);
+        }
     }
 
     public void GameStartNextPage() {
@@ -116,6 +121,11 @@ public class AnnouncementManager : MonoBehaviour {
     // Agreement form functions
 
     public void UserAgreementFormTriggered() {
+        if (agreementTriggered) {
+            return;
+        }
+
+        agreementTriggered = true;
 #if !UNITY_EDITOR
             Cursor.visible = true;
 #endif
