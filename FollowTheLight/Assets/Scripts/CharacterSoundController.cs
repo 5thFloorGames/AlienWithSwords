@@ -6,6 +6,8 @@ public class CharacterSoundController : MonoBehaviour {
 	public CharacterType charType;
 	public bool outOfActions;
 	public bool outOfMovement;
+
+    bool gameStartEnterDone;
 	
 	[SerializeField] AudioSource quoteSource;
 	[SerializeField] AudioSource effectSource;
@@ -24,6 +26,9 @@ public class CharacterSoundController : MonoBehaviour {
 	AudioClip[] healSFX;
 
 	void Awake() {
+
+        gameStartEnterDone = false;
+
 		selectCharacterQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Selected");
 		attackingQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Attack");
 		healingQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Heal");
@@ -53,6 +58,10 @@ public class CharacterSoundController : MonoBehaviour {
 	// Playing the Quotes
 	
 	public void PlaySelectionQuote() {
+        if (GameState.GetLevel() == 1 && charType == CharacterType.Character1 && !gameStartEnterDone) {
+            gameStartEnterDone = true;
+            return;
+        }
 		if (Random.Range (0, 2) == 0) {
 			PlayRandomQuote (selectCharacterQuotes);
 		}
