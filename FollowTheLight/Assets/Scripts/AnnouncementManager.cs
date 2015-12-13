@@ -12,16 +12,19 @@ public class AnnouncementManager : MonoBehaviour {
     Image damageFade;
 
 	public float announcementDisplayTime;
+    public float combatLogDisplayTime;
 
 	Text combatLog;
 	string combatTextNow;
 	string combatTextInc;
+    float mostRecentCombatEvent;
 
-	float mostRecentAnnouncement;
 	Text announcement;
 	string announcementNow;
 	string announcementInc;
-	bool preventAdditionalAnnouncements;
+    float mostRecentAnnouncement;
+
+    bool preventAdditionalAnnouncements;
     bool charactersAreEnemies;
 
     int startTutorialPageNumber;
@@ -49,6 +52,9 @@ public class AnnouncementManager : MonoBehaviour {
 		if (announcementNow.Length > 0) {
 			CheckAnnouncementTimers();
 		}
+        if (combatTextNow.Length > 0) {
+            CheckCombatLogTimers();
+        }
         if (Input.GetButtonDown("Submit") && GameState.playersTurn) {
             ToggleGuide();
         }
@@ -311,6 +317,7 @@ public class AnnouncementManager : MonoBehaviour {
     // Functionalities
 
 	IEnumerator GenerateCombatLog() {
+        mostRecentCombatEvent = Time.time;
 		while (combatTextNow.Length != combatTextInc.Length) {
 			combatTextNow += combatTextInc[combatTextNow.Length];
 			combatLog.text = combatTextNow;
@@ -332,6 +339,12 @@ public class AnnouncementManager : MonoBehaviour {
 			ResetAnnouncements();
 		}
 	}
+
+    void CheckCombatLogTimers() {
+        if (Time.time - mostRecentCombatEvent > combatLogDisplayTime) {
+            ResetCombatLog();
+        }
+    }
 
 	string GetCharacterName(CharacterType type) {
 		string name;

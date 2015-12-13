@@ -185,14 +185,6 @@ public class GameManager : MonoBehaviour {
         cm.PlayersTurnActivated ();
 		em.PlayersTurnActivated ();
 		GameState.playersTurn = true;
-		StartCoroutine (HideCombatLog());
-	}
-
-	IEnumerator HideCombatLog() {
-		yield return new WaitForSeconds (1.0f);
-		if (GameState.playersTurn) {
-			am.ResetCombatLog ();
-		}
 	}
 
 
