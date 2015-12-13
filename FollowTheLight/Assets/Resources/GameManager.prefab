@@ -2594,7 +2594,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "Use the practice arena to become familiar with moving, dealing damage,
     switching between characters, and ending your turn. Don't worry, these monsters
-    have had their damage glands removed so their spells won't hurt you.\r\n\r\nThe
+    have had their damage glands removed so their spells will barely hurt you.\n\r\nThe
     controls are below, but <color=#ff0000ff>hit the ENTER key at any time for a reminder.</color>\r"
 --- !u!114 &11465708
 MonoBehaviour:
