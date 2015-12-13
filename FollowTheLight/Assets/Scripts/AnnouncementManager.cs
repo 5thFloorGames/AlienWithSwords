@@ -74,11 +74,17 @@ public class AnnouncementManager : MonoBehaviour {
     // Agreement form functions
 
     public void UserAgreementFormTriggered() {
+        #if !UNITY_EDITOR
+            Cursor.visible = true;
+        #endif
         agreementForm.SetActive(true);
         GameState.playersTurn = false;
     }
 
     public void UserAgreementFormAgreed() {
+        #if !UNITY_EDITOR
+            Cursor.visible = false;
+        #endif
         agreementForm.SetActive(false);
         Invoke("ActivatePlayerTurnAgain", 0.5f);
     }
