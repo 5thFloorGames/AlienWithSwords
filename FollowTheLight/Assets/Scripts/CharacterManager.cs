@@ -14,6 +14,7 @@ public class CharacterManager : MonoBehaviour {
 	bool secondActive;
 	bool thirdActive;
     bool otherCharactersAreEnemies;
+    bool dyingWithouSwitching;
 
     bool initialized = false;
 
@@ -75,7 +76,7 @@ public class CharacterManager : MonoBehaviour {
         character.BroadcastMessage("EnterCharacter");
         GameState.activeCharacter = character;
         uim.ActiveCharacterUI(character.name);
-        am.RemoveDyingFader();
+        CheckForDyingSwitch();
     }
 
     public void PlayersTurnActivated() {
@@ -124,13 +125,28 @@ public class CharacterManager : MonoBehaviour {
         CheckForEnemyCountUpdates();
         CheckIfAllCharactersDead();
 		if (GameState.activeCharacter.GetComponent<CharacterState>().dead) {
-			Invoke("AutoSwitchToCharacter", 3.0f);
+            dyingWithouSwitching = true;
+			Invoke("AutoSwitchIfNeeded", 3.0f);
 		}
     }
 
     void CheckIfAllCharactersDead() {
         if ((!firstActive && !secondActive && !thirdActive)) {
             gameObject.GetComponent<GameManager>().AllCharactersDead();
+        }
+    }
+
+    void CheckForDyingSwitch() {
+        if (dyingWithouSwitching) {
+            dyingWithouSwitching = false;
+            am.RemoveDyingFader();
+        }
+    }
+
+    void AutoSwitchIfNeeded() {
+        if (dyingWithouSwitching) {
+            AutoSwitchToCharacter();
+            am.RemoveDyingFader();
         }
     }
 
@@ -179,6 +195,8 @@ public class CharacterManager : MonoBehaviour {
         secondActive = false;
         thirdActive = false;
 
+        dyingWithouSwitching = false;
+
         if (uim != null) {
             uim.HideCharacterInfos();
         }
@@ -222,7 +240,6 @@ public class CharacterManager : MonoBehaviour {
     }
 
 	public void AutoSwitchToCharacter() {
-        am.RemoveDyingFader();
         if (GetCharacterObject("Character1") != null && firstActive) {
 			SwitchCharacter(GetCharacterObject("Character1"));
 			return;

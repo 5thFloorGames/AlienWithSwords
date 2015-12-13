@@ -127,6 +127,7 @@ public class AnnouncementManager : MonoBehaviour {
     public void RemoveDyingFader() {
         if (dyingFade != null) {
             dyingFade.canvasRenderer.SetAlpha(0.0f);
+            dyingFade.CrossFadeAlpha(0.0f, 0.0f, false);
         }
     }
 
