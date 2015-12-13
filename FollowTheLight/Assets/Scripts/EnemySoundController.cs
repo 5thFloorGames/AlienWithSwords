@@ -42,6 +42,10 @@ public class EnemySoundController : MonoBehaviour {
         PlayASound(esm.GetDyingQuote());
     }
 
+    public void PlaySpawningQuote() {
+        StartCoroutine(PlayWithRandomDelay(esm.GetSpawningQuote()));
+    }
+
 
 
     // Effects

@@ -5,7 +5,7 @@ public class EnemySoundManager : MonoBehaviour {
 
 	AudioClip[] shootingQuotes;
     AudioClip[] explodingQuotes;
-    AudioClip[] killingCharacterQuotes;
+    AudioClip[] spawnQuotes;
     AudioClip[] aimedQuotes;
     AudioClip[] dyingQuotes;
 
@@ -16,7 +16,7 @@ public class EnemySoundManager : MonoBehaviour {
 	void Start () {
 		shootingQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Shoot");
         explodingQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Explode");
-        killingCharacterQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_KillChar");
+        spawnQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Spawn");
         aimedQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Aimed");
         dyingQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Die");
 
@@ -41,8 +41,8 @@ public class EnemySoundManager : MonoBehaviour {
         return GetAudioClipFromList(explodingQuotes);
     }
 
-    public AudioClip GetKillingCharacterQuote() {
-        return GetAudioClipFromList(killingCharacterQuotes);
+    public AudioClip GetSpawningQuote() {
+        return GetAudioClipFromList(spawnQuotes);
     }
 
 	public AudioClip GetAimedQuote() {
