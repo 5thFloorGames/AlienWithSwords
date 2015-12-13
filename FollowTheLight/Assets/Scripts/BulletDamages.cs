@@ -14,7 +14,9 @@ public class BulletDamages : MonoBehaviour {
 	}
 
     void OnTriggerEnter(Collider other) {
-		CreateHitEffect ();
+        if (other.tag == "Enemy") {
+            CreateHitEffect();
+        }
 		Destroy (gameObject);
 	}
 

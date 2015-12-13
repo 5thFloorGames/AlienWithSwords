@@ -1,4 +1,4 @@
-   art
+   art, story
 <size=88><color=#ffffffff>Jesse Barksdale</color></size>
 
 

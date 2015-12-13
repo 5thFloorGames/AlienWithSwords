@@ -1295,27 +1295,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: .600000024
-  m_Text: 'art
-
-    <size=88><color=#ffffffff>Jesse Barksdale</color></size>
-
-
-
-    programming
-
-    <size=88><color=#ffffffff>Laura Laakso</color></size>
-
-
-
-    scriptwriting, voice acting
-
-    <size=88><color=#ffffffff>Lauri Lukka</color></size>
-
-
-
-    sound design, music
-
-    <size=88><color=#ffffffff>Matti Strahlendorff</color></size>'
+  m_Text: "   art, story\n<size=88><color=#ffffffff>Jesse Barksdale</color></size>\n\n\n
+    \  programming\n<size=88><color=#ffffffff>Laura Laakso</color></size>\n\n\n   scriptwriting,
+    voice acting\n<size=88><color=#ffffffff>Lauri Lukka</color></size>\n\n\n   sound
+    design, music\n<size=88><color=#ffffffff>Matti Strahlendorff</color></size>"
 --- !u!222 &840913993
 CanvasRenderer:
   m_ObjectHideFlags: 0
