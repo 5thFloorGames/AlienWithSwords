@@ -24,6 +24,8 @@ public class AnnouncementManager : MonoBehaviour {
 	bool preventAdditionalAnnouncements;
     bool charactersAreEnemies;
 
+    int startTutorialPageNumber;
+
 	void Start () {
         guide = transform.FindChild("Guide").gameObject;
         agreementForm = transform.FindChild("UserAgreementForm").gameObject;
@@ -37,6 +39,8 @@ public class AnnouncementManager : MonoBehaviour {
         ActivateDyingAndDamage();
 		ResetCombatLog ();
 		ResetAnnouncements ();
+
+        startTutorialPageNumber = 0;
 	}
 
 	void Update () {
@@ -77,17 +81,34 @@ public class AnnouncementManager : MonoBehaviour {
     // Story and how to play game start functions
 
     public void GameStartTriggered() {
-
+        transform.FindChild("Story").gameObject.SetActive(true);
     }
 
-    public void GameStartNextPage(int currentPage) {
-        if (currentPage == 3) {
-            LeaveGameStart();
+    public void GameStartNextPage() {
+        if (startTutorialPageNumber == 0) {
+            transform.FindChild("Story").gameObject.SetActive(false);
+            transform.FindChild("HowToPlay").gameObject.SetActive(true);
+            transform.FindChild("HowToPlay").FindChild("text_page1").gameObject.SetActive(true);
+        } else if (startTutorialPageNumber == 1){
+            transform.FindChild("HowToPlay").FindChild("text_page1").gameObject.SetActive(false);
+            transform.FindChild("HowToPlay").FindChild("text_page2").gameObject.SetActive(true);
+        } else if (startTutorialPageNumber == 2) {
+            transform.FindChild("HowToPlay").FindChild("text_page2").gameObject.SetActive(false);
+            transform.FindChild("HowToPlay").FindChild("text_page3").gameObject.SetActive(true);
+        } else if (startTutorialPageNumber == 3) {
+            transform.FindChild("HowToPlay").FindChild("text_page3").gameObject.SetActive(false);
+            LeaveStartingTutorial();
         }
+        startTutorialPageNumber += 1;
     }
 
-    void LeaveGameStart() {
-
+    void LeaveStartingTutorial() {
+    #if !UNITY_EDITOR
+            Cursor.visible = false;
+    #endif
+        transform.FindChild("Story").gameObject.SetActive(false);
+        transform.FindChild("HowToPlay").gameObject.SetActive(false);
+        Invoke("ActivatePlayerTurnAgain", 0.5f);
     }
 
 
@@ -95,15 +116,16 @@ public class AnnouncementManager : MonoBehaviour {
     // Agreement form functions
 
     public void UserAgreementFormTriggered() {
-        #if !UNITY_EDITOR
+#if !UNITY_EDITOR
             Cursor.visible = true;
-        #endif
+#endif
+        GameState.playersTurn = false;
+
         agreementForm.SetActive(true);
         agreementForm.transform.FindChild("AgreementText1").gameObject.SetActive(true);
         agreementForm.transform.FindChild("AgreementText2").gameObject.SetActive(false);
         agreementForm.transform.FindChild("NextPage").gameObject.SetActive(true);
         agreementForm.transform.FindChild("IAgree").gameObject.SetActive(false);
-        GameState.playersTurn = false;
     }
 
     public void UserAgreementFormNextPage() {

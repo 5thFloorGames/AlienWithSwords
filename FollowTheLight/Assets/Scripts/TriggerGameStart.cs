@@ -14,7 +14,7 @@ public class TriggerGameStart : MonoBehaviour {
 	void OnTriggerEnter (Collider other) {
         if (!triggered && other.tag == "Player") {
             triggered = true;
-            am.UserAgreementFormTriggered();
+            am.GameStartTriggered();
         }
     }
 
