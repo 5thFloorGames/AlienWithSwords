@@ -1446,6 +1446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   announcementDisplayTime: 2
   combatLogDisplayTime: 5
+  lastLevelTipDelay: 20
 --- !u!114 &11425138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5026,6 +5027,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: combatLogDisplayTime
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: lastLevelTipDelay
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

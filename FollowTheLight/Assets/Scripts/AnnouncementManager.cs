@@ -13,6 +13,7 @@ public class AnnouncementManager : MonoBehaviour {
 
 	public float announcementDisplayTime;
     public float combatLogDisplayTime;
+    public float lastLevelTipDelay;
 
 	Text combatLog;
 	string combatTextNow;
@@ -26,10 +27,14 @@ public class AnnouncementManager : MonoBehaviour {
 
     bool preventAdditionalAnnouncements;
     bool charactersAreEnemies;
+    bool lastLevelTipNeeded;
+    bool lastLevelEncouragementGiven;
 
     int startTutorialPageNumber;
     bool agreementTriggered;
     bool startTutorialTriggered;
+
+    float levelStartTime;
 
 	void Start () {
         guide = transform.FindChild("Guide").gameObject;
@@ -46,6 +51,9 @@ public class AnnouncementManager : MonoBehaviour {
 		ResetAnnouncements ();
 
         startTutorialPageNumber = 0;
+        levelStartTime = Time.time;
+        lastLevelTipNeeded = false;
+        lastLevelEncouragementGiven = false;
 	}
 
 	void Update () {
@@ -58,9 +66,16 @@ public class AnnouncementManager : MonoBehaviour {
         if (Input.GetButtonDown("Submit") && GameState.playersTurn) {
             ToggleGuide();
         }
+
+        if (charactersAreEnemies && levelStartTime + lastLevelTipDelay > Time.time && lastLevelTipNeeded) {
+            lastLevelTipNeeded = false;
+            GenerateLastLevelTip();
+        }
 	}
 
 	void OnLevelWasLoaded() {
+        levelStartTime = Time.time;
+        lastLevelTipNeeded = false;
 		preventAdditionalAnnouncements = false;
 	}
 
@@ -169,20 +184,6 @@ public class AnnouncementManager : MonoBehaviour {
     }
 
 
-    // Ending functions
-
-    public void GenerateWinnerMessage() {
-        ResetAnnouncements();
-        ResetCombatLog();
-
-        announcementInc += "\nFinally we have a winner.";
-        announcementInc += "\nCongratulations.";
-        announcementDisplayTime = 10.0f;
-        StartCoroutine(GenerateAnnouncement());
-}
-
-
-
     // Guide
 
     void ToggleGuide() {
@@ -191,6 +192,29 @@ public class AnnouncementManager : MonoBehaviour {
         } else {
             guide.SetActive(true);
         }
+    }
+
+
+    // Ending functions
+
+    void GenerateLastLevelTip() {
+        announcementInc += "\nThere can only be one winner.";
+        StartCoroutine(GenerateAnnouncement());
+    }
+
+    void GenerateLastLevelEncouragement() {
+        announcementInc += "\nYes. Please continue.";
+        StartCoroutine(GenerateAnnouncement());
+    }
+
+    public void GenerateWinnerMessage() {
+        ResetAnnouncements();
+        ResetCombatLog();
+
+        announcementInc += "\nFinally.";
+        announcementInc += "\nCongratulations.";
+        announcementDisplayTime = 10.0f;
+        StartCoroutine(GenerateAnnouncement());
     }
 
 
@@ -268,6 +292,10 @@ public class AnnouncementManager : MonoBehaviour {
     public void CharacterTookDamageFromCharacter(CharacterType type, int damageAmount, CharacterType sourceType) {
         combatTextInc += "\n" + GetCharacterName(sourceType) + " dealt " + damageAmount + " damage to " + GetCharacterName(type) + ".";
         StartCoroutine(GenerateCombatLog());
+        if (charactersAreEnemies && !lastLevelEncouragementGiven) {
+            lastLevelEncouragementGiven = true;
+            GenerateLastLevelEncouragement();
+        }
     }
 
     public void EnemyTookDamageFromCharacter(EnemyType type, int damageAmount, CharacterType sourceType) {
