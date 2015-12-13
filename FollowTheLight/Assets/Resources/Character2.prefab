@@ -632,7 +632,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: .400000006
+  m_Volume: .300000012
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2157,7 +2157,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Volume
-      value: .400000006
+      value: .300000012
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: stepInterval
