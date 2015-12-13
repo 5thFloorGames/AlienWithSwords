@@ -68,11 +68,9 @@ public class GameManager : MonoBehaviour {
 
 	void Update () {
 
-        #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.N)) {
             LevelComplete();
         }
-        #endif
 
         if (Input.GetButton ("Cancel")) {
 			QuitGame();
@@ -148,6 +146,8 @@ public class GameManager : MonoBehaviour {
         if (objective == LevelObjective.KillYourCharacters) {
             float endingTimer = 10.0f;
             StartCoroutine(FadeInHalf(endingTimer));
+            am.GenerateWinnerMessage();
+            uim.gameObject.SetActive(false);
             GameState.playersTurn = false;
             Invoke("GameEnding", endingTimer);
         }

@@ -218,9 +218,10 @@ public class UserInterfaceManager : MonoBehaviour {
 	public void FlashHealthColor (string characterName, int times) {
 		Image meter = healthMeters[characterName];
 		Text txt = healthTexts[characterName];
-		
-		StartCoroutine(FlashImageColor(meter,new Color(0, 0, 0), times));
-		StartCoroutine(FlashTextColor(txt, new Color (0, 0, 0), times));
+        if (gameObject.activeSelf) {
+            StartCoroutine(FlashImageColor(meter, new Color(0, 0, 0), times));
+            StartCoroutine(FlashTextColor(txt, new Color(0, 0, 0), times));
+        }
 	}
 	
 	IEnumerator FlashImageColor (Image img, Color originalColor, int times) {

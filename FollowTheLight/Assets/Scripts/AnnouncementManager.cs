@@ -89,7 +89,7 @@ public class AnnouncementManager : MonoBehaviour {
 
 
 
-    // Story and how to play game start functions
+    // Tutorial game start functions
 
     public void GameStartTriggered() {
         Cursor.visible = true;
@@ -118,9 +118,9 @@ public class AnnouncementManager : MonoBehaviour {
     }
 
     void LeaveStartingTutorial() {
-#if !UNITY_EDITOR
+        #if !UNITY_EDITOR
             Cursor.visible = false;
-#endif
+        #endif
         GetComponent<AudioSource>().enabled = true;
         transform.FindChild("Story").gameObject.SetActive(false);
         transform.FindChild("HowToPlay").gameObject.SetActive(false);
@@ -137,9 +137,9 @@ public class AnnouncementManager : MonoBehaviour {
         }
 
         agreementTriggered = true;
-#if !UNITY_EDITOR
+        #if !UNITY_EDITOR
             Cursor.visible = true;
-#endif
+        #endif
         GameState.playersTurn = false;
 
         agreementForm.SetActive(true);
@@ -167,6 +167,19 @@ public class AnnouncementManager : MonoBehaviour {
     void ActivatePlayerTurnAgain() {
         GameState.playersTurn = true;
     }
+
+
+    // Ending functions
+
+    public void GenerateWinnerMessage() {
+        ResetAnnouncements();
+        ResetCombatLog();
+
+        announcementInc += "\nFinally we have a winner.";
+        announcementInc += "\nCongratulations.";
+        announcementDisplayTime = 10.0f;
+        StartCoroutine(GenerateAnnouncement());
+}
 
 
 
