@@ -1,11 +1,14 @@
-<size=66><color=#ff0000ff>On responsibility</color></size>
-- The users are fully responsible for all actions within the service space. 
-- The Corporation does not condone, agree, or support any actions violating any national or international laws, or good ethical practises. 
-- The user is aware of the current appeal in the ECtHR at Strasbourg, France. 
-- The user may leave the ‘game’ at any point, but they remain responsible for their actions within it.
-       
-<size=66><color=#ff0000ff>Further details</color></size>
-- This user agreement may be modified at any time.
+   art
+<size=88><color=#ffffffff>Jesse Barksdale</color></size>
 
 
-<size=100>2/2</size>
+   programming
+<size=88><color=#ffffffff>Laura Laakso</color></size>
+
+
+   scriptwriting, voice acting
+<size=88><color=#ffffffff>Lauri Lukka</color></size>
+
+
+   sound design, music
+<size=88><color=#ffffffff>Matti Strahlendorff</color></size>
