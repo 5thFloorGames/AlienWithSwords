@@ -35,13 +35,14 @@ public class GameManager : MonoBehaviour {
     void OnLevelWasLoaded(int level) {
 
         if (level == 0) {
+            Cursor.visible = true;
             Destroy(gameObject);
         }
 
         GameState.SetLastLevel(howManyLevels);
 
         #if !UNITY_EDITOR
-            Cursor.visible = false;
+                    Cursor.visible = false;
         #endif
 
         if (!initialized && level != 0) {

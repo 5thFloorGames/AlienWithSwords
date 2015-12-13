@@ -83,6 +83,7 @@ public class AnnouncementManager : MonoBehaviour {
     // Story and how to play game start functions
 
     public void GameStartTriggered() {
+        Cursor.visible = true;
         if (!startTutorialTriggered) {
             startTutorialTriggered = true;
             transform.FindChild("Story").gameObject.SetActive(true);
