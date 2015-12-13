@@ -12,7 +12,7 @@ public class TriggerUserAgreementForm : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
-        if (!triggered) {
+        if (!triggered && other.tag == "Player") {
             triggered = true;
             am.UserAgreementFormTriggered();
         }

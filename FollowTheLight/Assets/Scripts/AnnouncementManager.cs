@@ -188,6 +188,11 @@ public class AnnouncementManager : MonoBehaviour {
 
     // Announcements
 
+    public void EnemySpawnTriggered() {
+        announcementInc += "\nYou stepped on an enemy trigger.";
+        StartCoroutine(GenerateAnnouncement());
+    }
+
     public void EnemyTurnStarted() {
 		announcementInc += "\nEnemies will attack now.";
 		StartCoroutine (GenerateAnnouncement());
@@ -197,7 +202,7 @@ public class AnnouncementManager : MonoBehaviour {
 		if (preventAdditionalAnnouncements) {
 			return;
 		}
-		announcementInc += "\nGo.";
+		announcementInc += "\nYou go.";
 		StartCoroutine (GenerateAnnouncement());
 	}
 

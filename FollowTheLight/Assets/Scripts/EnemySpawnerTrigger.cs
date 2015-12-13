@@ -3,13 +3,23 @@ using System.Collections;
 
 public class EnemySpawnerTrigger : MonoBehaviour {
 
-	// Use this for initialization
+    public int spawnNumber;
+    EnemyManager em;
+    bool triggered;
+
 	void Start () {
-	
+        triggered = false;
+        em = GameObject.Find("GameManager").GetComponent<EnemyManager>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 	
 	}
+
+    void OnTriggerEnter (Collider other) {
+        if (!triggered && other.tag == "Player") {
+            triggered = true;
+            em.SpawnTriggered(spawnNumber);
+        }
+    }
 }

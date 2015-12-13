@@ -9,12 +9,15 @@ public class EnemyManager : MonoBehaviour {
 
     UserInterfaceManager uim;
 	GameManager gm;
+    AnnouncementManager am;
 	List<GameObject> enemies;
+    List<GameObject> spawningEnemies;
 
 	int enemyActionCounter;
 	
 	void Start () {
 		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        am = gm.gameObject.GetComponent<AnnouncementManager>();
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 		OnLevelWasLoaded (GameState.GetLevel());
 	}
@@ -35,7 +38,11 @@ public class EnemyManager : MonoBehaviour {
 	public void TriggerEnemyActions() {
 		enemyActionCounter = 0;
 		foreach (GameObject e in enemies) {
-			e.BroadcastMessage("TriggerActions");
+            if (e.activeSelf) {
+                e.BroadcastMessage("TriggerActions");
+            } else {
+                Invoke("EnemyActionsCompleted", 0.5f);
+            }
 		}
 		if (enemies.Count == 0) {
 			Invoke("AllEnemyActionsCompleted", 0.2f);
@@ -49,15 +56,35 @@ public class EnemyManager : MonoBehaviour {
 		}
 	}
 
+    public void SpawnTriggered(int spawnNumber) {
+        am.EnemySpawnTriggered();
+        List<GameObject> toRemove = new List<GameObject>();
+        foreach (GameObject obj in spawningEnemies) {
+            if (obj.GetComponent<EnemyState>().spawnNumber == spawnNumber) {
+                obj.SetActive(true);
+                toRemove.Add(obj);
+            }
+        }
+        foreach (GameObject obj in toRemove) {
+            spawningEnemies.Remove(obj);
+        }
+    }
+
 	void EnemyBasicAssignments(GameObject obj) {
 
 		EnemyState es = obj.GetComponent<EnemyState> ();
 		es.Init (gameObject);
-
 		obj.SendMessage ("InitActions", gameObject);
-
 		enemies.Add (obj);
+        CheckForSpawnerDetails(obj, es);
 	}
+
+    void CheckForSpawnerDetails(GameObject obj, EnemyState es) {
+        if (es.willSpawnLater) {
+            spawningEnemies.Add(obj);
+            obj.SetActive(false);
+        }
+    }
 
 	public void DeleteEnemyFromList(GameObject enemyobj) {
 		enemies.Remove (enemyobj);
@@ -69,7 +96,8 @@ public class EnemyManager : MonoBehaviour {
 
 	void GetEnemiesInScene() {
         enemies = new List<GameObject>();
-		GameObject[] additionalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        spawningEnemies = new List<GameObject>();
+        GameObject[] additionalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
 		foreach (GameObject enemy in additionalEnemies) {
 			if (enemy.GetComponent<EnemyState>() != null) {
 				EnemyBasicAssignments(enemy);
