@@ -2965,7 +2965,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11424480}
-        m_MethodName: GameStartNextPage
+        m_MethodName: UserAgreementFormNextPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
