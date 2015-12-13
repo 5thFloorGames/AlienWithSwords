@@ -87,6 +87,7 @@ public class EnemyActionsSecond : MonoBehaviour {
 
 			animator.SetTrigger ("Attack");
             esc.PlayShootingQuote();
+            esc.PlayShotSFX();
 			//Invoke("ActionsCompletedInformManager", shotLifetime);
 			yield return new WaitForSeconds (0.5f);
 			GameObject shot = (GameObject)Instantiate (shotPrefab, (start + direction), Quaternion.Inverse (transform.rotation));
@@ -94,7 +95,6 @@ public class EnemyActionsSecond : MonoBehaviour {
 			shot.GetComponent<EnemyShotDamages> ().Init (actionDamage, 0.0f, shotLifetime, thisScript);
 			Rigidbody shotrb = shot.GetComponent<Rigidbody> ();
 			shotrb.AddForce (direction * 500.0f);
-
             bulletFlying = true;
 		} else {
 			ActionsCompletedInformManager();
