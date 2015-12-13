@@ -38,7 +38,6 @@ public class EnemyActionsFirst : MonoBehaviour {
 	}
 
 	public void TriggerActions () {
-		esc.PlayShootingQuote ();
 		move.Go();
 	}
 
@@ -48,8 +47,8 @@ public class EnemyActionsFirst : MonoBehaviour {
 
     void CastAreaDamage() {
 		float animationDelay = 1.0f;
-
-		animator.SetTrigger ("Attack");
+        esc.PlayExplodingQuote();
+        animator.SetTrigger ("Attack");
         GameObject spawnedAreaDamage = (GameObject)Instantiate(aoePrefab, transform.position, Quaternion.identity);
 		spawnedAreaDamage.name = gameObject.name + "Aoe";
 		AreaDamageBehavior adb = spawnedAreaDamage.GetComponent<AreaDamageBehavior> ();
@@ -60,7 +59,7 @@ public class EnemyActionsFirst : MonoBehaviour {
     }
 
 	void PlayExplosionSound() {
-		esc.PlayExplosionSFX ();
+        esc.PlayExplosionSFX ();
 	}
 
 	void ActionsCompletedInformManager() {

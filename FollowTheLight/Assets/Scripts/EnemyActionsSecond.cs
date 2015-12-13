@@ -19,6 +19,7 @@ public class EnemyActionsSecond : MonoBehaviour {
     bool bulletFlying;
 
 	EnemyActionsSecond thisScript;
+    EnemySoundController esc;
 
     void Start() {
 		layerMask = (1 << 9);
@@ -36,6 +37,7 @@ public class EnemyActionsSecond : MonoBehaviour {
             actionDamage = 5;
         }
 
+        esc = GetComponent<EnemySoundController>();
     }
 
     void Update() {
@@ -84,6 +86,7 @@ public class EnemyActionsSecond : MonoBehaviour {
 			Vector3 direction = (end - start).normalized;
 
 			animator.SetTrigger ("Attack");
+            esc.PlayShootingQuote();
 			//Invoke("ActionsCompletedInformManager", shotLifetime);
 			yield return new WaitForSeconds (0.5f);
 			GameObject shot = (GameObject)Instantiate (shotPrefab, (start + direction), Quaternion.Inverse (transform.rotation));

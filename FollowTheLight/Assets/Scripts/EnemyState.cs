@@ -115,6 +115,7 @@ public class EnemyState : MonoBehaviour {
     }
 
 	void StartDying() {
+        esc.PlayDyingQuote();
         currentHealth = 0;
         dead = true;
         gameObject.GetComponentInChildren<Collider> ().enabled = false;
