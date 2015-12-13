@@ -54,7 +54,7 @@ public class EnemyActionsFirst : MonoBehaviour {
 		AreaDamageBehavior adb = spawnedAreaDamage.GetComponent<AreaDamageBehavior> ();
 
 		adb.Init (actionDamage, animationDelay, aoeLifetime, gameObject);
-		Invoke ("PlayExplosionSound", animationDelay);
+		Invoke ("PlayExplosionSound", animationDelay + 0.0f);
 		Invoke ("ActionsCompletedInformManager", animationDelay + aoeLifetime);
     }
 

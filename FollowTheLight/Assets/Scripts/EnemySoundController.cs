@@ -63,7 +63,7 @@ public class EnemySoundController : MonoBehaviour {
 	}
 
 	IEnumerator PlayWithRandomDelay(AudioClip clip) {
-		yield return new WaitForSeconds (Random.Range(0.01f, 0.60f));
+		yield return new WaitForSeconds (Random.Range(0.001f, 0.050f));
 		PlayASound (clip);
 	}
 

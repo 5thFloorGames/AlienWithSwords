@@ -220,7 +220,7 @@ public class AnnouncementManager : MonoBehaviour {
     // Announcements
 
     public void EnemySpawnTriggered() {
-        announcementInc += "\nYou stepped on an enemy trigger.";
+        announcementInc += "\nYou made enemies spawn.";
         StartCoroutine(GenerateAnnouncement());
     }
 
