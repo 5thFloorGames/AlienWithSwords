@@ -16,6 +16,7 @@ public class EnemyState : MonoBehaviour {
     int currentHealth;
 
 	Image healthMeter;
+    Text healthText;
 	EnemyManager em;
     AnnouncementManager am;
 	Animator animator;
@@ -25,12 +26,14 @@ public class EnemyState : MonoBehaviour {
 
 	public void Init(GameObject manager) {
 		dead = false;
-		healthMeter = transform.FindChild("EnemyInfo").FindChild("HealthMeter").GetComponent<Image>();
+        Transform info = transform.FindChild("EnemyInfo");
+		healthMeter = info.FindChild("HealthMeter").GetComponent<Image>();
+        healthText = info.FindChild("HealthText").GetComponent<Text>();
         em = manager.GetComponent<EnemyManager>();
         am = manager.GetComponent<AnnouncementManager>();
         esc = GetComponent<EnemySoundController>();
         HealthInit();
-		UpdateHealthToHealthMeter ();
+		UpdateHealthInfo ();
 	}
 	
 	void Start () {
@@ -89,7 +92,7 @@ public class EnemyState : MonoBehaviour {
 			if (!dead) {
 				animator.SetTrigger("IsHit");
 			}
-            UpdateHealthToHealthMeter ();
+            UpdateHealthInfo ();
 		}
 	}
 
@@ -105,8 +108,9 @@ public class EnemyState : MonoBehaviour {
 		spriteRenderer.color = new Vector4 (1, 1, 1, 1);
 	}
 
-	void UpdateHealthToHealthMeter() {
+	void UpdateHealthInfo() {
 		healthMeter.fillAmount = ((float)currentHealth/maximumHealth);
+        healthText.text = currentHealth.ToString();
 	}
 
     void Spawned() {
