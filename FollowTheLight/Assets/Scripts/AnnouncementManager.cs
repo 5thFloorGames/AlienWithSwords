@@ -64,6 +64,9 @@ public class AnnouncementManager : MonoBehaviour {
         } else {
             charactersAreEnemies = false;
         }
+        if (GameState.GetLevel() > 1) {
+            GetComponent<AudioSource>().enabled = true;
+        }
     }
 
 	public void ResetCombatLog() {
@@ -109,9 +112,10 @@ public class AnnouncementManager : MonoBehaviour {
     }
 
     void LeaveStartingTutorial() {
-    #if !UNITY_EDITOR
+#if !UNITY_EDITOR
             Cursor.visible = false;
-    #endif
+#endif
+        GetComponent<AudioSource>().enabled = true;
         transform.FindChild("Story").gameObject.SetActive(false);
         transform.FindChild("HowToPlay").gameObject.SetActive(false);
         Invoke("ActivatePlayerTurnAgain", 0.5f);
