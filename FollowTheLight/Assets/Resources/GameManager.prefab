@@ -52,6 +52,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &105324
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22451066}
+  - 222: {fileID: 22268516}
+  - 114: {fileID: 11405606}
+  m_Layer: 0
+  m_Name: text_page3_03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &107682
 GameObject:
   m_ObjectHideFlags: 1
@@ -826,7 +843,7 @@ GameObject:
   - 222: {fileID: 22251338}
   - 114: {fileID: 11492172}
   m_Layer: 0
-  m_Name: text_page3_03
+  m_Name: lines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1171,6 +1188,39 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11405606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 3ada1714ea87a42aea533866471302aa, type: 3}
+    m_FontSize: 110
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1.39999998
+  m_Text: "W,A,S,D to move\r\nLeft click to attack\r\n<size=80>Right click to use
+    Joseph's heal ability</size>\r\r"
 --- !u!114 &11405838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1827,8 +1877,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: UserAgreementFormNextPage
+      - m_Target: {fileID: 11424480}
+        m_MethodName: GameStartNextPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2129,13 +2179,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 2
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
-    m_LineSpacing: 1
-  m_Text: "1,2,3 to switch characters\r\n\r\n<size=80>Right click to use Joseph's
-    heal ability</size>\r\r\n\r\nX to restart the level"
+    m_LineSpacing: 1.39999998
+  m_Text: "1,2,3 to switch characters\r\nTAB to end your turn\r\nX to restart the
+    level"
 --- !u!114 &11454646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2171,10 +2221,9 @@ MonoBehaviour:
     a turn-based first person shooter in which you control a squad of three fighters.\r\n\r\nOn
     your turn, each of your fighters can <color=#ff0000ff>move a limited distance</color>
     and <color=#ff0000ff>perform one action.\r</color>\n\r\nWhen your turn is finished,
-    the enemy takes their turn. When the enemy is finished, it is your turn again,
-    and your fighters can move and perform another action.\r\n\r\nThe game continues
-    like this until you complete the level's objective or all of your fighters are
-    killed."
+    the enemies take their turn. After that, it is your turn again, and your fighters
+    can move and perform another action.\r\n\r\nThe game continues like this until
+    you destroy all the enemies in the level area."
 --- !u!114 &11455242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2473,7 +2522,7 @@ MonoBehaviour:
   m_Text: "Use the practice arena to become familiar with moving, dealing damage,
     switching between characters, and ending your turn. Don't worry, these monsters
     have had their damage glands removed so their spells won't hurt you.\r\n\r\nThe
-    controls are below, but <color=#ff0000ff>hit the ENTER key at any time for a reminder.</color>\r\n------------------------------------------------------------------------------------"
+    controls are below, but <color=#ff0000ff>hit the ENTER key at any time for a reminder.</color>\r"
 --- !u!114 &11465708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2748,8 +2797,8 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'JOSEPH is a healer who <color=#ff0000ff>replenishes the health of your
     fighters</color>, though he cannot heal himself. Joseph can also <color=#ff0000ff>deal
-    a tiny amount of damage</color> to enemies. Use right click to heal and left click
-    to deal damage.
+    a tiny amount of damage</color> to enemies. Use left click to deal damage and
+    right click to heal.
 
 '
 --- !u!114 &11475690
@@ -3171,17 +3220,17 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 3ada1714ea87a42aea533866471302aa, type: 3}
-    m_FontSize: 110
+    m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 1
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "W,A,S,D to move\r\n\r\nLeft click to attack\r\n\r\nTAB to end your turn\r"
+  m_Text: '------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'
 --- !u!114 &11492316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3601,6 +3650,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176950}
+--- !u!222 &22268516
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105324}
 --- !u!222 &22271838
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -4063,8 +4118,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .49999997, y: .49999997, z: .49999997}
   m_Children:
-  - {fileID: 22453402}
   - {fileID: 22468920}
+  - {fileID: 22451066}
+  - {fileID: 22453402}
   m_Father: {fileID: 22408842}
   m_RootOrder: 4
   m_AnchorMin: {x: .5, y: 1}
@@ -4214,6 +4270,23 @@ RectTransform:
   m_AnchoredPosition: {x: 685, y: 329}
   m_SizeDelta: {x: 600, y: 416}
   m_Pivot: {x: .5, y: .5}
+--- !u!224 &22451066
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105324}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 22432668}
+  m_RootOrder: 1
+  m_AnchorMin: {x: .5, y: 1}
+  m_AnchorMax: {x: .5, y: 1}
+  m_AnchoredPosition: {x: -253.999969, y: -730}
+  m_SizeDelta: {x: 2500, y: 1500}
+  m_Pivot: {x: .5, y: 1}
 --- !u!224 &22453402
 RectTransform:
   m_ObjectHideFlags: 1
@@ -4225,10 +4298,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 22432668}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_AnchorMin: {x: .5, y: 1}
   m_AnchorMax: {x: .5, y: 1}
-  m_AnchoredPosition: {x: 1313.99988, y: -638}
+  m_AnchoredPosition: {x: 160, y: -730}
   m_SizeDelta: {x: 2500, y: 1500}
   m_Pivot: {x: .5, y: 1}
 --- !u!224 &22454750
@@ -4350,11 +4423,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 22432668}
-  m_RootOrder: 1
-  m_AnchorMin: {x: .5, y: 1}
-  m_AnchorMax: {x: .5, y: 1}
-  m_AnchoredPosition: {x: -253.999969, y: -638}
-  m_SizeDelta: {x: 2500, y: 1500}
+  m_RootOrder: 0
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 0, y: 240}
+  m_SizeDelta: {x: 2000, y: 200}
   m_Pivot: {x: .5, y: 1}
 --- !u!224 &22469324
 RectTransform:
