@@ -155,7 +155,7 @@ public class AnnouncementManager : MonoBehaviour {
 
     public void CharacterTookDamageFromEnemy(CharacterType type, int damageAmount, EnemyType sourceType) {
 
-        combatTextInc += "\n" + sourceType + " dealt " + damageAmount + " damage to " + GetCharacterName(type) + ".";
+        combatTextInc += "\n" + FirstLetterToUpper(GetEnemyArticle(sourceType)) + " " + sourceType + " dealt " + damageAmount + " damage to " + GetCharacterName(type) + ".";
         StartCoroutine(GenerateCombatLog());
     }
 
@@ -165,12 +165,12 @@ public class AnnouncementManager : MonoBehaviour {
     }
 
     public void EnemyTookDamageFromCharacter(EnemyType type, int damageAmount, CharacterType sourceType) {
-        combatTextInc += "\n" + GetCharacterName(sourceType) + " dealt " + damageAmount + " damage to " + type + ".";
+        combatTextInc += "\n" + GetCharacterName(sourceType) + " dealt " + damageAmount + " damage to " + GetEnemyArticle(type) + " " + type + ".";
         StartCoroutine(GenerateCombatLog());
     }
 
 	public void CharacterDiedFromEnemy(CharacterType type, EnemyType sourceType) {
-        combatTextInc += "\n" + sourceType + " KILLED " + GetCharacterName(type) + "!";
+        combatTextInc += "\n" + FirstLetterToUpper(GetEnemyArticle(sourceType)) + " " + sourceType + " KILLED " + GetCharacterName(type) + "!";
         StartCoroutine(GenerateCombatLog());
     }
 
@@ -180,7 +180,7 @@ public class AnnouncementManager : MonoBehaviour {
     }
 
     public void EnemyDiedFromCharacter(EnemyType type, CharacterType sourceType) {
-        combatTextInc += "\n" + GetCharacterName(sourceType) + " destroyed an " + type + "!";
+        combatTextInc += "\n" + GetCharacterName(sourceType) + " DESTROYED " + GetEnemyArticle(type) + " " + type + "!";
         StartCoroutine(GenerateCombatLog());
     }
 
@@ -250,4 +250,24 @@ public class AnnouncementManager : MonoBehaviour {
 		}
 		return name;
 	}
+
+    string GetEnemyArticle(EnemyType type) {
+        if (type == EnemyType.Exploder) {
+            return "an";
+        } else if (type == EnemyType.Boss) {
+            return "the";
+        } else {
+            return "a";
+        }
+    }
+
+    public string FirstLetterToUpper(string str) {
+        if (str == null)
+            return null;
+
+        if (str.Length > 1)
+            return char.ToUpper(str[0]) + str.Substring(1);
+
+        return str.ToUpper();
+    }
 }
