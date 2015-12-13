@@ -17,6 +17,7 @@ public class CharacterSoundController : MonoBehaviour {
 	AudioClip[] dyingQuotes;
 	AudioClip[] killCharQuotes;
 	AudioClip[] outOfActionsQuotes;
+    AudioClip[] lastOneAliveQuotes;
 	
 	AudioClip[] attackSFX;
 	AudioClip[] attackHitSFX;
@@ -30,8 +31,9 @@ public class CharacterSoundController : MonoBehaviour {
 		killCharQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_KillChar");
 		dyingQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_Die");
 		outOfActionsQuotes = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/Quote_OutOfActions");
+        lastOneAliveQuotes = Resources.LoadAll<AudioClip>("Audio/" + charType.ToString() + "/Quote_LastOneAlive");
 
-		attackSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_Attack");
+        attackSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_Attack");
 		attackHitSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_AttackHit");
 		healSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_Heal");
 	}
@@ -86,11 +88,15 @@ public class CharacterSoundController : MonoBehaviour {
 		}
 	}
 
+    public void PlayLastOneAliveQuote() {
+        PlayRandomQuote(lastOneAliveQuotes);
+    }
 
 
-	// Playing the SFX
 
-	public void PlayAttackSFX() {
+    // Playing the SFX
+
+    public void PlayAttackSFX() {
 		PlayRandomSFX (attackSFX);
 	}
 

@@ -14,13 +14,19 @@ public class EnemyManager : MonoBehaviour {
     List<GameObject> spawningEnemies;
 
 	int enemyActionCounter;
+    bool otherCharactersAreEnemies;
 	
 	void Start () {
 		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         am = gm.gameObject.GetComponent<AnnouncementManager>();
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
 		OnLevelWasLoaded (GameState.GetLevel());
-	}
+        if (gm.GetLevelObjective() == LevelObjective.KillYourCharacters) {
+            otherCharactersAreEnemies = true;
+        } else {
+            otherCharactersAreEnemies = false;
+        }
+    }
 
 	void Update () {
 		
@@ -36,6 +42,10 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	public void TriggerEnemyActions() {
+        if (otherCharactersAreEnemies) {
+            AllEnemyActionsCompleted();
+            return;
+        }
 		enemyActionCounter = 0;
 		foreach (GameObject e in enemies) {
             if (e.activeSelf) {
@@ -96,6 +106,7 @@ public class EnemyManager : MonoBehaviour {
     }
 
 	void GetEnemiesInScene() {
+
         enemies = new List<GameObject>();
         spawningEnemies = new List<GameObject>();
         GameObject[] additionalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -104,6 +115,7 @@ public class EnemyManager : MonoBehaviour {
 				EnemyBasicAssignments(enemy);
 			}
 		}
+
 	}
 
 	void AllEnemyActionsCompleted() {
@@ -111,7 +123,9 @@ public class EnemyManager : MonoBehaviour {
 	}
 
     void GiveEnemyCountToUI() {
-        uim.UpdateEnemyCount(enemies.Count);
+        if (!otherCharactersAreEnemies) {
+            uim.UpdateEnemyCount(enemies.Count);
+        }
     }
 
 }

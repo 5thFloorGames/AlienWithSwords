@@ -79,6 +79,14 @@ public class CharacterState : MonoBehaviour {
     public void YouKilledAnEnemy() {
         cas.PlayKillingAnEnemyQuote();
     }
+
+    public void LastOneAlive() {
+        Invoke("PlayLastOneAliveQuote", 3.0f);
+    }
+
+    void PlayLastOneAliveQuote() {
+        cas.PlayLastOneAliveQuote();
+    }
 	
 	IEnumerator DelayedUnmute() {
 		yield return new WaitForSeconds (0.5f);

@@ -13,6 +13,7 @@ public class CharacterManager : MonoBehaviour {
 	bool firstActive;
 	bool secondActive;
 	bool thirdActive;
+    bool otherCharactersAreEnemies;
 
     bool initialized = false;
 
@@ -120,6 +121,7 @@ public class CharacterManager : MonoBehaviour {
             thirdActive = false;
         }
         character.BroadcastMessage("CharacterDied");
+        CheckForEnemyCountUpdates();
         CheckIfAllCharactersDead();
 		if (GameState.activeCharacter.GetComponent<CharacterState>().dead) {
 			Invoke("AutoSwitchToCharacter", 3.0f);
@@ -129,6 +131,25 @@ public class CharacterManager : MonoBehaviour {
     void CheckIfAllCharactersDead() {
         if ((!firstActive && !secondActive && !thirdActive)) {
             gameObject.GetComponent<GameManager>().AllCharactersDead();
+        }
+    }
+
+    void CheckForEnemyCountUpdates() {
+        if (otherCharactersAreEnemies) {
+            int counter = 0;
+            GameObject alive = null;
+            foreach (GameObject character in characters) {
+                CharacterState cs = character.GetComponent<CharacterState>();
+                if (!cs.dead) {
+                    alive = character;
+                    counter += 1;
+                }
+            }
+            if (counter == 1 && alive != null) {
+                alive.SendMessage("LastOneAlive");
+                am.gameObject.GetComponent<GameManager>().OneCharacterRemaining();
+            }
+            uim.UpdateEnemyCount(counter-1);
         }
     }
 
@@ -147,6 +168,12 @@ public class CharacterManager : MonoBehaviour {
     void HandleSpawning() {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
         am = GameObject.Find("GameManager").GetComponent<AnnouncementManager>();
+
+        if (am.gameObject.GetComponent<GameManager>().GetLevelObjective() == LevelObjective.KillYourCharacters) {
+            otherCharactersAreEnemies = true;
+        } else {
+            otherCharactersAreEnemies = false;
+        }
 
         firstActive = false;
         secondActive = false;
@@ -230,6 +257,7 @@ public class CharacterManager : MonoBehaviour {
 	}
 
     void SetInitializedToFalse() {
+        CheckForEnemyCountUpdates();
         initialized = false;
     }
 

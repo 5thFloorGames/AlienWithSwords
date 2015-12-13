@@ -136,6 +136,24 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void OneCharacterRemaining() {
+        if (objective == LevelObjective.KillYourCharacters) {
+            float endingTimer = 10.0f;
+            StartCoroutine(FadeInHalf(endingTimer));
+            GameState.playersTurn = false;
+            Invoke("GameEnding", endingTimer);
+        }
+    }
+
+    IEnumerator FadeInHalf(float timer) {
+        yield return new WaitForSeconds(timer/2);
+        am.EndGameFading(timer/2);
+    }
+
+    void GameEnding() {
+        QuitGame();
+    }
+
 
 
 	void StartEnemyTurn() {
@@ -173,7 +191,10 @@ public class GameManager : MonoBehaviour {
 
     public void SetLevelObjective(LevelObjective obj) {
         objective = obj;
-        //Debug.Log("Objective: " + objective.ToString());
+    }
+
+    public LevelObjective GetLevelObjective() {
+        return objective;
     }
 
     void LoadNextLevel() {

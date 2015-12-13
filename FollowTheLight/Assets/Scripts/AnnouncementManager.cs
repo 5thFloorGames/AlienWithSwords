@@ -22,6 +22,7 @@ public class AnnouncementManager : MonoBehaviour {
 	string announcementNow;
 	string announcementInc;
 	bool preventAdditionalAnnouncements;
+    bool charactersAreEnemies;
 
 	void Start () {
         guide = transform.FindChild("Guide").gameObject;
@@ -32,6 +33,12 @@ public class AnnouncementManager : MonoBehaviour {
         levelFade = tf.FindChild("LevelFade").GetComponent<Image>();
         dyingFade = tf.FindChild("DyingFade").GetComponent<Image>();
         damageFade = tf.FindChild("DamageFade").GetComponent<Image>();
+
+        if (gameObject.GetComponent<GameManager>().GetLevelObjective() == LevelObjective.KillYourCharacters) {
+            charactersAreEnemies = true;
+        } else {
+            charactersAreEnemies = false;
+        }
 
         ActivateDyingAndDamage();
 		ResetCombatLog ();
@@ -126,6 +133,10 @@ public class AnnouncementManager : MonoBehaviour {
         dyingFade.canvasRenderer.SetAlpha(0.0f);
     }
 
+    public void EndGameFading(float timer) {
+        dyingFade.CrossFadeAlpha(1.0f, timer, false);
+    }
+
     IEnumerator DyingFading() {
         dyingFade.CrossFadeAlpha(0.8f, 2.0f, false);
         yield return new WaitForSeconds(2.0f);
@@ -194,8 +205,10 @@ public class AnnouncementManager : MonoBehaviour {
     }
 
     public void EnemyTurnStarted() {
-		announcementInc += "\nEnemies will attack now.";
-		StartCoroutine (GenerateAnnouncement());
+        if (!charactersAreEnemies) {
+            announcementInc += "\nEnemies will attack now.";
+            StartCoroutine(GenerateAnnouncement());
+        }
 	}
 
 	public void PlayerTurnStart() {

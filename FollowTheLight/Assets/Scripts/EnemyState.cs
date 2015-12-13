@@ -111,7 +111,7 @@ public class EnemyState : MonoBehaviour {
 
     void Spawned() {
         GameObject prefab = (GameObject)Resources.Load("EnemySpawnEffect");
-        GameObject fx = (GameObject)Instantiate(prefab, transform.position + new Vector3 (0, 1, 0), Quaternion.identity);
+        Instantiate(prefab, transform.position + new Vector3 (0, 2, 0), Quaternion.identity);
     }
 
 	void StartDying() {
