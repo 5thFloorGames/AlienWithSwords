@@ -80,7 +80,18 @@ public class AnnouncementManager : MonoBehaviour {
             Cursor.visible = true;
         #endif
         agreementForm.SetActive(true);
+        agreementForm.transform.FindChild("AgreementText1").gameObject.SetActive(true);
+        agreementForm.transform.FindChild("AgreementText2").gameObject.SetActive(false);
+        agreementForm.transform.FindChild("NextPage").gameObject.SetActive(true);
+        agreementForm.transform.FindChild("IAgree").gameObject.SetActive(false);
         GameState.playersTurn = false;
+    }
+
+    public void UserAgreementFormNextPage() {
+        agreementForm.transform.FindChild("AgreementText1").gameObject.SetActive(false);
+        agreementForm.transform.FindChild("AgreementText2").gameObject.SetActive(true);
+        agreementForm.transform.FindChild("NextPage").gameObject.SetActive(false);
+        agreementForm.transform.FindChild("IAgree").gameObject.SetActive(true);
     }
 
     public void UserAgreementFormAgreed() {
