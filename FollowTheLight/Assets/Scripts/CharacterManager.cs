@@ -169,7 +169,7 @@ public class CharacterManager : MonoBehaviour {
         uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
         am = GameObject.Find("GameManager").GetComponent<AnnouncementManager>();
 
-        if (am.gameObject.GetComponent<GameManager>().GetLevelObjective() == LevelObjective.KillYourCharacters) {
+        if (GameObject.Find("GameManager").GetComponent<GameManager>().GetLevelObjective() == LevelObjective.KillYourCharacters) {
             otherCharactersAreEnemies = true;
         } else {
             otherCharactersAreEnemies = false;

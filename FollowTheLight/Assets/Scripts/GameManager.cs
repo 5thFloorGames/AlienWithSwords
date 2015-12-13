@@ -25,9 +25,6 @@ public class GameManager : MonoBehaviour {
     }
 
 	void Start () {
-        #if !UNITY_EDITOR
-            Cursor.visible = false;
-        #endif
         if (!initialized) {
 			OnLevelWasLoaded(GameState.GetLevel());
         }
@@ -39,11 +36,17 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
         }
 
+        #if !UNITY_EDITOR
+            Cursor.visible = false;
+        #endif
+
         if (!initialized && level != 0) {
             am = gameObject.GetComponent<AnnouncementManager>();
             cm = gameObject.GetComponent<CharacterManager>();
             em = gameObject.GetComponent<EnemyManager>();
             uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
+
+            objective = GameObject.Find("LevelLoader").GetComponent<LevelLoader>().levelObjective;
 
             initialized = true;
             levelCompleted = false;

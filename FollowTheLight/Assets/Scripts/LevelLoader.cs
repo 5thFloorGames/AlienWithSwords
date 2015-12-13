@@ -12,20 +12,19 @@ public class LevelLoader : MonoBehaviour {
 
 		userInterface = GameObject.Find("UserInterface");
 		if (userInterface == null) {
-			userInterface = Instantiate<GameObject>((GameObject)Resources.Load("UserInterface"));
+			userInterface = Instantiate((GameObject)Resources.Load("UserInterface"));
 			userInterface.name = "UserInterface";
 		}
 
 		gameManager = GameObject.Find("GameManager");
 		if (gameManager == null) {
-			gameManager = Instantiate<GameObject>((GameObject)Resources.Load("GameManager"));
+			gameManager = Instantiate((GameObject)Resources.Load("GameManager"));
 			gameManager.name = "GameManager";
 		}
 
 	}
 
     void Start() {
-        gameManager.GetComponent<GameManager>().SetLevelObjective(levelObjective);
     }
 
 	void Update () {
