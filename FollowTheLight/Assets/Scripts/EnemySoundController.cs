@@ -16,12 +16,12 @@ public class EnemySoundController : MonoBehaviour {
 		
 	}
 
-	public void PlayAttackQuote() {
-		StartCoroutine (PlayWithRandomDelay(esm.GetAttackQuote()));
+	public void PlayShootingQuote() {
+		StartCoroutine (PlayWithRandomDelay(esm.GetShootingQuote()));
 	}
 
 	public void PlayAimedQuote() {
-		PlayASound (esm.GetAttackQuote());
+		PlayASound (esm.GetShootingQuote());
 	}
 
 	public void PlayExplosionSFX() {

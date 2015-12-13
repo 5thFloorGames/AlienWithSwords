@@ -38,7 +38,7 @@ public class EnemyActionsFirst : MonoBehaviour {
 	}
 
 	public void TriggerActions () {
-		esc.PlayAttackQuote ();
+		esc.PlayShootingQuote ();
 		move.Go();
 	}
 

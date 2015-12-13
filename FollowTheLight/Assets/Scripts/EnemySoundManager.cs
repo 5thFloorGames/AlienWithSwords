@@ -3,18 +3,24 @@ using System.Collections;
 
 public class EnemySoundManager : MonoBehaviour {
 
-	AudioClip[] attackingQuotes;
-	AudioClip[] aimedQuotes;
+	AudioClip[] shootingQuotes;
+    AudioClip[] explodingQuotes;
+    AudioClip[] killingCharacterQuotes;
+    AudioClip[] aimedQuotes;
+    AudioClip[] dyingQuotes;
 
 	AudioClip[] explosionSFX;
 	AudioClip[] shotSFX;
 	AudioClip[] shotHitSFX;
 	
 	void Start () {
-		attackingQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Attack");
-		aimedQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Aimed");
+		shootingQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Shoot");
+        explodingQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Explode");
+        killingCharacterQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_KillChar");
+        aimedQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Aimed");
+        dyingQuotes = Resources.LoadAll<AudioClip>("Audio/Enemy/Quote_Die");
 
-		explosionSFX = Resources.LoadAll<AudioClip>("Audio/Enemy/SFX_Explosion");
+        explosionSFX = Resources.LoadAll<AudioClip>("Audio/Enemy/SFX_Explosion");
 		shotSFX = Resources.LoadAll<AudioClip>("Audio/Enemy/SFX_Shot");
 		shotHitSFX = Resources.LoadAll<AudioClip>("Audio/Enemy/SFX_ShotHit");
 	}
@@ -23,15 +29,33 @@ public class EnemySoundManager : MonoBehaviour {
 	
 	}
 
-	public AudioClip GetAttackQuote() {
-		return GetAudioClipFromList (attackingQuotes);
+
+
+    // Quotes
+
+	public AudioClip GetShootingQuote() {
+		return GetAudioClipFromList (shootingQuotes);
 	}
+
+    public AudioClip GetExplodingQuote() {
+        return GetAudioClipFromList(explodingQuotes);
+    }
+
+    public AudioClip GetKillingCharacterQuote() {
+        return GetAudioClipFromList(killingCharacterQuotes);
+    }
 
 	public AudioClip GetAimedQuote() {
 		return GetAudioClipFromList (aimedQuotes);
 	}
 
+    public AudioClip GetDyingQuote() {
+        return GetAudioClipFromList(dyingQuotes);
+    }
 
+
+
+    // Effects
 
 	public AudioClip GetExplosionSFX() {
 		return GetAudioClipFromList (explosionSFX);

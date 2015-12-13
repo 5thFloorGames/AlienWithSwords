@@ -10,7 +10,7 @@ public class GameState : MonoBehaviour {
     public static List<GameObject> characters;
 	
 	static int level = 0;
-	static int lastLevel = 3;
+	static int lastLevel = 4;
 
 	public static int GetLevel() {
 		return level;

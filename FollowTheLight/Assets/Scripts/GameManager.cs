@@ -28,11 +28,6 @@ public class GameManager : MonoBehaviour {
         #if !UNITY_EDITOR
             Cursor.visible = false;
         #endif
-		am = gameObject.GetComponent<AnnouncementManager>();
-        cm = gameObject.GetComponent<CharacterManager> ();
-		em = gameObject.GetComponent<EnemyManager> ();
-        uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
-
         if (!initialized) {
 			OnLevelWasLoaded(GameState.GetLevel());
         }
@@ -45,6 +40,11 @@ public class GameManager : MonoBehaviour {
         }
 
         if (!initialized && level != 0) {
+            am = gameObject.GetComponent<AnnouncementManager>();
+            cm = gameObject.GetComponent<CharacterManager>();
+            em = gameObject.GetComponent<EnemyManager>();
+            uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
+
             initialized = true;
             levelCompleted = false;
             am.LevelLoadedFader();

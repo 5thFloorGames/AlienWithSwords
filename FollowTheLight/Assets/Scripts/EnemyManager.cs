@@ -124,6 +124,9 @@ public class EnemyManager : MonoBehaviour {
 
     void GiveEnemyCountToUI() {
         if (!otherCharactersAreEnemies) {
+            if (uim == null) {
+                uim = GameObject.Find("UserInterface").GetComponent<UserInterfaceManager>();
+            }
             uim.UpdateEnemyCount(enemies.Count);
         }
     }
