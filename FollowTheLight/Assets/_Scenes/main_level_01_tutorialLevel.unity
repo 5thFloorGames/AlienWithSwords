@@ -84,7 +84,7 @@ NavMeshSettings:
     minRegionArea: 2
     cellSize: .166666672
     manualCellSize: 0
-  m_NavMeshData: {fileID: 23800000, guid: 9ece6c291adce6d43bf0c8683a58e77f, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 2530c777bfae2c9428d76c175bda27aa, type: 2}
 --- !u!1 &3888447
 GameObject:
   m_ObjectHideFlags: 0
@@ -13541,7 +13541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &888286107
 Transform:
   m_ObjectHideFlags: 0
@@ -13556,7 +13556,7 @@ Transform:
   - {fileID: 2100334977}
   - {fileID: 1292358978}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
 --- !u!4 &889254418 stripped
 Transform:
   m_PrefabParentObject: {fileID: 464402, guid: 5fd6ed93ad374ea41a4b0b57fb7764ba, type: 2}

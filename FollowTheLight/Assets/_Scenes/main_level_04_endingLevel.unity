@@ -84,7 +84,7 @@ NavMeshSettings:
     minRegionArea: 2
     cellSize: .166666672
     manualCellSize: 0
-  m_NavMeshData: {fileID: 23800000, guid: 9ece6c291adce6d43bf0c8683a58e77f, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: e069bd969e0f5c94dbd4da1e4f357557, type: 2}
 --- !u!1 &3888447
 GameObject:
   m_ObjectHideFlags: 0
@@ -30341,7 +30341,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1 &2038540874
 GameObject:
   m_ObjectHideFlags: 0
