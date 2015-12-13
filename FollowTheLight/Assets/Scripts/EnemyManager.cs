@@ -62,6 +62,7 @@ public class EnemyManager : MonoBehaviour {
         foreach (GameObject obj in spawningEnemies) {
             if (obj.GetComponent<EnemyState>().spawnNumber == spawnNumber) {
                 obj.SetActive(true);
+                obj.BroadcastMessage("Spawned");
                 toRemove.Add(obj);
             }
         }

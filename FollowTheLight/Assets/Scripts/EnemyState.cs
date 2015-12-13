@@ -109,6 +109,11 @@ public class EnemyState : MonoBehaviour {
 		healthMeter.fillAmount = ((float)currentHealth/maximumHealth);
 	}
 
+    void Spawned() {
+        GameObject prefab = (GameObject)Resources.Load("EnemySpawnEffect");
+        GameObject fx = (GameObject)Instantiate(prefab, transform.position + new Vector3 (0, 1, 0), Quaternion.identity);
+    }
+
 	void StartDying() {
         currentHealth = 0;
         dead = true;
