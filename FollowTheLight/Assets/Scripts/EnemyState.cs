@@ -138,7 +138,7 @@ public class EnemyState : MonoBehaviour {
         Invoke("ColliderDeactivate", 1.0f);
 		GameObject prefab = (GameObject) Resources.Load("BloodPool");
 		transform.FindChild ("EnemyInfo").gameObject.SetActive (false);
-		Instantiate (prefab, transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity);
+		Instantiate (prefab, transform.position, Quaternion.identity);
 	}
 
     void ColliderDeactivate() {
