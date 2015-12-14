@@ -126,7 +126,7 @@ public class CharacterManager : MonoBehaviour {
         CheckIfAllCharactersDead();
 		if (GameState.activeCharacter.GetComponent<CharacterState>().dead) {
             dyingWithouSwitching = true;
-			Invoke("AutoSwitchIfNeeded", 3.0f);
+			Invoke("AutoSwitchIfNeeded", 2.0f);
 		}
     }
 

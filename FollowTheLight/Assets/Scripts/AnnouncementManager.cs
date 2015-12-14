@@ -257,7 +257,7 @@ public class AnnouncementManager : MonoBehaviour {
     }
 
     IEnumerator DyingFading() {
-        dyingFade.CrossFadeAlpha(0.8f, 2.0f, false);
+        dyingFade.CrossFadeAlpha(0.6f, 1.0f, false);
         yield return new WaitForSeconds(2.0f);
     }
 
