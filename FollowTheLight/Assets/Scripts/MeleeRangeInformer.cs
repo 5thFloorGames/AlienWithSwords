@@ -21,9 +21,9 @@ public class MeleeRangeInformer : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
-        if (hitList.Contains(other.gameObject)) {
-            return;
-        }
+        //if (hitList.Contains(other.gameObject)) {
+        //    return;
+        //}
         if (((other.GetType() == typeof(CapsuleCollider)) && other.tag == "Enemy") || (other.tag == "Player" && (other.GetType() == typeof(CapsuleCollider)))) {
             GameObject otherObj = other.transform.root.gameObject;
             otherObj.SendMessage("AimedAt", transform.root.gameObject);
