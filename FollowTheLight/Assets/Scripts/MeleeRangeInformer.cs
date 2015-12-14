@@ -85,17 +85,29 @@ public class MeleeRangeInformer : MonoBehaviour {
     }
 
 	public void ActivateTheHitList() {
-        hitList = new List<GameObject>();
-        //List<GameObject> toRemove = new List<GameObject>();
-        //if (hitList != null) {
-        //    foreach (GameObject enemyObj in hitList) {
-        //        if (enemyObj.GetComponent<CharacterState>() != null) {
-        //            enemyObj.SendMessage("AimedAt", transform.root.gameObject);
-        //        }else if (enemyObj.GetComponent<EnemyState>().dead != true) {
-        //            enemyObj.SendMessage("AimedAt", transform.root.gameObject);
-        //        }
-        //    }
-        //}
+        List<GameObject> toRemove = new List<GameObject>();
+        if (hitList != null) {
+            foreach (GameObject enemyObj in hitList) {
+                Bounds bounds = cldr.bounds;
+                if (bounds.Contains(enemyObj.transform.position)) {
+                    if (enemyObj.GetComponent<CharacterState>() != null) {
+                        enemyObj.SendMessage("AimedAt", transform.root.gameObject);
+                    } else if (enemyObj.GetComponent<EnemyState>().dead != true) {
+                        enemyObj.SendMessage("AimedAt", transform.root.gameObject);
+                    }
+                } else {
+                    toRemove.Add(enemyObj);
+                }
+            }
+            Debug.Log(hitList.Count);
+
+            foreach (GameObject obj in toRemove) {
+                hitList.Remove(obj);
+            }
+
+            Debug.Log(hitList.Count);
+        }
+
         if (cldr == null) {
             cldr = GetComponent<MeshCollider>();
         }
@@ -108,5 +120,10 @@ public class MeleeRangeInformer : MonoBehaviour {
 
     public void PlayerTurnStarted() {
         ActivateTheHitList();
+    }
+
+    void ResetActions() {
+        //DeactivateTheHitList();
+        //ActivateTheHitList();
     }
 }
