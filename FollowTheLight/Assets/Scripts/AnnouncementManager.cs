@@ -52,7 +52,6 @@ public class AnnouncementManager : MonoBehaviour {
 
         startTutorialPageNumber = 0;
         levelStartTime = Time.time;
-        lastLevelTipNeeded = false;
         lastLevelEncouragementGiven = false;
 	}
 
@@ -67,7 +66,7 @@ public class AnnouncementManager : MonoBehaviour {
             ToggleGuide();
         }
 
-        if (charactersAreEnemies && levelStartTime + lastLevelTipDelay > Time.time && lastLevelTipNeeded) {
+        if (charactersAreEnemies && (levelStartTime + lastLevelTipDelay < Time.time) && lastLevelTipNeeded) {
             lastLevelTipNeeded = false;
             GenerateLastLevelTip();
         }
@@ -75,13 +74,14 @@ public class AnnouncementManager : MonoBehaviour {
 
 	void OnLevelWasLoaded() {
         levelStartTime = Time.time;
-        lastLevelTipNeeded = false;
 		preventAdditionalAnnouncements = false;
 	}
 
     public void InformLevelObjective(LevelObjective obj) {
         if (obj == LevelObjective.KillYourCharacters) {
+            levelStartTime = Time.time;
             charactersAreEnemies = true;
+            lastLevelTipNeeded = true;
         } else {
             charactersAreEnemies = false;
         }
@@ -198,7 +198,7 @@ public class AnnouncementManager : MonoBehaviour {
     // Ending functions
 
     void GenerateLastLevelTip() {
-        announcementInc += "\nThere can only be one winner.";
+        announcementInc += "\nThere can only be one...";
         StartCoroutine(GenerateAnnouncement());
     }
 
@@ -293,6 +293,7 @@ public class AnnouncementManager : MonoBehaviour {
         combatTextInc += "\n" + GetCharacterName(sourceType) + " dealt " + damageAmount + " damage to " + GetCharacterName(type) + ".";
         StartCoroutine(GenerateCombatLog());
         if (charactersAreEnemies && !lastLevelEncouragementGiven) {
+            lastLevelTipNeeded = false;
             lastLevelEncouragementGiven = true;
             GenerateLastLevelEncouragement();
         }
