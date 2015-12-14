@@ -28401,7 +28401,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 424668, guid: 285365bf838458f4abad80ce075e9c0d, type: 2}
       propertyPath: m_RootOrder
-      value: 55
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: 451108, guid: 285365bf838458f4abad80ce075e9c0d, type: 2}
       propertyPath: m_LocalPosition.x
