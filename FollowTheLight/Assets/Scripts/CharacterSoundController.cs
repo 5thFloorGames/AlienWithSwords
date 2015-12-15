@@ -25,6 +25,8 @@ public class CharacterSoundController : MonoBehaviour {
 	AudioClip[] attackHitSFX;
 	AudioClip[] healSFX;
 
+    AudioClip[] ui;
+
 	void Awake() {
 
         gameStartEnterDone = false;
@@ -41,6 +43,8 @@ public class CharacterSoundController : MonoBehaviour {
         attackSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_Attack");
 		attackHitSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_AttackHit");
 		healSFX = Resources.LoadAll<AudioClip> ("Audio/" + charType.ToString() + "/SFX_Healing");
+
+        ui = Resources.LoadAll<AudioClip>("Audio/SelectionSFX");
 	}
 	
 	void Start () {
@@ -62,6 +66,8 @@ public class CharacterSoundController : MonoBehaviour {
             gameStartEnterDone = true;
             return;
         }
+        PlayRandomSFX(ui);
+
 		if (Random.Range (0, 2) == 0) {
 			PlayRandomQuote (selectCharacterQuotes);
 		}

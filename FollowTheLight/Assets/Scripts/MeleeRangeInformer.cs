@@ -99,7 +99,6 @@ public class MeleeRangeInformer : MonoBehaviour {
                     toRemove.Add(enemyObj);
                 }
             }
-            Debug.Log(hitList.Count);
 
             foreach (GameObject obj in toRemove) {
                 hitList.Remove(obj);
