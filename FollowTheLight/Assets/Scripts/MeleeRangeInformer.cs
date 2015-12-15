@@ -104,7 +104,6 @@ public class MeleeRangeInformer : MonoBehaviour {
                 hitList.Remove(obj);
             }
 
-            Debug.Log(hitList.Count);
         }
 
         if (cldr == null) {
